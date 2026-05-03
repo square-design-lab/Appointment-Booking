@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useBooking } from '../BookingContext';
 import { fetchReasons } from '../api/bookingApi';
 import ReasonCard from '../components/ReasonCard';
@@ -190,6 +190,19 @@ export default function Step1Details() {
   const ageError       = getAgeError();
   const inPersonError  = getInPersonOnlyError();
 
+  // Filter the loaded reasons list by visit type — client-side, no re-fetch
+  const TELEHEALTH_KEYWORDS = ['telehealth', 'tele', 'video', 'virtual'];
+  const filteredReasons = useMemo(() => {
+    if (!visitType) return reasons;
+    return reasons.filter((r) => {
+      const text = `${r.reason} ${r.description || ''}`.toLowerCase();
+      const isTelehealth = TELEHEALTH_KEYWORDS.some((kw) => text.includes(kw));
+      if (visitType === 'telehealth') return isTelehealth;
+      if (visitType === 'inperson')   return !isTelehealth;
+      return true;
+    });
+  }, [reasons, visitType]);
+
   // Can the patient proceed?
   const canProceed =
     !!patientType &&
@@ -244,7 +257,7 @@ export default function Step1Details() {
         <div className="vbf-toggle-group" role="radiogroup" aria-label="Visit method">
           <input
             type="radio" id="vt-inperson" name="visitType" value="inperson"
-            checked={visitType === 'inperson'} onChange={() => { setVisitType('inperson'); setTelehealthState(''); }}
+            checked={visitType === 'inperson'} onChange={() => { setVisitType('inperson'); setTelehealthState(''); setSelectedReason(null); }}
           />
           <label htmlFor="vt-inperson" className={visitType === 'inperson' ? 'vbf-checked' : ''}>
             <span className="vbf-toggle-icon" aria-hidden="true" />
@@ -253,7 +266,7 @@ export default function Step1Details() {
 
           <input
             type="radio" id="vt-telehealth" name="visitType" value="telehealth"
-            checked={visitType === 'telehealth'} onChange={() => setVisitType('telehealth')}
+            checked={visitType === 'telehealth'} onChange={() => { setVisitType('telehealth'); setSelectedReason(null); }}
           />
           <label htmlFor="vt-telehealth" className={visitType === 'telehealth' ? 'vbf-checked' : ''}>
             <span className="vbf-toggle-icon" aria-hidden="true" />
@@ -334,7 +347,7 @@ export default function Step1Details() {
           />
         )}
 
-        {!reasonsLoading && !reasonsError && reasons.length === 0 && patientType && (
+        {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && patientType && (
           <div className="vbf-callout vbf-callout--info">
             <span className="vbf-callout-icon">ℹ️</span>
             <span>
@@ -344,19 +357,19 @@ export default function Step1Details() {
           </div>
         )}
 
-        {!reasonsLoading && !reasonsError && reasons.length === 0 && !patientType && (
+        {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && !patientType && (
           <div style={{ color: 'var(--c-text-muted)', fontSize: 14 }}>
             Select whether you're a new or returning patient to see available appointment types.
           </div>
         )}
 
-        {!reasonsLoading && !reasonsError && reasons.length > 0 && (
+        {!reasonsLoading && !reasonsError && filteredReasons.length > 0 && (
           <div
             className="vbf-reasons-grid"
             role="radiogroup"
             aria-label="Appointment type"
           >
-            {reasons.map((r) => (
+            {filteredReasons.map((r) => (
               <ReasonCard
                 key={r.reasonId}
                 reason={r}
