@@ -1,9 +1,9 @@
 import React from 'react';
 import { useBooking } from '../BookingContext';
 
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr + 'T12:00:00');
+function formatDate(date) {
+  if (!date) return '';
+  const d = date instanceof Date ? date : new Date(date + 'T12:00:00');
   return d.toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
   });
