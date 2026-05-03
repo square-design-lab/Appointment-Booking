@@ -22,10 +22,6 @@ async function apiFetch(path, options = {}) {
   return res.json();
 }
 
-export function fetchProviderInfo(athenaProviderId) {
-  return apiFetch(`/api/booking/provider-info/${encodeURIComponent(athenaProviderId)}`);
-}
-
 export function fetchReasons({ departmentId, providerId, patientType }) {
   return apiFetch('/api/booking/reasons', {
     method: 'POST',
@@ -63,6 +59,13 @@ export function writeServiceNote(data) {
 
 export function updateInsurance(data) {
   return apiFetch('/api/booking/update-insurance', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export function sendAlert(data) {
+  return apiFetch('/api/booking/alert', {
     method: 'POST',
     body: JSON.stringify(data),
   });

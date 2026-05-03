@@ -628,58 +628,6 @@ function futureDateMMDDYYYY(daysAhead) {
   }).format(d);
 }
 
-// ─── GET /api/booking/provider-info/:athenaProviderId ─────────────────────────
-// Fetches provider display name, photo, credentials from WordPress REST API.
-// No PHI involved — safe to log errors.
-app.get('/api/booking/provider-info/:athenaProviderId', async (req, res) => {
-  const { athenaProviderId } = req.params;
-  const wpUrl = process.env.WP_REST_URL || 'https://vantagementalhealth.org/wp-json/wp/v2/providers';
-
-  try {
-    const response = await axios.get(wpUrl, {
-      params: {
-        meta_key:  'athena_provider_id',
-        meta_value: athenaProviderId,
-        _embed:    'true',
-        per_page:  1,
-      },
-      timeout: 8000,
-    });
-
-    const providers = Array.isArray(response.data) ? response.data : [];
-    if (!providers.length) {
-      return res.json({ name: '', photo: null, credentials: '', specialties: [] });
-    }
-
-    const wp   = providers[0];
-    const meta = wp.meta || {};
-    const name = wp.title?.rendered || '';
-
-    let photo = null;
-    const embedded = wp._embedded;
-    if (embedded?.['wp:featuredmedia']?.[0]?.source_url) {
-      photo = embedded['wp:featuredmedia'][0].source_url;
-    }
-
-    const rawServices = meta.services;
-    const specialties = Array.isArray(rawServices)
-      ? rawServices
-      : (typeof rawServices === 'string' ? rawServices.split(',').map((s) => s.trim()).filter(Boolean) : []);
-
-    return res.json({
-      name,
-      photo,
-      credentials:       meta.provider_title || '',
-      specialties,
-      telehealth_location: meta.telehealth_location || [],
-    });
-  } catch (err) {
-    console.error('[booking/provider-info] WP error:', err.response?.status ?? err.message);
-    // Return empty gracefully — sidebar still works without provider details
-    return res.json({ name: '', photo: null, credentials: '', specialties: [] });
-  }
-});
-
 // ─── POST /api/booking/reasons ────────────────────────────────────────────────
 // Returns appointment reasons for a given provider + department.
 // Filters by patient type (new / returning / all).
@@ -950,6 +898,19 @@ app.post('/api/booking/update-insurance', async (req, res) => {
     console.error('[booking/update-insurance] error:', err.response?.status, err.message);
     return res.json({ success: false });
   }
+});
+
+// ─── POST /api/booking/alert ─────────────────────────────────────────────────
+// Centralised support SMS trigger. Frontend calls this for errors it catches
+// that the backend could not handle internally (e.g. network-level failures).
+// Never log PHI — only structural context (error type, appointment ID shape).
+app.post('/api/booking/alert', async (req, res) => {
+  const { type, message } = req.body;
+  if (!type || !message) {
+    return res.status(400).json({ error: 'Missing type or message' });
+  }
+  await alertSupport(`[${type}] ${message}`);
+  return res.json({ sent: true });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

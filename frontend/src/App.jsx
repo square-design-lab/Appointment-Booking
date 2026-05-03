@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookingProvider, useBooking } from './BookingContext';
 import ProgressBar from './components/ProgressBar';
 import Sidebar from './components/Sidebar';
@@ -10,6 +10,21 @@ import ConfirmationScreen from './steps/ConfirmationScreen';
 function BookingFlow() {
   const { currentStep } = useBooking();
   const isConfirmation = currentStep === 4;
+
+  // Slot-taken banner: set by Step3 via sessionStorage when a race condition
+  // causes the chosen slot to be taken before booking completes.
+  const [slotTakenMsg, setSlotTakenMsg] = useState(null);
+
+  useEffect(() => {
+    if (currentStep === 2) {
+      if (sessionStorage.getItem('vbf_slot_taken')) {
+        sessionStorage.removeItem('vbf_slot_taken');
+        setSlotTakenMsg('That time was just taken by another patient. Please select a different time.');
+      }
+    } else {
+      setSlotTakenMsg(null);
+    }
+  }, [currentStep]);
 
   return (
     <div className="vbf-root">
@@ -30,7 +45,21 @@ function BookingFlow() {
         <div className={`vbf-layout${isConfirmation ? ' vbf-layout--full' : ''}`}>
           <main className="vbf-main">
             {currentStep === 1 && <Step1Details />}
-            {currentStep === 2 && <Step2DateTime />}
+            {currentStep === 2 && (
+              <>
+                {slotTakenMsg && (
+                  <div
+                    className="vbf-callout vbf-callout--warning"
+                    role="alert"
+                    style={{ marginBottom: 16 }}
+                  >
+                    <span className="vbf-callout-icon">⚠️</span>
+                    <span>{slotTakenMsg}</span>
+                  </div>
+                )}
+                <Step2DateTime />
+              </>
+            )}
             {currentStep === 3 && <Step3Registration />}
             {currentStep === 4 && <ConfirmationScreen />}
           </main>
