@@ -1,0 +1,95 @@
+<!-- Vantage Booking Modal -->
+<div id="vantage-booking-modal" style="display:none;">
+  <div id="vantage-modal-overlay"></div>
+  <div id="vantage-modal-box">
+    <button id="vantage-modal-close" type="button">&#x2715;</button>
+    <h3>Book an Appointment</h3>
+    <div id="vantage-modal-msg" style="display:none;"></div>
+
+    <form id="vantage-booking-form" novalidate>
+
+      <div class="vantage-field">
+        <label for="vb-dob">Date of Birth <span>*</span></label>
+        <input type="date" id="vb-dob" name="dob" required>
+      </div>
+
+      <div class="vantage-field">
+        <label>Are you a new or returning patient? <span>*</span></label>
+        <div class="vantage-radio-group">
+          <label><input type="radio" name="patient_type" value="new"> New Patient</label>
+          <label><input type="radio" name="patient_type" value="returning"> Returning Patient</label>
+        </div>
+      </div>
+
+      <div class="vantage-field">
+        <label for="vb-service">What service are you looking for? <span>*</span></label>
+        <select id="vb-service" name="service_type" required>
+          <option value="">— Select a service —</option>
+          <option value="psychiatry">Psychiatry Medication Management</option>
+          <option value="therapy-individual">Mental Health Therapy</option>
+          <option value="therapy-family">Family Therapy</option>
+          <option value="therapy-couples">Couples Therapy</option>
+          <option value="therapy-child">Child Therapy</option>
+          <option value="therapy-teen">Teen Therapy</option>
+          <option value="therapy-group">Group Therapy</option>
+          <option value="tms">Transcranial Magnetic Stimulation (TMS)</option>
+          <option value="adhd">ADHD Evaluation</option>
+          <option value="psych-testing">Psychopharmacologic Testing</option>
+        </select>
+      </div>
+
+      <div class="vantage-field">
+        <label>How would you like to meet? <span>*</span></label>
+        <div class="vantage-radio-group">
+          <label><input type="radio" name="visit_type" value="inperson"> In-Person</label>
+          <label><input type="radio" name="visit_type" value="telehealth"> Telehealth / Virtual</label>
+        </div>
+      </div>
+
+      <!-- Telehealth state question — shown only when Telehealth is selected -->
+      <div class="vantage-field" id="vb-telehealth-state-field" style="display:none;">
+        <label>Will you be in the state of Minnesota during your appointment? <span>*</span></label>
+        <div class="vantage-radio-group">
+          <label><input type="radio" name="telehealth_state" value="mn"> Yes — I will be in Minnesota</label>
+          <label><input type="radio" name="telehealth_state" value="other"> No — I will be outside Minnesota</label>
+        </div>
+      </div>
+
+      <div class="vantage-field">
+        <label for="vb-insurance">What is your insurance? <span>*</span></label>
+        <select id="vb-insurance" name="insurance" required>
+          <option value="">— Select insurance —</option>
+          <option value="self-pay">Self-Pay / No Insurance</option>
+          <option value="aetna">Aetna</option>
+          <option value="americas-ppo">America's PPO</option>
+          <option value="bcbs">Blue Cross Blue Shield</option>
+          <option value="cigna">Cigna</option>
+          <option value="healthpartners">HealthPartners</option>
+          <option value="medica">Medica</option>
+          <option value="medicaid">Medicaid</option>
+          <option value="medicare">Medicare</option>
+          <option value="optum">Optum</option>
+          <option value="ucare">UCare</option>
+          <option value="united-behavioral">United Behavioral Health</option>
+          <option value="united-healthcare">United Healthcare</option>
+          <option value="tricare">Tricare</option>
+          <option value="other">Other / Not Listed</option>
+        </select>
+      </div>
+
+      <!-- Hidden provider fields -->
+      <input type="hidden" id="vb-provider-id"      name="provider_id">
+      <input type="hidden" id="vb-department-id"    name="department_id">
+      <input type="hidden" id="vb-location-id"      name="location_id">
+      <input type="hidden" id="vb-practitioner-id"  name="practitioner_id">
+      <input type="hidden" id="vb-min-age"          name="provider_min_age">
+      <input type="hidden" id="vb-max-age"          name="provider_max_age">
+      <input type="hidden" id="vb-services"         name="provider_services">
+      <input type="hidden" id="vb-insurances"       name="provider_insurances">
+      <input type="hidden" id="vb-telehealth-locs"  name="provider_telehealth_locs">
+      <input type="hidden" id="vb-provider-name"    name="provider_name">
+
+      <button type="submit" id="vantage-modal-submit">Check Availability</button>
+    </form>
+  </div>
+</div>

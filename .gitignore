@@ -1,0 +1,44 @@
+# ─── Sensitive reference docs (stay local only) ────────────────────────────────
+api-credentials.txt
+project-context.txt
+checkin-app-summary.md
+vantage-booking-schedule-page-summary.txt
+custom-booking-form-build-prompt.txt
+
+# ─── Athena API docs (proprietary — local reference only) ─────────────────────
+docs/
+
+# ─── Environment / secrets ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.env.local
+
+# ─── Old root-level files superseded by backend/ and frontend/ ─────────────────
+# Leading / anchors these to root only so wordpress/slots.js etc. are still tracked
+/server.js
+/package-backend.json
+/package-frontend.json
+/slots.js
+/modal.html
+
+# ─── Legacy project folder (replaced by frontend/) ─────────────────────────────
+/vantage-booking-form/
+
+# ─── Provider contacts (may contain real phone numbers) ────────────────────────
+backend/provider-contacts-real.json
+
+# ─── Node modules & build output ───────────────────────────────────────────────
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+dist/
+
+# ─── OS / editor files ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+*.log
