@@ -828,22 +828,68 @@
 .vbf-similar-avail { font-size: 12px; color: var(--c-primary); font-weight: 600; margin-top: 2px; }
 .vbf-btn--sm { padding: 7px 16px; font-size: 13px; }
 
+/* ─── Mobile summary strip (hidden on desktop, shown on mobile) ──────────────── */
+.vbf-mobile-summary {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--c-primary);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+.vbf-mobile-summary-provider {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+}
+.vbf-mobile-summary-dt {
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ─── Mobile ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .vbf-container { padding: 0 16px 40px; }
-  .vbf-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .vbf-sidebar-wrap { order: -1; }
-  .vbf-sidebar { position: static; }
-  .vbf-sidebar-body { display: none; }
-  .vbf-sidebar-help { display: none; }
+
+  /* Single-column layout — sidebar hidden, main takes full width */
+  .vbf-layout { grid-template-columns: 1fr; gap: 0; }
+  .vbf-sidebar-wrap { display: none; }
+
+  /* Show compact provider strip at top of main */
+  .vbf-mobile-summary { display: flex; }
+
   .vbf-card { padding: 20px 16px; }
   .vbf-step-title { font-size: 18px; }
+
+  /* Progress bar — numbers only, no labels */
   .vbf-progress-label { display: none; }
   .vbf-progress-connector { width: 30px; }
+
+  /* Form fields — single column */
   .vbf-fields-row { grid-template-columns: 1fr; }
   .vbf-toggle-group { gap: 8px; }
   .vbf-toggle-group label { padding: 9px 14px; font-size: 13px; }
+
+  /* Nav buttons — stack vertically, full width, primary on top */
+  .vbf-nav { flex-direction: column-reverse; gap: 10px; margin-top: 24px; }
+  .vbf-nav .vbf-btn { width: 100%; justify-content: center; }
+
+  /* Calendar + time grid — already flex-wrap: wrap; no change needed */
+
+  /* Similar provider cards — shrink photo */
+  .vbf-similar-photo { width: 36px; height: 36px; font-size: 15px; }
+
+  /* Confirmation hero — tighter padding */
+  .vbf-confirm-hero { padding: 20px 16px 16px; }
+  .vbf-confirm-title { font-size: 20px; }
+  .vbf-confirm-summary-label { min-width: 100px; }
 }

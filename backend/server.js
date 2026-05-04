@@ -900,6 +900,26 @@ app.post('/api/booking/update-insurance', async (req, res) => {
   }
 });
 
+// ─── GET /api/booking/health ─────────────────────────────────────────────────
+// Lightweight liveness + Athena reachability check.
+// Always returns 200 — never 5xx — so load-balancer health checks never fail.
+app.get('/api/booking/health', async (_req, res) => {
+  try {
+    const token = await getAccessToken();
+    await axios.get(
+      `${process.env.ATHENA_BASE_URL}/v1/${process.env.ATHENA_PRACTICE_ID}/departments`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        params:  { limit: 1 },
+        timeout: 3000,
+      }
+    );
+    return res.json({ status: 'ok', athena: 'reachable' });
+  } catch {
+    return res.json({ status: 'ok', athena: 'unreachable' });
+  }
+});
+
 // ─── POST /api/booking/alert ─────────────────────────────────────────────────
 // Centralised support SMS trigger. Frontend calls this for errors it catches
 // that the backend could not handle internally (e.g. network-level failures).

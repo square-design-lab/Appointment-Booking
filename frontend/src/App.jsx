@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BookingProvider, useBooking } from './BookingContext';
 import ProgressBar from './components/ProgressBar';
 import Sidebar from './components/Sidebar';
+import MobileSummary from './components/MobileSummary';
 import Step1Details from './steps/Step1Details';
 import Step2DateTime from './steps/Step2DateTime';
 import Step3Registration from './steps/Step3Registration';
@@ -44,6 +45,7 @@ function BookingFlow() {
 
         <div className={`vbf-layout${isConfirmation ? ' vbf-layout--full' : ''}`}>
           <main className="vbf-main">
+            {!isConfirmation && <MobileSummary />}
             {currentStep === 1 && <Step1Details />}
             {currentStep === 2 && (
               <>
