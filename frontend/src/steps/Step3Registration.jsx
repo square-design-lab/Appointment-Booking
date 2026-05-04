@@ -22,12 +22,17 @@ function isValidZip(v) {
   return /^\d{5}$/.test(v.trim());
 }
 
-function formatDobDisplay(isoDate) {
-  if (!isoDate) return '';
-  const [y, m, d] = isoDate.split('-');
-  const months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-  return `${months[parseInt(m, 10) - 1]} ${parseInt(d, 10)}, ${y}`;
+function validateDob(value) {
+  if (!value) return 'Please enter your date of birth.';
+  const parts = value.split('-');
+  if (parts.length !== 3 || parts[0].length !== 4) return null;
+  const d = new Date(value + 'T12:00:00');
+  if (isNaN(d.getTime())) return 'Please enter a valid date of birth.';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (d > today) return 'Date of birth cannot be in the future.';
+  if (d.getFullYear() < 1900) return 'Please enter a valid date of birth.';
+  return null;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -39,12 +44,31 @@ const US_STATES = [
   'VT','VA','WA','WV','WI','WY',
 ];
 
+const INSURANCE_OPTIONS = [
+  { value: '',                   label: '— Select insurance —' },
+  { value: 'self-pay',           label: 'Self-Pay / No Insurance' },
+  { value: 'aetna',              label: 'Aetna' },
+  { value: 'americas-ppo',       label: "America's PPO" },
+  { value: 'bcbs',               label: 'Blue Cross Blue Shield' },
+  { value: 'cigna',              label: 'Cigna' },
+  { value: 'healthpartners',     label: 'HealthPartners' },
+  { value: 'medica',             label: 'Medica' },
+  { value: 'medicaid',           label: 'Medicaid' },
+  { value: 'medicare',           label: 'Medicare' },
+  { value: 'optum',              label: 'Optum' },
+  { value: 'ucare',              label: 'UCare' },
+  { value: 'united-behavioral',  label: 'United Behavioral Health' },
+  { value: 'united-healthcare',  label: 'United Healthcare' },
+  { value: 'tricare',            label: 'Tricare' },
+  { value: 'other',              label: 'Other / Not Listed' },
+];
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Step3Registration() {
   const {
     urlParams,
-    dob,
+    dob,   setDob,
     setCurrentStep,
     selectedReason,
     selectedAppointmentId, setSelectedAppointmentId,
@@ -71,11 +95,32 @@ export default function Step3Registration() {
   const [state,        setState]        = useState(patientData.state        || 'MN');
   const [zip,          setZip]          = useState(patientData.zip          || '');
 
+  // ── DOB (editable, syncs back to context) ────────────────────────────────
+  const [localDob, setLocalDob] = useState(dob || '');
+  const [dobError, setDobError] = useState(null);
+
+  function handleDobChange(e) {
+    const val = e.target.value;
+    setLocalDob(val);
+    const err = validateDob(val);
+    setDobError(err);
+    if (!err && val) setDob(val);
+  }
+
   // ── Section B: Insurance ──────────────────────────────────────────────────
   const [hasInsurance,   setHasInsurance]   = useState(patientData.hasInsurance   || false);
   const [insuranceName,  setInsuranceName]  = useState(patientData.insuranceName  || '');
   const [groupId,        setGroupId]        = useState(patientData.groupId        || '');
   const [memberId,       setMemberId]       = useState(patientData.memberId       || '');
+
+  // Group/Member fields only shown when insurance is selected AND it isn't self-pay or other
+  const showGroupMember = hasInsurance &&
+    insuranceName !== '' &&
+    insuranceName !== 'self-pay' &&
+    insuranceName !== 'other';
+
+  // Human-readable label to send to the API
+  const insuranceLabel = INSURANCE_OPTIONS.find((o) => o.value === insuranceName)?.label || insuranceName;
 
   // ── Section C: Notes ──────────────────────────────────────────────────────
   const [notes, setNotes] = useState(patientData.notes || '');
@@ -112,9 +157,9 @@ export default function Step3Registration() {
     state:        !state                                 ? 'State is required.'                : null,
     zip:          !zip.trim()                            ? 'Zip code is required.'
                 : !isValidZip(zip)                       ? 'Please enter a valid 5-digit zip code.' : null,
-    insuranceName: hasInsurance && !insuranceName.trim() ? 'Insurance provider name is required.' : null,
-    groupId:      hasInsurance && !groupId.trim()        ? 'Group ID is required.'             : null,
-    memberId:     hasInsurance && !memberId.trim()       ? 'Member ID is required.'            : null,
+    insuranceName: hasInsurance && !insuranceName        ? 'Please select an insurance provider.' : null,
+    groupId:      showGroupMember && !groupId.trim()     ? 'Group ID is required.'             : null,
+    memberId:     showGroupMember && !memberId.trim()    ? 'Member ID is required.'            : null,
     termsAccepted:!termsAccepted                         ? 'You must accept the terms to continue.' : null,
   };
 
@@ -123,7 +168,7 @@ export default function Step3Registration() {
     return (touched[name] || triedSubmit) ? errors[name] : null;
   }
 
-  const hasAnyError = Object.values(errors).some(Boolean);
+  const hasAnyError = Object.values(errors).some(Boolean) || !!dobError || !localDob;
 
   // ── Booking sequence ──────────────────────────────────────────────────────
 
@@ -206,13 +251,13 @@ export default function Step3Registration() {
     }
 
     // 4 — Update insurance (best-effort)
-    if (hasInsurance && insuranceName.trim()) {
+    if (hasInsurance && insuranceName) {
       try {
         await updateInsurance({
           appointmentId: bookedId,
-          insuranceName: insuranceName.trim(),
-          groupId:       groupId.trim(),
-          memberId:      memberId.trim(),
+          insuranceName: insuranceLabel,
+          groupId:       showGroupMember ? groupId.trim() : '',
+          memberId:      showGroupMember ? memberId.trim() : '',
         });
       } catch { /* non-fatal */ }
     }
@@ -236,10 +281,10 @@ export default function Step3Registration() {
   }, [
     hasAnyError, firstName, lastName, dob, urlParams, phone, email, zip,
     selectedAppointmentId, selectedReason, notes, hasInsurance, insuranceName,
-    groupId, memberId, legalSex, phoneType, smsConsent, emailConsent,
-    confirmEmail, preferredName, address1, address2, city, state, termsAccepted,
-    setPatientData, setBookingConfirmation, setCurrentStep,
-    setSelectedTime, setSelectedAppointmentId,
+    insuranceLabel, showGroupMember, groupId, memberId, legalSex, phoneType,
+    smsConsent, emailConsent, confirmEmail, preferredName, address1, address2,
+    city, state, termsAccepted, setPatientData, setBookingConfirmation,
+    setCurrentStep, setSelectedTime, setSelectedAppointmentId,
   ]);
 
   // ── Input helper ──────────────────────────────────────────────────────────
@@ -318,25 +363,27 @@ export default function Step3Registration() {
         autoComplete: 'nickname',
       })}
 
-      {/* DOB — read-only */}
+      {/* DOB — editable, syncs to context */}
       <div className="vbf-field">
-        <label className="vbf-label">
-          Date of Birth
+        <label className="vbf-label" htmlFor="vbf-dob">
+          Date of Birth <span className="vbf-label-req">*</span>
         </label>
-        <div
-          className="vbf-input"
-          style={{
-            background: 'var(--c-disabled-bg)',
-            color: 'var(--c-text-secondary)',
-            cursor: 'default',
-            userSelect: 'none',
-          }}
-          aria-readonly="true"
-        >
-          {formatDobDisplay(dob) || <span style={{ color: 'var(--c-text-muted)' }}>—</span>}
-        </div>
+        <input
+          id="vbf-dob"
+          type="date"
+          className={`vbf-input${dobError ? ' vbf-input--error' : ''}`}
+          value={localDob}
+          onChange={handleDobChange}
+          max={new Date().toISOString().split('T')[0]}
+          aria-describedby={dobError ? 'vbf-dob-err' : undefined}
+        />
+        {dobError && (
+          <div id="vbf-dob-err" className="vbf-field-error" role="alert">
+            <span>⚠</span> {dobError}
+          </div>
+        )}
         <div style={{ fontSize: 12, color: 'var(--c-text-muted)' }}>
-          Entered in Step 1 — go back to change.
+          You can update your date of birth here if needed.
         </div>
       </div>
 
@@ -548,20 +595,44 @@ export default function Step3Registration() {
 
       {hasInsurance && (
         <div style={{ marginTop: 16 }}>
-          {inp('insuranceName', insuranceName, setInsuranceName, {
-            label: 'Insurance Provider Name',
-            placeholder: 'e.g. Blue Cross Blue Shield',
-          })}
-          <div className="vbf-fields-row" style={{ marginTop: 0 }}>
-            {inp('groupId', groupId, setGroupId, {
-              label: 'Group ID',
-              placeholder: 'Group number from card',
-            })}
-            {inp('memberId', memberId, setMemberId, {
-              label: 'Member ID',
-              placeholder: 'Member ID from card',
-            })}
+          {/* Insurance provider dropdown */}
+          <div className="vbf-field">
+            <label className="vbf-label" htmlFor="vbf-insuranceName">
+              Insurance Provider <span className="vbf-label-req">*</span>
+            </label>
+            <div className="vbf-select-wrap">
+              <select
+                id="vbf-insuranceName"
+                className={`vbf-select${fieldError('insuranceName') ? ' vbf-select--error' : ''}`}
+                value={insuranceName}
+                onChange={(e) => setInsuranceName(e.target.value)}
+                onBlur={() => touch('insuranceName')}
+              >
+                {INSURANCE_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+            {fieldError('insuranceName') && (
+              <div className="vbf-field-error" role="alert">
+                <span>⚠</span> {fieldError('insuranceName')}
+              </div>
+            )}
           </div>
+
+          {/* Group/Member only shown for plans that use them */}
+          {showGroupMember && (
+            <div className="vbf-fields-row" style={{ marginTop: 0 }}>
+              {inp('groupId', groupId, setGroupId, {
+                label: 'Group ID',
+                placeholder: 'Group number from card',
+              })}
+              {inp('memberId', memberId, setMemberId, {
+                label: 'Member ID',
+                placeholder: 'Member ID from card',
+              })}
+            </div>
+          )}
         </div>
       )}
 
