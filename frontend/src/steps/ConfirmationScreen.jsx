@@ -62,6 +62,35 @@ function downloadIcs(content, filename) {
   URL.revokeObjectURL(url);
 }
 
+// ─── Google Calendar URL builder ─────────────────────────────────────────────
+
+function buildGoogleCalendarUrl({ date, time, reasonName, providerName, visitType, locationAddress }) {
+  const [hStr, mStr = '00'] = time.split(':');
+  const h  = parseInt(hStr, 10);
+  const m  = parseInt(mStr, 10);
+  const y  = date.getFullYear();
+  const mo = date.getMonth() + 1;
+  const d  = date.getDate();
+
+  // Local datetime strings — no Z suffix so Google Calendar uses the user's local timezone
+  const startDt = formatIcsDt(y, mo, d, h, m);
+  const endDate = new Date(y, date.getMonth(), d, h + 1, m, 0);
+  const endDt   = formatIcsDt(
+    endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate(),
+    endDate.getHours(), endDate.getMinutes()
+  );
+
+  const params = new URLSearchParams({
+    action:   'TEMPLATE',
+    text:     `Vantage Mental Health — ${reasonName} with ${providerName}`,
+    dates:    `${startDt}/${endDt}`,
+    details:  `Provider: ${providerName}\nVisit type: ${visitType}\nVantage Mental Health — (651) 217-1480`,
+    location: locationAddress || '',
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 // ─── Display helpers ──────────────────────────────────────────────────────────
 
 function formatDateLong(date) {
@@ -104,16 +133,24 @@ export default function ConfirmationScreen() {
 
   const visitLabel = visitType === 'telehealth' ? 'Video Visit (Telehealth)' : 'In Person';
 
+  const calendarArgs = selectedDate && selectedTime ? {
+    date:            selectedDate,
+    time:            selectedTime,
+    locationAddress: locationInfo?.address || locationInfo?.name || '',
+    reasonName:      selectedReason?.reason || 'Appointment',
+    providerName,
+    visitType:       visitLabel,
+  } : null;
+
+  function handleAddToGoogleCalendar() {
+    if (!calendarArgs) return;
+    const url = buildGoogleCalendarUrl(calendarArgs);
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
   function handleAddToCalendar() {
-    if (!selectedDate || !selectedTime) return;
-    const ics = generateIcs({
-      date:            selectedDate,
-      time:            selectedTime,
-      locationAddress: locationInfo?.address || locationInfo?.name || '',
-      reasonName:      selectedReason?.reason || 'Appointment',
-      providerName,
-      visitType:       visitLabel,
-    });
+    if (!calendarArgs) return;
+    const ics = generateIcs(calendarArgs);
     const dateSlug = selectedDate.toISOString().split('T')[0];
     downloadIcs(ics, `vantage-appointment-${dateSlug}.ics`);
   }
@@ -227,14 +264,23 @@ export default function ConfirmationScreen() {
 
       {/* ── Actions ─────────────────────────────────────────────── */}
       <div className="vbf-confirm-actions">
-        {selectedDate && selectedTime && (
-          <button
-            type="button"
-            className="vbf-btn vbf-btn--primary"
-            onClick={handleAddToCalendar}
-          >
-            Add to Calendar
-          </button>
+        {calendarArgs && (
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              className="vbf-btn vbf-btn--primary"
+              onClick={handleAddToGoogleCalendar}
+            >
+              Add to Google Calendar
+            </button>
+            <button
+              type="button"
+              className="vbf-btn vbf-btn--ghost"
+              onClick={handleAddToCalendar}
+            >
+              Add to Other Calendar
+            </button>
+          </div>
         )}
         <a
           href="https://vantagementalhealth.org"
