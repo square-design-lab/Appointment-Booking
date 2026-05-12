@@ -108,6 +108,11 @@ function formatTime12h(t) {
   return `${hour % 12 || 12}:${m.padStart(2, '0')} ${period}`;
 }
 
+// ─── Reason-specific "What to Expect" links ──────────────────────────────────
+// Empty until Justin provides per-appointment-type URLs.
+// Populate as: { 'new patient psychiatry': 'https://vantagementalhealth.org/...' }
+const REASON_LINKS = {};
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function ConfirmationScreen() {
@@ -132,6 +137,10 @@ export default function ConfirmationScreen() {
     : '';
 
   const visitLabel = visitType === 'telehealth' ? 'Video Visit (Telehealth)' : 'In Person';
+
+  const whatToExpectKey = Object.keys(REASON_LINKS).find(
+    (key) => selectedReason?.reason?.toLowerCase().includes(key)
+  );
 
   const calendarArgs = selectedDate && selectedTime ? {
     date:            selectedDate,
@@ -161,12 +170,7 @@ export default function ConfirmationScreen() {
       {/* ── Hero ────────────────────────────────────────────────── */}
       <div className="vbf-confirm-hero">
         <div className="vbf-confirm-check" aria-label="Appointment confirmed">✓</div>
-        <h1 className="vbf-confirm-title">Your appointment is confirmed!</h1>
-        {patientData.email && (
-          <p className="vbf-confirm-subtitle">
-            A confirmation email has been sent to <strong>{patientData.email}</strong>.
-          </p>
-        )}
+        <h1 className="vbf-confirm-title">Your Appointment is Scheduled</h1>
       </div>
 
       {/* ── Provider strip ──────────────────────────────────────── */}
@@ -247,24 +251,9 @@ export default function ConfirmationScreen() {
 
       </div>
 
-      {/* ── What to expect ──────────────────────────────────────── */}
-      <div className="vbf-confirm-next">
-        <div className="vbf-confirm-next-title">What to expect</div>
-        <p>
-          Your provider will review your information before your visit.
-        </p>
-        <p>
-          To cancel or reschedule, please call{' '}
-          <a href="tel:6512171480" style={{ color: 'var(--c-primary)', fontWeight: 600 }}>
-            (651) 217-1480
-          </a>{' '}
-          at least 24 hours in advance.
-        </p>
-      </div>
-
-      {/* ── Actions ─────────────────────────────────────────────── */}
-      <div className="vbf-confirm-actions">
-        {calendarArgs && (
+      {/* ── Calendar buttons ────────────────────────────────────── */}
+      {calendarArgs && (
+        <div className="vbf-confirm-actions">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button
               type="button"
@@ -281,7 +270,66 @@ export default function ConfirmationScreen() {
               Add to Other Calendar
             </button>
           </div>
+        </div>
+      )}
+
+      {/* ── Reschedule / cancel ──────────────────────────────────── */}
+      <div className="vbf-confirm-next">
+        <div className="vbf-confirm-next-title">Need to reschedule or cancel?</div>
+        <p>
+          You can do so directly through the reminders you'll receive via email or text,
+          or call us at{' '}
+          <a href="tel:6512171480" style={{ color: 'var(--c-primary)', fontWeight: 600 }}>
+            (651) 217-1480
+          </a>{' '}
+          and we'll help.
+        </p>
+      </div>
+
+      {/* ── Next steps ──────────────────────────────────────────── */}
+      <div className="vbf-confirm-next">
+        <div className="vbf-confirm-next-title">What to Expect Next</div>
+        <p>
+          <strong>1.</strong>{' '}
+          Check your email over the next few days for a welcome message and patient portal
+          registration link (if this is your first visit with Vantage Mental Health).
+        </p>
+        <p>
+          <strong>2.</strong>{' '}
+          You'll receive check-in instructions via text and email. Please complete this as
+          soon as possible so we have accurate, up-to-date information before your visit.
+        </p>
+        {visitType !== 'telehealth' && (
+          <p>
+            <strong>3.</strong>{' '}
+            Please arrive 5–10 minutes early to your appointment.
+          </p>
         )}
+        {visitType === 'telehealth' && (
+          <p>
+            <strong>3.</strong>{' '}
+            You'll receive a secure video link via email and text before your appointment.
+            We recommend logging in 5 minutes early to test your connection.
+          </p>
+        )}
+      </div>
+
+      {/* ── Dynamic "What to Expect" link (empty until Justin provides URLs) ── */}
+      {whatToExpectKey && (
+        <div className="vbf-confirm-actions" style={{ paddingTop: 0 }}>
+          <a
+            href={REASON_LINKS[whatToExpectKey]}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--c-primary)', fontWeight: 600 }}
+          >
+            What to Expect at Your Appointment →
+          </a>
+        </div>
+      )}
+
+      {/* ── Return button ────────────────────────────────────────── */}
+      <div className="vbf-confirm-actions">
         <a
           href="https://vantagementalhealth.org"
           className="vbf-btn vbf-btn--ghost"
