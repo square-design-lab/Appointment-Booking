@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { fetchProviderInfo } from './api/bookingApi';
+import providerContacts from './data/provider-contacts.json';
 
 const BookingContext = createContext(null);
 
@@ -11,7 +11,7 @@ export const SERVICE_LABELS = {
   'therapy-child':      'Child Therapy',
   'therapy-teen':       'Teen Therapy',
   'therapy-group':      'Group Therapy',
-  tms:                  'Transcranial Magnetic Stimulation (TMS)',
+  tms:                  'Transcranial Magnetic Stimulation',
   adhd:                 'ADHD Evaluation',
   'psych-testing':      'Psychopharmacologic Testing',
 };
@@ -56,7 +56,7 @@ export function BookingProvider({ children }) {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [providerInfo, setProviderInfo] = useState(null);
-  const [providerLoading, setProviderLoading] = useState(false);
+  const providerLoading = false;
 
   // Step 1
   const [patientType, setPatientType]         = useState(urlParams.patientType || '');
@@ -78,11 +78,18 @@ export function BookingProvider({ children }) {
 
   useEffect(() => {
     if (!urlParams.providerId) return;
-    setProviderLoading(true);
-    fetchProviderInfo(urlParams.providerId)
-      .then((info) => setProviderInfo(info))
-      .catch(() => setProviderInfo(null))
-      .finally(() => setProviderLoading(false));
+    const found = providerContacts.find(
+      (p) => String(p.athena_provider_id) === String(urlParams.providerId)
+    );
+    if (found) {
+      setProviderInfo({
+        name:        found.name,
+        credentials: found.provider_title,
+        photo:       found.photo || null,
+        specialties: found.specialties || [],
+        specialty:   found.specialty || '',
+      });
+    }
   }, [urlParams.providerId]);
 
   const locationInfo   = LOCATION_INFO[urlParams.departmentId] || null;

@@ -1,44 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 /* ─── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --c-primary:       #2A6B5B;
-  --c-primary-dark:  #1E4F43;
-  --c-primary-hover: #235D4E;
-  --c-primary-light: #EBF5F2;
-  --c-primary-faint: #F2F9F7;
+  /* ── Brand palette (matches Vantage WordPress site) ── */
+  --c-primary:        #425853;
+  --c-primary-dark:   #2A3B36;
+  --c-primary-hover:  #374A46;
+  --c-primary-light:  #EFF2F1;
+  --c-primary-faint:  #F5F7F6;
+  --c-accent:         #FFBB5E;
 
-  --c-text:          #1C2B33;
-  --c-text-secondary:#4A5D68;
-  --c-text-muted:    #8095A0;
+  /* ── Text ── */
+  --c-text:           #333133;
+  --c-text-secondary: #627067;
+  --c-text-muted:     #627067;
 
-  --c-border:        #DDE3EA;
-  --c-border-focus:  #2A6B5B;
-  --c-border-hover:  #B0BEC9;
+  /* ── Borders & dividers ── */
+  --c-border:         #CDD6D4;
+  --c-border-focus:   #425853;
+  --c-border-hover:   #B8C2BF;
+  --c-divider:        #CDD6D4;
+  --c-dark-divider:   #B8C2BF;
 
-  --c-bg:            #F6F8FA;
-  --c-white:         #FFFFFF;
-  --c-card:          #FFFFFF;
+  /* ── Backgrounds ── */
+  --c-bg:             #EFF2F1;
+  --c-white:          #FFFFFF;
+  --c-black:          #333133;
+  --c-card:           #FFFFFF;
+  --c-secondary-bg:   #EFF2F1;
 
-  --c-error:         #C0392B;
-  --c-error-bg:      #FEF2F2;
-  --c-error-border:  #F5C6C2;
-  --c-warning:       #D97706;
-  --c-warning-bg:    #FFFBEB;
-  --c-success:       #2A6B5B;
-  --c-success-bg:    #ECFDF5;
+  /* ── Semantic extras ── */
+  --c-steel:          #485B6E;
+  --c-gold:           #E0C891;
 
-  --c-disabled-bg:   #F0F2F4;
-  --c-disabled-text: #9AABB6;
+  /* ── Status ── */
+  --c-error:          #C0392B;
+  --c-error-bg:       #FEF2F2;
+  --c-error-border:   #F5C6C2;
+  --c-warning:        #D97706;
+  --c-warning-bg:     #FFFBEB;
+  --c-success:        #425853;
+  --c-success-bg:     #EFF2F1;
 
+  /* ── Disabled ── */
+  --c-disabled-bg:    #EFF2F1;
+  --c-disabled-text:  #B8C2BF;
+
+  /* ── Shape ── */
   --radius-sm:  6px;
   --radius-md:  10px;
   --radius-lg:  14px;
   --radius-xl:  20px;
 
+  /* ── Elevation ── */
   --shadow-sm:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
   --shadow-md:  0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05);
   --shadow-lg:  0 10px 30px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.06);
 
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  /* ── Typography ── */
+  --font:      'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'SF Mono', 'Fira Mono', monospace;
 }
 
@@ -50,6 +70,7 @@
   min-height: 100vh;
   background: var(--c-bg);
   font-family: var(--font);
+  font-size: 16px;
   color: var(--c-text);
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
@@ -185,7 +206,7 @@
   letter-spacing: -0.3px;
 }
 .vbf-section-label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .8px;
@@ -199,7 +220,13 @@
   gap: 10px;
   flex-wrap: wrap;
 }
-.vbf-toggle-group input[type="radio"] { display: none; }
+.vbf-toggle-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
 .vbf-toggle-group label {
   display: flex;
   align-items: center;
@@ -225,27 +252,7 @@
   background: var(--c-primary-light);
   color: var(--c-primary);
 }
-.vbf-toggle-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.vbf-toggle-icon::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0;
-  transition: opacity .12s;
-}
-.vbf-toggle-group input[type="radio"]:checked + label .vbf-toggle-icon::after,
-.vbf-toggle-group label.vbf-checked .vbf-toggle-icon::after { opacity: 1; }
+.vbf-toggle-icon { display: none; }
 
 /* ─── Form section divider ──────────────────────────────────────────────────── */
 .vbf-divider {
@@ -361,7 +368,7 @@
   box-shadow: 0 0 0 3px rgba(192,57,43,.12);
 }
 .vbf-field-error {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-error);
   display: flex;
   align-items: center;
@@ -700,7 +707,7 @@
 
 /* ─── Step 3 form ────────────────────────────────────────────────────────────── */
 .vbf-form-section-title {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--c-text);
   margin-bottom: 16px;
@@ -747,7 +754,7 @@
   box-shadow: 0 0 0 3px rgba(42,107,91,.12);
 }
 .vbf-char-count {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--c-text-muted);
   text-align: right;
 }
@@ -892,4 +899,11 @@
   .vbf-confirm-hero { padding: 20px 16px 16px; }
   .vbf-confirm-title { font-size: 20px; }
   .vbf-confirm-summary-label { min-width: 100px; }
+}
+
+
+@media screen and (min-width: 768px) {
+  .vbf-fields-row .vbf-field:nth-child(2) {
+    margin-top: 0;
+  }
 }

@@ -160,7 +160,7 @@ export default function Step2DateTime() {
     return providerContacts
       .filter((p) => {
         if (String(p.athena_provider_id) === String(urlParams.providerId)) return false;
-        return (p.specialties || []).includes(serviceLabel);
+        return (p.specialties || []).some(s => s.toLowerCase() === serviceLabel.toLowerCase());
       })
       .slice(0, 3);
   }, [urlParams.providerId, serviceLabel]);
@@ -251,7 +251,7 @@ export default function Step2DateTime() {
       {similarProviders.length > 0 && (
         <div className="vbf-similar">
           <div className="vbf-divider" />
-          <div className="vbf-similar-title">Other providers offering {serviceLabel}</div>
+          {serviceLabel && <div className="vbf-similar-title">Other providers also offering {serviceLabel}</div>}
           {similarProviders.map((p) => (
             <div key={p.athena_provider_id} className="vbf-similar-card">
               {p.photo ? (
