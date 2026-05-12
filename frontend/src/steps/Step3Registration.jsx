@@ -6,6 +6,7 @@ import {
   writeServiceNote,
   updateInsurance,
   sendAlert,
+  createPatientCase,
 } from '../api/bookingApi';
 
 // ─── Validation helpers ───────────────────────────────────────────────────────
@@ -71,8 +72,10 @@ export default function Step3Registration() {
     dob,   setDob,
     setCurrentStep,
     selectedReason,
+    selectedDate,
     selectedAppointmentId, setSelectedAppointmentId,
     selectedTime,          setSelectedTime,
+    locationInfo,
     patientData,           setPatientData,
     setBookingConfirmation,
     visitType,
@@ -262,7 +265,37 @@ export default function Step3Registration() {
       } catch { /* non-fatal */ }
     }
 
-    // 5 — Store confirmation and advance
+    // 5 — Create patient case in Athena (best-effort — never blocks confirmation)
+    try {
+      await createPatientCase({
+        patientId,
+        departmentId: urlParams.departmentId,
+        providerId:   urlParams.providerId,
+        patientData: {
+          firstname:     firstName.trim(),
+          lastname:      lastName.trim(),
+          email:         email.trim().toLowerCase(),
+          phone:         phone.trim(),
+          dob,
+          insuranceName: insuranceLabel || 'None',
+          groupId:       showGroupMember ? groupId.trim()  : '-',
+          memberId:      showGroupMember ? memberId.trim() : '-',
+        },
+        appointmentData: {
+          reasonName:   selectedReason?.reason || '',
+          date:         selectedDate
+            ? `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${selectedDate.getFullYear()}`
+            : '',
+          time:         selectedTime || '',
+          locationName: locationInfo?.name || '',
+          visitType:    visitType === 'telehealth' ? 'Telehealth' : 'In Person',
+        },
+      });
+    } catch (e) {
+      console.error('Patient case creation failed (non-blocking):', e);
+    }
+
+    // 6 — Store confirmation and advance
     const snapshot = {
       firstName: firstName.trim(), lastName: lastName.trim(),
       preferredName: preferredName.trim(), legalSex, phone: phone.trim(),
@@ -280,7 +313,8 @@ export default function Step3Registration() {
     setCurrentStep(4);
   }, [
     hasAnyError, firstName, lastName, dob, urlParams, phone, email, zip,
-    selectedAppointmentId, selectedReason, notes, hasInsurance, insuranceName,
+    selectedAppointmentId, selectedReason, selectedDate, selectedTime,
+    locationInfo, visitType, notes, hasInsurance, insuranceName,
     insuranceLabel, showGroupMember, groupId, memberId, legalSex, phoneType,
     smsConsent, emailConsent, confirmEmail, preferredName, address1, address2,
     city, state, termsAccepted, setPatientData, setBookingConfirmation,

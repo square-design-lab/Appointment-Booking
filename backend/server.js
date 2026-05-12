@@ -913,6 +913,82 @@ app.post('/api/booking/update-insurance', async (req, res) => {
   }
 });
 
+// ─── POST /api/booking/create-patient-case ───────────────────────────────────
+// Best-effort — creates a patient case document in Athena assigned to the
+// correct office staff so staff can verify new vs. duplicate patient records.
+// HIPAA: internalnote contains PHI — never echo it back in logs.
+
+const CASE_ASSIGNED_TO = {
+  '1': 'STILLWATER OFFICE STAFF',
+  '5': 'SAINT ANTHONY OFFICE STAFF',
+  '8': 'EDINA OFFICE STAFF',
+};
+
+app.post('/api/booking/create-patient-case', async (req, res) => {
+  const { patientId, departmentId, providerId, patientData: pd, appointmentData: ad } = req.body;
+
+  if (!patientId || !departmentId || !providerId) {
+    console.error('[booking/create-patient-case] Missing required fields');
+    return res.json({ success: false });
+  }
+
+  const assignedTo = CASE_ASSIGNED_TO[String(departmentId)] || 'STILLWATER OFFICE STAFF';
+
+  const noteText =
+    `The patient booked an appointment online.\n` +
+    `Please verify if this is, in fact, a new patient or a\n` +
+    `duplicate record for an existing patient.\n\n` +
+    `Reason given for appointment: (Patient Email: ${pd?.email || ''},\n` +
+    `Phone: ${pd?.phone || ''}, Type: mobile, Patient DOB: ${pd?.dob || ''},\n` +
+    `Insurance: ${pd?.insuranceName || 'None'}, Group ID: ${pd?.groupId || '-'},\n` +
+    `Member ID: ${pd?.memberId || '-'}) REASON: ${ad?.reasonName || ''}\n\n` +
+    `Appointment Type: ${ad?.reasonName || ''}\n` +
+    `Appointment Date: ${ad?.date || ''}\n` +
+    `Appointment Time: ${ad?.time || ''}`;
+
+  // Athena cap is 4000 chars — truncate defensively
+  const safeNote = noteText.slice(0, 4000);
+
+  const params = new URLSearchParams();
+  params.append('providerid',       providerId);
+  params.append('departmentid',     departmentId);
+  params.append('documentsource',   'PATIENT');
+  params.append('documentsubclass', 'OTHER');
+  params.append('subject',          'New Appointment Scheduled Online via API');
+  params.append('assignedto',       assignedTo);
+  params.append('internalnote',     safeNote);
+
+  try {
+    const token = await getAccessToken();
+    const response = await axios.post(
+      `${process.env.ATHENA_BASE_URL}/v1/${process.env.ATHENA_PRACTICE_ID}/patients/${patientId}/documents/patientcase`,
+      params,
+      {
+        headers: {
+          Authorization:  `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
+
+    const data = response.data;
+    // Athena returns [{ patientcaseid: '...' }] or { patientcaseid: '...' }
+    const raw = Array.isArray(data) ? data[0] : data;
+    const patientCaseId = raw?.patientcaseid || raw?.documentid || null;
+
+    console.log('[booking/create-patient-case] Created, id:', patientCaseId, '| assignedTo:', assignedTo);
+    return res.json({ success: true, patientCaseId });
+  } catch (err) {
+    console.error(
+      '[booking/create-patient-case] Athena error:',
+      err.response?.status,
+      err.message,
+      JSON.stringify(err.response?.data)
+    );
+    return res.json({ success: false });
+  }
+});
+
 // ─── GET /api/booking/health ─────────────────────────────────────────────────
 // Lightweight liveness + Athena reachability check.
 // Always returns 200 — never 5xx — so load-balancer health checks never fail.

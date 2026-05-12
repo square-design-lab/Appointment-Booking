@@ -70,3 +70,10 @@ export function sendAlert(data) {
     body: JSON.stringify(data),
   });
 }
+
+export function createPatientCase(data) {
+  return apiFetch('/api/booking/create-patient-case', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
