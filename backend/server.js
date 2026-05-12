@@ -7,15 +7,28 @@ const twilio = require('twilio');
 const app = express();
 app.use(express.json());
 
+const ALLOWED_ORIGINS = [
+  'https://checkin.vantagementalhealth.org',
+  'https://vantagementalhealth.org',
+  'https://www.vantagementalhealth.org',
+  // Cloud Run — booking frontend service
+  'https://booking-frontend-717838047212.us-central1.run.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:4173',
+];
+
 app.use(cors({
-  origin: [
-    'https://checkin.vantagementalhealth.org',
-    'https://vantagementalhealth.org',
-    'https://www.vantagementalhealth.org',
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://localhost:4173',
-  ],
+  origin: (origin, callback) => {
+    // Allow same-origin / server-to-server (no Origin header)
+    if (!origin) return callback(null, true);
+    // Exact match against allowlist OR any *.run.app subdomain (Cloud Run preview URLs)
+    if (ALLOWED_ORIGINS.includes(origin) || /^https:\/\/[a-z0-9-]+-[a-z0-9]+\.run\.app$/.test(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS: origin not allowed — ${origin}`));
+  },
+  credentials: true,
 }));
 
 const providerContacts = require('./provider-contacts.json');
