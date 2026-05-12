@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BookingProvider, useBooking } from './BookingContext';
+import logoSrc from './assets/logo.png';
 import ProgressBar from './components/ProgressBar';
 import Sidebar from './components/Sidebar';
 import MobileSummary from './components/MobileSummary';
@@ -32,7 +33,7 @@ function BookingFlow() {
       <header className="vbf-header">
         <div className="vbf-header-inner">
           <a href="https://vantagementalhealth.org" className="vbf-logo-link">
-            Vantage Mental Health
+            <img src={logoSrc} alt="Vantage Mental Health" className="vbf-logo-img" />
           </a>
           <span className="vbf-header-phone">
             Questions? <a href="tel:6512171480">(651) 217-1480</a>
@@ -55,7 +56,7 @@ function BookingFlow() {
                     role="alert"
                     style={{ marginBottom: 16 }}
                   >
-                    <span className="vbf-callout-icon">⚠️</span>
+                    <span className="vbf-callout-icon" aria-hidden="true" />
                     <span>{slotTakenMsg}</span>
                   </div>
                 )}

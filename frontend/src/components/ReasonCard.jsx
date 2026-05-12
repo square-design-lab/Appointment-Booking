@@ -16,9 +16,6 @@ export default function ReasonCard({ reason, selected, onClick }) {
           <div className="vbf-reason-card__desc">{reason.description}</div>
         )}
       </div>
-      <div className="vbf-reason-card__check" aria-hidden="true">
-        <div className="vbf-reason-card__check-dot" />
-      </div>
     </div>
   );
 }

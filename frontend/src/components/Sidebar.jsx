@@ -73,7 +73,6 @@ export default function Sidebar() {
         {/* Location — always show if known */}
         {locationInfo && (
           <div className="vbf-summary-row">
-            <span className="vbf-summary-icon">📍</span>
             <div className="vbf-summary-content">
               <div className="vbf-summary-label">Location</div>
               <div className="vbf-summary-value">{locationInfo.name}</div>
@@ -87,7 +86,6 @@ export default function Sidebar() {
         {/* Visit method — show once chosen */}
         {visitType && (
           <div className="vbf-summary-row">
-            <span className="vbf-summary-icon">{visitType === 'telehealth' ? '💻' : '🏥'}</span>
             <div className="vbf-summary-content">
               <div className="vbf-summary-label">Visit Type</div>
               <div className="vbf-summary-value">
@@ -100,7 +98,6 @@ export default function Sidebar() {
         {/* Appointment reason — show once selected in Step 1 */}
         {selectedReason && (
           <div className="vbf-summary-row">
-            <span className="vbf-summary-icon">📋</span>
             <div className="vbf-summary-content">
               <div className="vbf-summary-label">Appointment Type</div>
               <div className="vbf-summary-value">{selectedReason.reason}</div>
@@ -111,7 +108,6 @@ export default function Sidebar() {
         {/* Date & time — show once selected in Step 2 */}
         {selectedDate && (
           <div className="vbf-summary-row">
-            <span className="vbf-summary-icon">📅</span>
             <div className="vbf-summary-content">
               <div className="vbf-summary-label">Date & Time</div>
               <div className="vbf-summary-value">

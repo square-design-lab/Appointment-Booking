@@ -324,7 +324,7 @@ export default function Step3Registration() {
       {/* ── Submit error banners ─────────────────────────────────── */}
       {submitError === 'duplicate' && (
         <div className="vbf-callout vbf-callout--warning" style={{ marginBottom: 20 }} role="alert">
-          <span className="vbf-callout-icon">⚠️</span>
+          <span className="vbf-callout-icon" aria-hidden="true" />
           <span>
             <strong>Multiple records found.</strong> We found more than one matching patient record
             for your information. Our staff will reach out to assist you. Please call{' '}
@@ -338,7 +338,7 @@ export default function Step3Registration() {
 
       {submitError === 'generic' && (
         <div className="vbf-callout vbf-callout--error" style={{ marginBottom: 20 }} role="alert">
-          <span className="vbf-callout-icon">⚠️</span>
+          <span className="vbf-callout-icon" aria-hidden="true" />
           <span>
             <strong>Something went wrong.</strong> We couldn't complete your booking. Please try
             again or call <a href="tel:6512171480" style={{ fontWeight: 700 }}>(651) 217-1480</a>.
@@ -577,7 +577,6 @@ export default function Step3Registration() {
             onChange={() => setHasInsurance(false)}
           />
           <label htmlFor="ins-no" className={!hasInsurance ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
             No
           </label>
 
@@ -587,7 +586,6 @@ export default function Step3Registration() {
             onChange={() => setHasInsurance(true)}
           />
           <label htmlFor="ins-yes" className={hasInsurance ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
             Yes
           </label>
         </div>

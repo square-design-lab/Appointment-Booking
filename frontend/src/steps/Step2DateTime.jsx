@@ -184,7 +184,7 @@ export default function Step2DateTime() {
 
       {slotsError && (
         <div className="vbf-callout vbf-callout--error" style={{ marginBottom: 20 }}>
-          <span className="vbf-callout-icon">⚠️</span>
+          <span className="vbf-callout-icon" aria-hidden="true" />
           <span>{slotsError}</span>
         </div>
       )}
@@ -232,7 +232,7 @@ export default function Step2DateTime() {
               </div>
               {timeSlotsForDate.length === 0 ? (
                 <div className="vbf-callout vbf-callout--info">
-                  <span className="vbf-callout-icon">ℹ️</span>
+                  <span className="vbf-callout-icon" aria-hidden="true" />
                   <span>No times available for this date. Please select a different day.</span>
                 </div>
               ) : (

@@ -234,7 +234,6 @@ export default function Step1Details() {
             checked={patientType === 'returning'} onChange={() => setPatientType('returning')}
           />
           <label htmlFor="pt-returning" className={patientType === 'returning' ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
             Yes — I'm a returning patient
           </label>
 
@@ -243,7 +242,6 @@ export default function Step1Details() {
             checked={patientType === 'new'} onChange={() => setPatientType('new')}
           />
           <label htmlFor="pt-new" className={patientType === 'new' ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
             No — I'm a new patient
           </label>
         </div>
@@ -260,8 +258,7 @@ export default function Step1Details() {
             checked={visitType === 'inperson'} onChange={() => { setVisitType('inperson'); setTelehealthState(''); setSelectedReason(null); }}
           />
           <label htmlFor="vt-inperson" className={visitType === 'inperson' ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
-            🏥 In Person
+            In Person
           </label>
 
           <input
@@ -269,15 +266,14 @@ export default function Step1Details() {
             checked={visitType === 'telehealth'} onChange={() => { setVisitType('telehealth'); setSelectedReason(null); }}
           />
           <label htmlFor="vt-telehealth" className={visitType === 'telehealth' ? 'vbf-checked' : ''}>
-            <span className="vbf-toggle-icon" aria-hidden="true" />
-            💻 Telehealth / Video Visit
+            Telehealth / Video Visit
           </label>
         </div>
 
         {/* In-person only service error */}
         {inPersonError && (
           <div className="vbf-callout vbf-callout--error" style={{ marginTop: 12 }}>
-            <span className="vbf-callout-icon">⚠️</span>
+            <span className="vbf-callout-icon" aria-hidden="true" />
             <span>{inPersonError}</span>
           </div>
         )}
@@ -296,8 +292,7 @@ export default function Step1Details() {
                 checked={telehealthState === 'mn'} onChange={() => setTelehealthState('mn')}
               />
               <label htmlFor="ths-yes" className={telehealthState === 'mn' ? 'vbf-checked' : ''}>
-                <span className="vbf-toggle-icon" aria-hidden="true" />
-                {hasWI ? 'Yes — I\'ll be in MN or WI' : 'Yes — I\'ll be in Minnesota'}
+                    {hasWI ? 'Yes — I\'ll be in MN or WI' : 'Yes — I\'ll be in Minnesota'}
               </label>
 
               <input
@@ -305,14 +300,13 @@ export default function Step1Details() {
                 checked={telehealthState === 'other'} onChange={() => setTelehealthState('other')}
               />
               <label htmlFor="ths-no" className={telehealthState === 'other' ? 'vbf-checked' : ''}>
-                <span className="vbf-toggle-icon" aria-hidden="true" />
-                {hasWI ? 'No — I\'ll be outside MN & WI' : 'No — I\'ll be outside Minnesota'}
+                    {hasWI ? 'No — I\'ll be outside MN & WI' : 'No — I\'ll be outside Minnesota'}
               </label>
             </div>
 
             {thStateError && (
               <div className="vbf-callout vbf-callout--error" style={{ marginTop: 12 }}>
-                <span className="vbf-callout-icon">⚠️</span>
+                <span className="vbf-callout-icon" aria-hidden="true" />
                 <span>
                   {thStateError}{' '}
                   <a href="/providers/" style={{ color: 'inherit', fontWeight: 700 }}>
@@ -349,7 +343,7 @@ export default function Step1Details() {
 
         {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && patientType && (
           <div className="vbf-callout vbf-callout--info">
-            <span className="vbf-callout-icon">ℹ️</span>
+            <span className="vbf-callout-icon" aria-hidden="true" />
             <span>
               No online appointment types are available for {providerDisplayName} right now.
               Please call <a href="tel:6512171480" style={{ fontWeight: 700 }}>(651) 217-1480</a> to schedule.
