@@ -113,6 +113,8 @@ function buildBookingUrl(provider) {
     departmentId:   provider.departmentId,
     service,
     telehealthLocs: provider.telehealthLocs || '',
+    minAge:         provider.minAge != null ? String(provider.minAge) : '0',
+    maxAge:         provider.maxAge != null ? String(provider.maxAge) : '100',
   });
   return BASE_URL + '?' + params.toString();
 }

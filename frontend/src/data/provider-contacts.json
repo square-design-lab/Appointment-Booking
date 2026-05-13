@@ -13,6 +13,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 17,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -54,6 +56,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -98,6 +102,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -138,6 +144,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -179,6 +187,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -221,6 +231,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 0,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -253,6 +265,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -300,6 +314,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 17,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -343,6 +359,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
+    "minAge": 12,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn,telehealth - wi",
     "insurance": [
       "Aetna",
@@ -390,6 +408,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -433,6 +453,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -478,6 +500,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -521,6 +545,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 17,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -565,6 +591,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 64,
     "telehealthLocs": "telehealth - mn,telehealth - wi",
     "insurance": [
       "Aetna",
@@ -607,6 +635,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -651,6 +681,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 0,
+    "maxAge": 12,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -688,6 +720,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -733,6 +767,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 10,
+    "maxAge": 60,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -774,6 +810,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 3,
+    "maxAge": 20,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -816,6 +854,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -857,6 +897,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -893,6 +935,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -930,6 +974,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -970,6 +1016,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 13,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1008,6 +1056,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1045,6 +1095,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1085,6 +1137,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1123,6 +1177,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1160,6 +1216,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn,telehealth - wi",
     "insurance": [
       "Aetna",
@@ -1204,6 +1262,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1243,6 +1303,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 3,
+    "maxAge": 17,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1287,6 +1349,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1326,6 +1390,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1368,6 +1434,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 14,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn,telehealth - wi",
     "insurance": [
       "Aetna",
@@ -1408,6 +1476,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1446,6 +1516,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1489,6 +1561,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn,telehealth - wi",
     "insurance": [
       "Aetna",
@@ -1527,6 +1601,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1565,6 +1641,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 0,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
@@ -1597,6 +1675,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 0,
+    "maxAge": 100,
     "telehealthLocs": "telehealth - mn",
     "insurance": [
       "Aetna",
