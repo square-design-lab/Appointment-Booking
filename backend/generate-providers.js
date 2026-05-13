@@ -36,6 +36,10 @@ for (let i = 4; i <= 40; i++) {
   const r = rows[i];
   if (!r || !r[0]) continue;
   const id = String(r[0]);
+  const langs = [];
+  if (r[70] === 'X') langs.push('English');
+  if (r[71] === 'X') langs.push('Spanish');
+  if (r[72] === 'X') langs.push('Other');
   xlMap[id] = {
     acceptingNew:      r[4] === 'X',
     minAge:            r[10] !== '' ? Number(r[10]) : 0,
@@ -43,12 +47,14 @@ for (let i = 4; i <= 40; i++) {
     telehealthLocs:    [r[8]==='X' ? 'telehealth - mn' : null, r[9]==='X' ? 'telehealth - wi' : null].filter(Boolean).join(','),
     insurance:         Object.entries(INSURANCE_IDX).filter(([c]) => r[+c] === 'X').map(([, n]) => n),
     whatWeTreat:       Object.entries(TREAT_IDX).filter(([c]) => r[+c] === 'X').map(([, n]) => n),
-    treatmentApproach: Object.entries(APPROACH_IDX).filter(([c]) => r[+c] === 'X').map(([, n]) => n)
+    treatmentApproach: Object.entries(APPROACH_IDX).filter(([c]) => r[+c] === 'X').map(([, n]) => n),
+    gender:            r[69] || '',
+    languages:         langs.length ? langs : ['English'],
   };
 }
 
 const DEFAULT_INS = ['Aetna','Americas PPO','Blue Cross Blue Shield','Cigna','HealthPartners','Medica','Medicaid','Medicare','Optum','UCare','United Healthcare','United Behavioral Health'];
-['47','46','33'].forEach(id => { xlMap[id] = { acceptingNew: true, minAge: 0, maxAge: 100, telehealthLocs: 'telehealth - mn', insurance: DEFAULT_INS, whatWeTreat: [], treatmentApproach: [] }; });
+['47','46','33'].forEach(id => { xlMap[id] = { acceptingNew: true, minAge: 0, maxAge: 100, telehealthLocs: 'telehealth - mn', insurance: DEFAULT_INS, whatWeTreat: [], treatmentApproach: [], gender: 'Female', languages: ['English'] }; });
 
 const base = [
   {"athena_provider_id":"28","departmentId":"5","name":"Suzanne Aoun, MD","provider_title":"Psychiatrist","credentials":"MD","specialty":"Psychiatry","specialties":["Psychiatric Medication Management"],"photo":"https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Aoun-web-hs.webp","sms_opt_in":false,"mobile_number":""},
@@ -94,7 +100,7 @@ const base = [
 ];
 
 const updated = base.map(p => {
-  const x = xlMap[p.athena_provider_id] || { acceptingNew: true, minAge: 0, maxAge: 100, telehealthLocs: 'telehealth - mn', insurance: DEFAULT_INS, whatWeTreat: [], treatmentApproach: [] };
+  const x = xlMap[p.athena_provider_id] || { acceptingNew: true, minAge: 0, maxAge: 100, telehealthLocs: 'telehealth - mn', insurance: DEFAULT_INS, whatWeTreat: [], treatmentApproach: [], gender: 'Female', languages: ['English'] };
   return {
     ...p,
     acceptingNew:      x.acceptingNew,
@@ -103,7 +109,9 @@ const updated = base.map(p => {
     telehealthLocs:    x.telehealthLocs,
     insurance:         x.insurance,
     whatWeTreat:       x.whatWeTreat,
-    treatmentApproach: x.treatmentApproach
+    treatmentApproach: x.treatmentApproach,
+    gender:            x.gender,
+    languages:         x.languages,
   };
 });
 

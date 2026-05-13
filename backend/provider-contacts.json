@@ -39,7 +39,11 @@
       "Bipolar Disorder",
       "Autism Spectrum and Neurodivergence"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "8",
@@ -85,7 +89,11 @@
       "Personality Disorders",
       "Sleep and Insomnia"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "37",
@@ -128,6 +136,10 @@
       "CBT (Cognitive Behavioral Therapy)",
       "DBT (Dialectical Behavior Therapy)",
       "Exposure Therapy"
+    ],
+    "gender": "Male",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -171,6 +183,10 @@
     ],
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -217,6 +233,10 @@
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
       "EMDR and ART"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -249,7 +269,11 @@
       "United Behavioral Health"
     ],
     "whatWeTreat": [],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "26",
@@ -298,6 +322,10 @@
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
       "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -342,6 +370,10 @@
       "CBT (Cognitive Behavioral Therapy)",
       "DBT (Dialectical Behavior Therapy)",
       "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -392,6 +424,10 @@
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
       "DBT (Dialectical Behavior Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -436,6 +472,10 @@
     ],
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -483,6 +523,10 @@
     ],
     "treatmentApproach": [
       "IFS (Internal Family Systems)"
+    ],
+    "gender": "Male",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -527,7 +571,11 @@
       "Bipolar Disorder",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "10",
@@ -572,7 +620,11 @@
       "Autism Spectrum and Neurodivergence",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "1",
@@ -619,7 +671,11 @@
       "Autism Spectrum and Neurodivergence",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "32",
@@ -663,6 +719,10 @@
       "EMDR and ART",
       "Brainspotting",
       "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -703,6 +763,10 @@
     ],
     "treatmentApproach": [
       "Parenting Therapy"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -748,7 +812,11 @@
       "Personality Disorders",
       "LGBTQ+"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Non-binary",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "18",
@@ -794,7 +862,11 @@
       "Perinatal and Maternal Mental Health",
       "LGBTQ+"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "39",
@@ -838,6 +910,10 @@
     ],
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -879,7 +955,11 @@
       "Self-Esteem and Identity",
       "LGBTQ+"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "6",
@@ -919,7 +999,11 @@
       "Depression and Low Mood",
       "Trauma and PTSD"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "40",
@@ -958,7 +1042,11 @@
       "Trauma and PTSD",
       "Life Transitions and Stress"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "13",
@@ -1000,7 +1088,11 @@
       "Bipolar Disorder",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "35",
@@ -1040,7 +1132,11 @@
       "Life Transitions and Stress",
       "Autism Spectrum and Neurodivergence"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "44",
@@ -1079,7 +1175,11 @@
       "Grief and Loss",
       "Life Transitions and Stress"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "7",
@@ -1121,7 +1221,11 @@
       "Bipolar Disorder",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "15",
@@ -1160,7 +1264,11 @@
       "Trauma and PTSD",
       "Bipolar Disorder"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "38",
@@ -1200,7 +1308,11 @@
       "Trauma and PTSD",
       "Relationship and Couples Issues"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "11",
@@ -1245,7 +1357,11 @@
       "Autism Spectrum and Neurodivergence",
       "Personality Disorders"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "23",
@@ -1285,7 +1401,11 @@
       "Trauma and PTSD",
       "LGBTQ+"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "14",
@@ -1333,6 +1453,10 @@
       "CBT (Cognitive Behavioral Therapy)",
       "Play Therapy",
       "Exposure Therapy"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -1373,7 +1497,11 @@
       "Grief and Loss",
       "LGBTQ+"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "41",
@@ -1417,6 +1545,10 @@
       "CBT (Cognitive Behavioral Therapy)",
       "EMDR and ART",
       "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -1460,7 +1592,11 @@
       "Life Transitions and Stress",
       "Chronic Illness"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "25",
@@ -1498,7 +1634,11 @@
       "Grief and Loss",
       "Self-Esteem and Identity"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "31",
@@ -1545,6 +1685,10 @@
     ],
     "treatmentApproach": [
       "EMDR and ART"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -1585,7 +1729,11 @@
       "Relationship and Couples Issues",
       "Life Transitions and Stress"
     ],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "30",
@@ -1625,6 +1773,10 @@
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
       "DBT (Dialectical Behavior Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
     ]
   },
   {
@@ -1659,7 +1811,11 @@
       "United Behavioral Health"
     ],
     "whatWeTreat": [],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   },
   {
     "athena_provider_id": "33",
@@ -1693,6 +1849,10 @@
       "United Behavioral Health"
     ],
     "whatWeTreat": [],
-    "treatmentApproach": []
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
   }
 ]

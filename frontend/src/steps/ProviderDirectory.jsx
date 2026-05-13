@@ -92,6 +92,10 @@ const ALL_TREATMENT_APPROACH = [
   'IFS (Internal Family Systems)',
 ];
 
+const ALL_GENDERS = ['Female', 'Male', 'Non-binary'];
+
+const ALL_LANGUAGES = ['English', 'Spanish', 'Other'];
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function getInitials(name) {
@@ -178,6 +182,9 @@ export default function ProviderDirectory() {
   const [insuranceFilter, setInsuranceFilter] = useState('');
   const [treatFilter,     setTreatFilter]     = useState('');
   const [approachFilter,  setApproachFilter]  = useState('');
+  const [genderFilter,    setGenderFilter]    = useState('');
+  const [languageFilter,  setLanguageFilter]  = useState('');
+  const [ageFilter,       setAgeFilter]       = useState('');
   const [acceptingNew,    setAcceptingNew]    = useState(false);
   const [search,          setSearch]          = useState('');
 
@@ -202,6 +209,22 @@ export default function ProviderDirectory() {
       // Treatment Approach
       if (approachFilter && !(p.treatmentApproach || []).includes(approachFilter)) return false;
 
+      // Gender
+      if (genderFilter && p.gender !== genderFilter) return false;
+
+      // Language
+      if (languageFilter && !(p.languages || []).includes(languageFilter)) return false;
+
+      // Age
+      if (ageFilter !== '') {
+        const age = Number(ageFilter);
+        if (!isNaN(age)) {
+          const min = p.minAge != null ? p.minAge : 0;
+          const max = p.maxAge != null ? p.maxAge : 100;
+          if (age < min || age > max) return false;
+        }
+      }
+
       // Accepting New Patients
       if (acceptingNew && !p.acceptingNew) return false;
 
@@ -214,9 +237,9 @@ export default function ProviderDirectory() {
 
       return true;
     });
-  }, [serviceFilter, locationFilter, insuranceFilter, treatFilter, approachFilter, acceptingNew, search]);
+  }, [serviceFilter, locationFilter, insuranceFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search]);
 
-  const hasFilters = serviceFilter || locationFilter || insuranceFilter || treatFilter || approachFilter || acceptingNew || search;
+  const hasFilters = serviceFilter || locationFilter || insuranceFilter || treatFilter || approachFilter || genderFilter || languageFilter || ageFilter || acceptingNew || search;
 
   function clearFilters() {
     setServiceFilter('');
@@ -224,6 +247,9 @@ export default function ProviderDirectory() {
     setInsuranceFilter('');
     setTreatFilter('');
     setApproachFilter('');
+    setGenderFilter('');
+    setLanguageFilter('');
+    setAgeFilter('');
     setAcceptingNew(false);
     setSearch('');
   }
@@ -346,6 +372,48 @@ export default function ProviderDirectory() {
             </label>
           </div>
 
+          {/* Row 3: Patient Age | Gender | Language */}
+          <div className="vpd-filter-row">
+            <div className="vpd-age-wrap">
+              <label className="vpd-age-label" htmlFor="vpd-age-input">Patients age</label>
+              <input
+                id="vpd-age-input"
+                type="number"
+                className="vpd-age-input"
+                placeholder="age in years"
+                min="0"
+                max="120"
+                value={ageFilter}
+                onChange={(e) => setAgeFilter(e.target.value)}
+                aria-label="Filter by patient age"
+              />
+            </div>
+
+            <select
+              className="vpd-select"
+              value={genderFilter}
+              onChange={(e) => setGenderFilter(e.target.value)}
+              aria-label="Filter by gender"
+            >
+              <option value="">Any Gender</option>
+              {ALL_GENDERS.map((g) => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </select>
+
+            <select
+              className="vpd-select"
+              value={languageFilter}
+              onChange={(e) => setLanguageFilter(e.target.value)}
+              aria-label="Filter by language"
+            >
+              <option value="">Any Language</option>
+              {ALL_LANGUAGES.map((l) => (
+                <option key={l} value={l}>{l}</option>
+              ))}
+            </select>
+          </div>
+
           {/* Active filter chips */}
           {hasFilters && (
             <div className="vpd-active-filters">
@@ -354,6 +422,9 @@ export default function ProviderDirectory() {
               {insuranceFilter && <span className="vpd-chip">{insuranceFilter} <button onClick={() => setInsuranceFilter('')} aria-label="Remove">×</button></span>}
               {treatFilter     && <span className="vpd-chip">{treatFilter}     <button onClick={() => setTreatFilter('')}     aria-label="Remove">×</button></span>}
               {approachFilter  && <span className="vpd-chip">{approachFilter}  <button onClick={() => setApproachFilter('')}  aria-label="Remove">×</button></span>}
+              {genderFilter    && <span className="vpd-chip">{genderFilter}    <button onClick={() => setGenderFilter('')}    aria-label="Remove">×</button></span>}
+              {languageFilter  && <span className="vpd-chip">{languageFilter}  <button onClick={() => setLanguageFilter('')}  aria-label="Remove">×</button></span>}
+              {ageFilter       && <span className="vpd-chip">Age: {ageFilter}  <button onClick={() => setAgeFilter('')}       aria-label="Remove">×</button></span>}
               {acceptingNew    && <span className="vpd-chip">Accepting New Patients <button onClick={() => setAcceptingNew(false)} aria-label="Remove">×</button></span>}
               {search          && <span className="vpd-chip">"{search}" <button onClick={() => setSearch('')} aria-label="Remove">×</button></span>}
               <button className="vpd-clear-btn" onClick={clearFilters}>Clear all</button>
