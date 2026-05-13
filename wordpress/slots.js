@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Redirect ──────────────────────────────────────────
   function redirect(locationId, practitionerId) {
-    var bookingPage = '/book/';
+    var bookingPage = 'https://booking-frontend-717838047212.us-central1.run.app/';
     var form   = document.getElementById('vantage-booking-form');
     var getVal = function (name) {
       var el = form ? form.querySelector('[name="' + name + '"]') : null;

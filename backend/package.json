@@ -15,7 +15,8 @@
     "twilio": "^5.2.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "xlsx": "^0.18.5"
   },
   "engines": {
     "node": ">=20"

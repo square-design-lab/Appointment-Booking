@@ -8,6 +8,7 @@ import Step1Details from './steps/Step1Details';
 import Step2DateTime from './steps/Step2DateTime';
 import Step3Registration from './steps/Step3Registration';
 import ConfirmationScreen from './steps/ConfirmationScreen';
+import ProviderDirectory from './steps/ProviderDirectory';
 
 function BookingFlow() {
   const { currentStep } = useBooking();
@@ -79,6 +80,13 @@ function BookingFlow() {
 }
 
 export default function App() {
+  const params = new URLSearchParams(window.location.search);
+  const providerId = params.get('providerId');
+
+  if (!providerId) {
+    return <ProviderDirectory />;
+  }
+
   return (
     <BookingProvider>
       <BookingFlow />

@@ -4,7 +4,7 @@
 
 | Service  | URL |
 |----------|-----|
-| **Frontend** | https://booking-frontend-717838047212.us-central1.run.app |
+| **Booking App** | https://booking-frontend-717838047212.us-central1.run.app |
 | **Backend API** | https://booking-backend-717838047212.us-central1.run.app |
 | **Health check** | https://booking-backend-717838047212.us-central1.run.app/api/booking/health |
 
@@ -12,122 +12,34 @@
 
 ## How It Works
 
-The booking form is a React SPA served from Cloud Run. You embed it on the
-WordPress `/book/` page using a full-height `<iframe>`. WordPress injects
-`window.VANTAGE_BOOKING` before the iframe loads so the form knows which
-provider / location to load and where to send API requests.
+The booking form is a standalone React app served from Cloud Run. Patients
+access it directly — no iframe needed. WordPress "Book Now" buttons simply
+link to the Cloud Run URL with query parameters that identify the provider,
+location, and service. When visited without a `providerId` param, the app
+shows a full provider directory.
 
 ---
 
 ## Step-by-Step WordPress Setup
 
-### Step 1 — Create the `/book/` Page
-
-1. In WordPress admin go to **Pages → Add New**
-2. Set the title: **Book an Appointment**
-3. Set the slug: `book`
-4. Set the page template to **Full Width** (removes sidebar — iframe needs full horizontal space)
-5. Leave the body content empty — the iframe block below will fill it
-
----
-
-### Step 2 — Add the Iframe Block
-
-In the page editor switch to the **Code Editor** view (top-right ⋮ menu →
-**Code editor**) and paste:
-
-```html
-<!-- wp:html -->
-<div id="vantage-booking-wrap">
-  <iframe
-    id="vantage-booking-iframe"
-    src="https://booking-frontend-717838047212.us-central1.run.app"
-    title="Book an Appointment — Vantage Mental Health"
-    frameborder="0"
-    scrolling="no"
-    style="width:100%;border:none;display:block;min-height:700px;"
-  ></iframe>
-</div>
-<!-- /wp:html -->
-```
-
----
-
-### Step 3 — Add the Auto-Resize + Config Script
-
-Still in the Code Editor, paste this block **directly below** the iframe block:
-
-```html
-<!-- wp:html -->
-<script>
-(function () {
-  var params = new URLSearchParams(window.location.search);
-  var iframe  = document.getElementById('vantage-booking-iframe');
-
-  // Inject API URL + URL params into iframe once it loads
-  iframe.addEventListener('load', function () {
-    iframe.contentWindow.postMessage(
-      {
-        type:         'VANTAGE_BOOKING_CONFIG',
-        apiUrl:       'https://booking-backend-717838047212.us-central1.run.app',
-        providerId:   params.get('provider')      || '',
-        providerName: params.get('providerName')  || '',
-        service:      params.get('service')       || '',
-        location:     params.get('location')      || '',
-        visitType:    params.get('visitType')     || '',
-      },
-      'https://booking-frontend-717838047212.us-central1.run.app'
-    );
-  });
-
-  // Auto-resize iframe to match content height
-  window.addEventListener('message', function (e) {
-    if (e.origin !== 'https://booking-frontend-717838047212.us-central1.run.app') return;
-    if (e.data && e.data.type === 'VANTAGE_HEIGHT') {
-      iframe.style.height = (e.data.height + 32) + 'px';
-    }
-  });
-})();
-</script>
-<!-- /wp:html -->
-```
-
----
-
-### Step 4 — Add Height-Post Message to the React App
-
-Open `frontend/src/main.jsx` and add a `ResizeObserver` that posts height
-changes to the WordPress parent page. If it is not already there, add:
-
-```js
-const ro = new ResizeObserver(entries => {
-  const h = entries[0]?.contentRect.height ?? document.body.scrollHeight;
-  window.parent.postMessage({ type: 'VANTAGE_HEIGHT', height: Math.ceil(h) }, '*');
-});
-ro.observe(document.getElementById('vantage-booking-root'));
-```
-
-After adding, redeploy the frontend (see **Redeployment** section below).
-
----
-
-### Step 5 — Update Each Provider's "Book Now" Button
+### Step 1 — Update Each Provider's "Book Now" Button
 
 Every provider page or card on the website should link to:
 
 ```
-https://vantagementalhealth.org/book/?provider=ATHENA_ID&providerName=DISPLAY_NAME&service=SERVICE_SLUG&location=LOCATION_ID
+https://booking-frontend-717838047212.us-central1.run.app/?providerId=ATHENA_ID&providerName=DISPLAY_NAME&departmentId=DEPT_ID&service=SERVICE_SLUG
 ```
 
 **Parameter reference:**
 
 | Parameter | Example | Description |
 |-----------|---------|-------------|
-| `provider` | `12345` | Athena provider ID (from provider-contacts.json) |
+| `providerId` | `12345` | Athena provider ID (from provider-contacts.json) |
 | `providerName` | `Jane+Smith,+LICSW` | Display name shown in the form header |
+| `departmentId` | `1` | Department ID: `1`=Stillwater, `5`=St. Anthony, `8`=Edina |
 | `service` | `psychiatry` | Service slug — see table below |
-| `location` | `1` | Department ID: `1`=Stillwater, `5`=St. Anthony, `8`=Edina |
 | `visitType` | `telehealth` | Pre-select: `telehealth` or `inperson` (optional) |
+| `telehealthState` | `mn` | Pre-select state: `mn` or `other` (optional) |
 
 **Service slugs:**
 
@@ -145,7 +57,7 @@ https://vantagementalhealth.org/book/?provider=ATHENA_ID&providerName=DISPLAY_NA
 
 **Example button HTML (Elementor or block editor):**
 ```html
-<a href="/book/?provider=12345&providerName=Jane+Smith%2C+LICSW&service=psychiatry&location=1"
+<a href="https://booking-frontend-717838047212.us-central1.run.app/?providerId=12345&providerName=Jane+Smith%2C+LICSW&departmentId=1&service=psychiatry"
    class="elementor-button">
   Book with Jane Smith
 </a>
@@ -153,37 +65,40 @@ https://vantagementalhealth.org/book/?provider=ATHENA_ID&providerName=DISPLAY_NA
 
 ---
 
-### Step 6 — Add CSS to Remove WordPress Page Chrome (Optional)
+### Step 2 — Update the `slots.js` Modal Redirect
 
-If the page template still shows a title or extra padding above the iframe,
-go to **Appearance → Customize → Additional CSS** and add:
+The WordPress provider-listing page uses `slots.js` to open a booking modal
+that redirects patients into the app. The `bookingPage` variable in that file
+already points to the Cloud Run URL:
 
-```css
-/* Booking page — full-bleed iframe, no header/padding */
-.page-id-XXXX .entry-title,
-.page-id-XXXX .page-header     { display: none; }
-
-.page-id-XXXX .entry-content,
-.page-id-XXXX .page-content    { padding: 0 !important; margin: 0 !important; }
-
-#vantage-booking-wrap           { margin: 0; padding: 0; }
+```js
+var bookingPage = 'https://booking-frontend-717838047212.us-central1.run.app/';
 ```
 
-Replace `XXXX` with the WordPress page ID (visible in the editor URL:
-`post.php?post=XXXX`).
+No further changes needed here — the modal passes all required params as a
+query string automatically.
 
 ---
 
-### Step 7 — Verify the Integration
+### Step 3 — Verify the Integration
 
-1. Open:
+1. Open the provider directory directly:
    ```
-   https://vantagementalhealth.org/book/?provider=TEST&providerName=Test+Provider&service=psychiatry&location=1
+   https://booking-frontend-717838047212.us-central1.run.app/
    ```
-2. The booking form should appear inside the WordPress page layout
-3. Open browser DevTools → Console — no CORS errors should appear
-4. Step through to Step 2 — calendar should show appointment slots
-5. Complete the full flow to the confirmation screen
+   All providers should appear with photo, title, location, and specialty tags.
+
+2. Open a provider deep-link:
+   ```
+   https://booking-frontend-717838047212.us-central1.run.app/?providerId=1&providerName=Justin+Gerstner,+MD&departmentId=1&service=psychiatry
+   ```
+   The booking flow should start at Step 1 with the correct provider name.
+
+3. Open browser DevTools → Console — no CORS errors should appear.
+
+4. Step through to Step 2 — calendar should show appointment slots.
+
+5. Complete the full flow to the confirmation screen.
 
 ---
 

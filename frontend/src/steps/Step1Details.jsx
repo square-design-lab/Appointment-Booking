@@ -92,12 +92,12 @@ export default function Step1Details() {
   } = useBooking();
 
   // Reasons state
-  const [reasons, setReasons]           = useState([]);
+  const [reasons, setReasons]               = useState([]);
   const [reasonsLoading, setReasonsLoading] = useState(false);
-  const [reasonsError, setReasonsError] = useState(null);
+  const [reasonsError, setReasonsError]     = useState(null);
 
   // DOB validation
-  const [dobError, setDobError] = useState(null);
+  const [dobError, setDobError]     = useState(null);
   const [dobTouched, setDobTouched] = useState(false);
 
   // Telehealth state error
@@ -105,6 +105,13 @@ export default function Step1Details() {
 
   // Derived telehealth provider state
   const { hasMN, hasWI } = parseTelehealthLocs(urlParams.telehealthLocs);
+
+  // If telehealthState is already pre-filled from URL params, silently consume it
+  useEffect(() => {
+    if (urlParams.telehealthState && !telehealthState) {
+      setTelehealthState(urlParams.telehealthState);
+    }
+  }, [urlParams.telehealthState]);
 
   // Load reasons when patientType, departmentId, or providerId changes
   const loadReasons = useCallback(() => {
@@ -187,8 +194,8 @@ export default function Step1Details() {
     return null;
   }
 
-  const ageError       = getAgeError();
-  const inPersonError  = getInPersonOnlyError();
+  const ageError      = getAgeError();
+  const inPersonError = getInPersonOnlyError();
 
   // Filter the loaded reasons list by visit type — client-side, no re-fetch
   const TELEHEALTH_KEYWORDS = ['telehealth', 'tele', 'video', 'virtual'];
@@ -202,6 +209,12 @@ export default function Step1Details() {
       return true;
     });
   }, [reasons, visitType]);
+
+  // Show telehealth state question only when visitType=telehealth AND state not already set from URL
+  const showTelehealthStateQuestion =
+    visitType === 'telehealth' &&
+    !inPersonError &&
+    !urlParams.telehealthState;
 
   // Can the patient proceed?
   const canProceed =
@@ -278,8 +291,8 @@ export default function Step1Details() {
           </div>
         )}
 
-        {/* Telehealth state question */}
-        {visitType === 'telehealth' && !inPersonError && (
+        {/* Telehealth state question — only shown when NOT pre-filled from URL */}
+        {showTelehealthStateQuestion && (
           <div style={{ marginTop: 16 }}>
             <div className="vbf-section-label">
               {hasWI
@@ -307,14 +320,17 @@ export default function Step1Details() {
             {thStateError && (
               <div className="vbf-callout vbf-callout--error" style={{ marginTop: 12 }}>
                 <span className="vbf-callout-icon" aria-hidden="true" />
-                <span>
-                  {thStateError}{' '}
-                  <a href="/providers/" style={{ color: 'inherit', fontWeight: 700 }}>
-                    Browse all providers →
-                  </a>
-                </span>
+                <span>{thStateError}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Telehealth state error when state was pre-filled from URL */}
+        {!showTelehealthStateQuestion && thStateError && visitType === 'telehealth' && (
+          <div className="vbf-callout vbf-callout--error" style={{ marginTop: 12 }}>
+            <span className="vbf-callout-icon" aria-hidden="true" />
+            <span>{thStateError}</span>
           </div>
         )}
       </div>
@@ -400,7 +416,7 @@ export default function Step1Details() {
 
       {/* ── Navigation ────────────────────────────────────────────── */}
       <div className="vbf-nav">
-        <a href="https://vantagementalhealth.org/providers/" className="vbf-btn vbf-btn--ghost">
+        <a href="https://booking-frontend-717838047212.us-central1.run.app/" className="vbf-btn vbf-btn--ghost">
           ← Back
         </a>
         <button
