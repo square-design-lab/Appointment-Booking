@@ -81,10 +81,18 @@ function BookingFlow() {
 
 export default function App() {
   const params = new URLSearchParams(window.location.search);
-  const providerId = params.get('providerId');
+  const providerId   = params.get('providerId');
+  const departmentId = params.get('departmentId');
 
+  // No providerId → show the directory
   if (!providerId) {
     return <ProviderDirectory />;
+  }
+
+  // Has providerId but no departmentId → broken/incomplete URL; redirect cleanly
+  if (!departmentId) {
+    window.location.replace('/');
+    return null;
   }
 
   return (

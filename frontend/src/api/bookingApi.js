@@ -32,6 +32,7 @@ export function fetchReasons({ departmentId, providerId, patientType }) {
 export function fetchSlots({ reasonId, providerId, departmentId, startDate, endDate }) {
   return apiFetch('/api/booking/slots', {
     method: 'POST',
+    cache: 'no-store',
     body: JSON.stringify({ reasonId, providerId, departmentId, startDate, endDate }),
   });
 }

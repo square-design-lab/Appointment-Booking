@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useBooking } from '../BookingContext';
-import { fetchReasons } from '../api/bookingApi';
+import { fetchReasons, fetchSlots } from '../api/bookingApi';
 import ReasonCard from '../components/ReasonCard';
 import ErrorScreen from '../components/ErrorScreen';
 
@@ -103,6 +103,12 @@ export default function Step1Details() {
   // Telehealth state error
   const [thStateError, setThStateError] = useState(null);
 
+  // Background slot availability check
+  // 'idle' | 'loading' | 'ok' | 'none'
+  const [slotsCheckStatus, setSlotsCheckStatus] = useState('idle');
+  const [nextPending,      setNextPending]      = useState(false);
+  const slotsCheckIdRef = useRef(0);
+
   // Derived telehealth provider state
   const { hasMN, hasWI } = parseTelehealthLocs(urlParams.telehealthLocs);
 
@@ -155,6 +161,41 @@ export default function Step1Details() {
     );
     setThStateError(err);
   }, [visitType, telehealthState, urlParams.telehealthLocs, urlParams.providerName]);
+
+  // Background slot check — fires whenever reason or visitType changes
+  useEffect(() => {
+    if (!selectedReason || !visitType) {
+      setSlotsCheckStatus('idle');
+      return;
+    }
+    setSlotsCheckStatus('loading');
+    const checkId = ++slotsCheckIdRef.current;
+    fetchSlots({
+      reasonId:     selectedReason.reasonId,
+      providerId:   urlParams.providerId,
+      departmentId: urlParams.departmentId,
+    })
+      .then((data) => {
+        if (slotsCheckIdRef.current !== checkId) return; // stale
+        const hasAny = (data.slots || []).some((day) => (day.times || []).length > 0);
+        setSlotsCheckStatus(hasAny ? 'ok' : 'none');
+      })
+      .catch(() => {
+        if (slotsCheckIdRef.current !== checkId) return;
+        setSlotsCheckStatus('ok'); // fail open — don't block user on API error
+      });
+  }, [selectedReason?.reasonId, visitType, urlParams.providerId, urlParams.departmentId]);
+
+  // If Next was clicked while check was still loading, proceed once check resolves
+  useEffect(() => {
+    if (!nextPending) return;
+    if (slotsCheckStatus === 'ok') {
+      setNextPending(false);
+      setCurrentStep(2);
+    } else if (slotsCheckStatus === 'none') {
+      setNextPending(false); // error message shows via slotsCheckStatus
+    }
+  }, [slotsCheckStatus, nextPending]);
 
   // DOB change handler
   function handleDobChange(e) {
@@ -216,8 +257,8 @@ export default function Step1Details() {
     !inPersonError &&
     !urlParams.telehealthState;
 
-  // Can the patient proceed?
-  const canProceed =
+  // All conditions except slot availability
+  const baseReady =
     !!patientType &&
     !!visitType &&
     (visitType !== 'telehealth' || (!!telehealthState && !thStateError)) &&
@@ -227,9 +268,16 @@ export default function Step1Details() {
     !ageError &&
     !inPersonError;
 
+  // Next button is disabled when base conditions not met OR slots confirmed unavailable
+  const canProceed = baseReady && slotsCheckStatus !== 'none';
+
   function handleNext() {
-    if (!canProceed) return;
-    setCurrentStep(2);
+    if (!baseReady || slotsCheckStatus === 'none') return;
+    if (slotsCheckStatus === 'ok') {
+      setCurrentStep(2);
+    } else if (slotsCheckStatus === 'loading') {
+      setNextPending(true); // will advance automatically when check resolves
+    }
   }
 
   const providerDisplayName = urlParams.providerName || 'your provider';
@@ -414,6 +462,18 @@ export default function Step1Details() {
         )}
       </div>
 
+      {/* ── No-availability message ───────────────────────────────── */}
+      {slotsCheckStatus === 'none' && selectedReason && (
+        <div className="vbf-callout vbf-callout--error" role="alert" style={{ marginBottom: 8 }}>
+          <span className="vbf-callout-icon" aria-hidden="true" />
+          <span>
+            This provider has no available appointments for the selected visit type. Please call{' '}
+            <a href="tel:6512171480" style={{ fontWeight: 700 }}>(651) 217-1480</a> or{' '}
+            <a href="https://booking-frontend-717838047212.us-central1.run.app/">choose a different provider</a>.
+          </span>
+        </div>
+      )}
+
       {/* ── Navigation ────────────────────────────────────────────── */}
       <div className="vbf-nav">
         <a href="https://booking-frontend-717838047212.us-central1.run.app/" className="vbf-btn vbf-btn--ghost">
@@ -422,10 +482,14 @@ export default function Step1Details() {
         <button
           className="vbf-btn vbf-btn--primary"
           onClick={handleNext}
-          disabled={!canProceed}
-          aria-disabled={!canProceed}
+          disabled={!canProceed || nextPending}
+          aria-disabled={!canProceed || nextPending}
+          style={{ display: 'flex', alignItems: 'center', gap: 8 }}
         >
-          Next: Date &amp; Time →
+          {nextPending && (
+            <span className="vbf-spinner" style={{ width: 16, height: 16 }} aria-hidden="true" />
+          )}
+          {nextPending ? 'Checking availability…' : 'Next: Date & Time →'}
         </button>
       </div>
     </div>
