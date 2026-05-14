@@ -1155,6 +1155,32 @@
   transform: translateY(-2px);
 }
 
+.vpd-card-photo-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.vpd-card-photo-link:hover .vpd-card-photo {
+  opacity: 0.88;
+  transition: opacity 0.15s ease;
+}
+
+.vpd-card-photo-link:hover .vpd-card-initials {
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+
+.vpd-no-avail-msg {
+  width: 100%;
+  margin: 0;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--c-text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
 .vpd-card-photo-wrap {
   width: 100%;
   aspect-ratio: 3 / 4;

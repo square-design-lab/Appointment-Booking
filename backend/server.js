@@ -753,6 +753,58 @@ app.post('/api/booking/slots', async (req, res) => {
   }
 });
 
+// ─── POST /api/booking/batch-availability ─────────────────────────────────────
+// Quick check: does each provider have any open slots in the next 90 days?
+// Used by the provider directory to show/hide the Book Appointment button.
+// Results are cached in memory for 5 minutes to reduce Athena API load.
+
+const batchAvailCache = { results: null, expiresAt: 0 };
+
+app.post('/api/booking/batch-availability', async (req, res) => {
+  const { providers } = req.body;
+  if (!Array.isArray(providers) || providers.length === 0) {
+    return res.json({ results: [] });
+  }
+
+  // Serve from cache if still fresh
+  if (batchAvailCache.results && Date.now() < batchAvailCache.expiresAt) {
+    const requested = new Set(providers.map((p) => String(p.providerId)));
+    const cached = batchAvailCache.results.filter((r) => requested.has(String(r.providerId)));
+    return res.json({ results: cached });
+  }
+
+  const today   = todayMMDDYYYY();
+  const endDate = futureDateMMDDYYYY(90);
+
+  const results = await Promise.all(
+    providers.map(async ({ providerId, departmentId }) => {
+      try {
+        const data = await athenaGet(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+          {
+            providerid:   providerId,
+            departmentid: departmentId,
+            startdate:    today,
+            enddate:      endDate,
+            reasonid:     '-1',
+          }
+        );
+        const appts = Array.isArray(data) ? data : (data.appointments || []);
+        return { providerId: String(providerId), hasSlots: appts.length > 0 };
+      } catch {
+        return { providerId: String(providerId), hasSlots: true }; // fail open
+      }
+    })
+  );
+
+  // Cache for 5 minutes
+  batchAvailCache.results   = results;
+  batchAvailCache.expiresAt = Date.now() + 5 * 60 * 1000;
+  console.log(`[batch-availability] checked ${results.length} providers; ${results.filter((r) => r.hasSlots).length} have slots`);
+
+  return res.json({ results });
+});
+
 // ─── POST /api/booking/find-or-create-patient ─────────────────────────────────
 // HIPAA: never log req.body — contains PHI (name, DOB, phone, email).
 //

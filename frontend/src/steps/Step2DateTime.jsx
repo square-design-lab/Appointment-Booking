@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { useBooking } from '../BookingContext';
-import { fetchSlots } from '../api/bookingApi';
+import { fetchSlots, fetchBatchAvailability } from '../api/bookingApi';
 import providerContacts from '../data/provider-contacts.json';
 import TimeSlotGrid from '../components/TimeSlotGrid';
 
@@ -165,6 +165,38 @@ export default function Step2DateTime() {
       .slice(0, 3);
   }, [urlParams.providerId, serviceLabel]);
 
+  // Availability check for similar providers — filter out those with no slots
+  const [similarAvailability, setSimilarAvailability] = useState(null);
+
+  useEffect(() => {
+    if (similarProviders.length === 0) {
+      setSimilarAvailability(new Map());
+      return;
+    }
+    fetchBatchAvailability(
+      similarProviders.map((p) => ({
+        providerId:   String(p.athena_provider_id),
+        departmentId: String(p.departmentId),
+      }))
+    )
+      .then((data) => {
+        const map = new Map();
+        for (const { providerId, hasSlots } of data.results || []) {
+          map.set(String(providerId), hasSlots);
+        }
+        setSimilarAvailability(map);
+      })
+      .catch(() => setSimilarAvailability(new Map())); // fail open — show all
+  }, [similarProviders]);
+
+  // Only show similar providers whose availability is confirmed (or still loading)
+  const visibleSimilarProviders = useMemo(() => {
+    if (!similarAvailability) return similarProviders; // still loading — show all
+    return similarProviders.filter(
+      (p) => similarAvailability.get(String(p.athena_provider_id)) !== false
+    );
+  }, [similarProviders, similarAvailability]);
+
   // Build a redirect URL for a similar provider (reuses current params, swaps provider)
   function similarProviderUrl(provider) {
     const base = { ...urlParams };
@@ -248,11 +280,11 @@ export default function Step2DateTime() {
       </div>
 
       {/* ── Similar providers ──────────────────────────────────────── */}
-      {similarProviders.length > 0 && (
+      {visibleSimilarProviders.length > 0 && (
         <div className="vbf-similar">
           <div className="vbf-divider" />
           {serviceLabel && <div className="vbf-similar-title">Other providers also offering {serviceLabel}</div>}
-          {similarProviders.map((p) => (
+          {visibleSimilarProviders.map((p) => (
             <div key={p.athena_provider_id} className="vbf-similar-card">
               {p.photo ? (
                 <img src={p.photo} alt={p.name} className="vbf-similar-photo" />

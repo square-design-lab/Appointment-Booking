@@ -72,6 +72,13 @@ export function sendAlert(data) {
   });
 }
 
+export function fetchBatchAvailability(providers) {
+  return apiFetch('/api/booking/batch-availability', {
+    method: 'POST',
+    body: JSON.stringify({ providers }),
+  });
+}
+
 export function createPatientCase(data) {
   return apiFetch('/api/booking/create-patient-case', {
     method: 'POST',

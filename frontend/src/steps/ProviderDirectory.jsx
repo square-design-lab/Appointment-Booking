@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import providers from '../data/provider-contacts.json';
 import logoSrc from '../assets/logo.png';
+import { fetchBatchAvailability } from '../api/bookingApi';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -125,27 +126,30 @@ function buildBookingUrl(provider) {
 
 // ── ProviderCard ─────────────────────────────────────────────────────────────
 
-function ProviderCard({ provider }) {
+function ProviderCard({ provider, hasSlots }) {
   const [imgError, setImgError] = useState(false);
   const locationName = DEPT_NAMES[provider.departmentId] || '';
   const tags = (provider.specialties || []).slice(0, 3);
+  const bookingUrl = buildBookingUrl(provider);
 
   return (
     <div className="vpd-card">
-      <div className="vpd-card-photo-wrap">
-        {provider.photo && !imgError ? (
-          <img
-            src={provider.photo}
-            alt={provider.name}
-            className="vpd-card-photo"
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          <div className="vpd-card-initials" aria-hidden="true">
-            {getInitials(provider.name)}
-          </div>
-        )}
-      </div>
+      <a href={bookingUrl} className="vpd-card-photo-link" tabIndex={-1} aria-hidden="true">
+        <div className="vpd-card-photo-wrap">
+          {provider.photo && !imgError ? (
+            <img
+              src={provider.photo}
+              alt={provider.name}
+              className="vpd-card-photo"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="vpd-card-initials" aria-hidden="true">
+              {getInitials(provider.name)}
+            </div>
+          )}
+        </div>
+      </a>
 
       <div className="vpd-card-body">
         <div className="vpd-card-name">{provider.name}</div>
@@ -163,12 +167,16 @@ function ProviderCard({ provider }) {
       </div>
 
       <div className="vpd-card-footer">
-        <a
-          href={buildBookingUrl(provider)}
-          className="vbf-btn vbf-btn--primary vpd-book-btn"
-        >
-          Book Appointment
-        </a>
+        {hasSlots === false ? (
+          <p className="vpd-no-avail-msg">No online availability — call us to schedule</p>
+        ) : (
+          <a
+            href={bookingUrl}
+            className="vbf-btn vbf-btn--primary vpd-book-btn"
+          >
+            Book Appointment
+          </a>
+        )}
       </div>
     </div>
   );
@@ -187,6 +195,25 @@ export default function ProviderDirectory() {
   const [ageFilter,       setAgeFilter]       = useState('');
   const [acceptingNew,    setAcceptingNew]    = useState(false);
   const [search,          setSearch]          = useState('');
+
+  // null = loading, Map<providerId, bool> once resolved
+  const [availability, setAvailability] = useState(null);
+
+  useEffect(() => {
+    const list = providers.map((p) => ({
+      providerId:   String(p.athena_provider_id),
+      departmentId: String(p.departmentId),
+    }));
+    fetchBatchAvailability(list)
+      .then((data) => {
+        const map = new Map();
+        for (const { providerId, hasSlots } of data.results || []) {
+          map.set(String(providerId), hasSlots);
+        }
+        setAvailability(map);
+      })
+      .catch(() => setAvailability(new Map())); // fail open — show all book buttons
+  }, []);
 
   const filtered = useMemo(() => {
     return providers.filter((p) => {
@@ -228,10 +255,17 @@ export default function ProviderDirectory() {
       // Accepting New Patients
       if (acceptingNew && !p.acceptingNew) return false;
 
-      // Search — name, title, or specialties
+      // Search — name, title, specialties, what we treat, treatment approach, or location
       if (search) {
         const q = search.toLowerCase();
-        const haystack = `${p.name} ${p.provider_title} ${(p.specialties || []).join(' ')}`.toLowerCase();
+        const haystack = [
+          p.name,
+          p.provider_title,
+          ...(p.specialties || []),
+          ...(p.whatWeTreat || []),
+          ...(p.treatmentApproach || []),
+          DEPT_NAMES[p.departmentId] || '',
+        ].join(' ').toLowerCase();
         if (!haystack.includes(q)) return false;
       }
 
@@ -288,7 +322,7 @@ export default function ProviderDirectory() {
             <input
               type="search"
               className="vpd-search"
-              placeholder="Search by name or specialty…"
+              placeholder="Search by name, specialty, condition, or location…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               aria-label="Search providers"
@@ -447,7 +481,11 @@ export default function ProviderDirectory() {
         ) : (
           <div className="vpd-grid">
             {filtered.map((p) => (
-              <ProviderCard key={p.athena_provider_id} provider={p} />
+              <ProviderCard
+                key={p.athena_provider_id}
+                provider={p}
+                hasSlots={availability ? availability.get(String(p.athena_provider_id)) : undefined}
+              />
             ))}
           </div>
         )}
