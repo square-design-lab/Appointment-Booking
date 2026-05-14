@@ -530,54 +530,6 @@
     ]
   },
   {
-    "athena_provider_id": "9",
-    "departmentId": "1",
-    "name": "Twilight Florido-Bergad, DNP",
-    "provider_title": "Psychiatric Nurse Practitioner",
-    "credentials": "DNP",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management",
-      "Psychopharmacologic Testing"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Twilight-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Personality Disorders"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ]
-  },
-  {
     "athena_provider_id": "10",
     "departmentId": "5",
     "name": "Claire Garber, DO",
