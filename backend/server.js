@@ -684,6 +684,10 @@ app.post('/api/booking/reasons', async (req, res) => {
 
 // ─── POST /api/booking/slots ──────────────────────────────────────────────────
 // Returns open appointment slots grouped by date.
+// Strategy: try with the specific reasonId first (correct for production where
+// reasons are linked to appointment types). If Athena returns zero slots, retry
+// with reasonid=-1 (returns all open slots — needed for sandbox, and as a
+// safety net for any provider whose reasons aren't fully configured yet).
 app.post('/api/booking/slots', async (req, res) => {
   const { reasonId, providerId, departmentId, startDate, endDate } = req.body;
 
@@ -691,21 +695,36 @@ app.post('/api/booking/slots', async (req, res) => {
     return res.status(400).json({ error: 'Missing providerId or departmentId' });
   }
 
-  const params = {
+  const baseParams = {
     providerid:   providerId,
     departmentid: departmentId,
     startdate:    startDate || todayMMDDYYYY(),
     enddate:      endDate   || futureDateMMDDYYYY(90),
-    reasonid:     reasonId || '-1',
   };
 
   try {
-    const data = await athenaGet(
-      `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
-      params
-    );
+    // Step 1 — specific reason (production path)
+    let appointments = [];
+    if (reasonId && reasonId !== '-1') {
+      const data = await athenaGet(
+        `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+        { ...baseParams, reasonid: reasonId }
+      );
+      appointments = Array.isArray(data) ? data : (data.appointments || []);
+      if (appointments.length > 0) {
+        console.log(`[booking/slots] provider ${providerId}: ${appointments.length} slots via reasonId ${reasonId}`);
+      }
+    }
 
-    const appointments = Array.isArray(data) ? data : (data.appointments || []);
+    // Step 2 — fallback to -1 if specific reason returned nothing
+    if (appointments.length === 0) {
+      const data = await athenaGet(
+        `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+        { ...baseParams, reasonid: '-1' }
+      );
+      appointments = Array.isArray(data) ? data : (data.appointments || []);
+      console.log(`[booking/slots] provider ${providerId}: ${appointments.length} slots via reasonId -1 (fallback)`);
+    }
 
     // Group slots by date
     const byDate = {};
