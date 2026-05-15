@@ -481,19 +481,30 @@ export default function Step1Details() {
       {/* ── Navigation ────────────────────────────────────────────── */}
       <div className="vbf-nav">
         <a href="https://booking-frontend-717838047212.us-central1.run.app/" className="vbf-btn vbf-btn--ghost">
-          ← Back
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4.22,9.28l-4-4A.751.751,0,0,1,.235,4.2L4.22.22A.75.75,0,0,1,5.28,1.281L2.561,4H14.75a.75.75,0,0,1,0,1.5H2.561L5.28,8.22A.75.75,0,1,1,4.22,9.28Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+          </svg>
+          Back
         </a>
         <button
           className="vbf-btn vbf-btn--primary"
           onClick={handleNext}
           disabled={!canProceed || nextPending}
           aria-disabled={!canProceed || nextPending}
-          style={{ display: 'flex', alignItems: 'center', gap: 8 }}
         >
-          {nextPending && (
-            <span className="vbf-spinner" style={{ width: 16, height: 16 }} aria-hidden="true" />
+          {nextPending ? (
+            <>
+              <span className="vbf-spinner" style={{ width: 16, height: 16 }} aria-hidden="true" />
+              Checking availability…
+            </>
+          ) : (
+            <>
+              Next: Date &amp; Time
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M10.22,9.28a.75.75,0,0,1,0-1.06l2.72-2.72H.75A.75.75,0,0,1,.75,4H12.938L10.22,1.281A.75.75,0,1,1,11.281.22l4,4a.749.749,0,0,1,0,1.06l-4,4a.75.75,0,0,1-1.061,0Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+              </svg>
+            </>
           )}
-          {nextPending ? 'Checking availability…' : 'Next: Date & Time →'}
         </button>
       </div>
     </div>
