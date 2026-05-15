@@ -76,10 +76,29 @@ async function getAccessToken() {
 }
 
 async function athenaGet(path, params = {}) {
-  const token = await getAccessToken();
-  const response = await axios.get(`${process.env.ATHENA_BASE_URL}${path}`, {
+  const token   = await getAccessToken();
+  const baseUrl = `${process.env.ATHENA_BASE_URL}${path}`;
+
+  // Athena requires date params (MM/DD/YYYY) with literal slashes — never URL-encode them.
+  // All other params are safely encoded. This matches vantage-api behaviour.
+  const DATE_KEYS = ['startdate', 'enddate', 'appointmentdate'];
+  const rawParts  = [];
+  const safeParts = [];
+
+  Object.entries(params).forEach(([k, v]) => {
+    if (v === undefined || v === null || v === '') return;
+    if (DATE_KEYS.includes(k.toLowerCase())) {
+      rawParts.push(`${k}=${v}`);
+    } else {
+      safeParts.push(`${encodeURIComponent(k)}=${encodeURIComponent(v)}`);
+    }
+  });
+
+  const allParts = [...safeParts, ...rawParts];
+  const fullUrl  = allParts.length > 0 ? `${baseUrl}?${allParts.join('&')}` : baseUrl;
+
+  const response = await axios.get(fullUrl, {
     headers: { Authorization: `Bearer ${token}` },
-    params,
   });
   return response.data;
 }

@@ -20,7 +20,16 @@ export default function MobileSummary() {
 
   return (
     <div className="vbf-mobile-summary" aria-hidden="true">
-      <div className="vbf-mobile-summary-provider">{name}</div>
+      <div className="vbf-mobile-summary-left">
+        {providerInfo?.photo && (
+          <img
+            src={providerInfo.photo}
+            alt=""
+            className="vbf-mobile-summary-photo"
+          />
+        )}
+        <div className="vbf-mobile-summary-provider">{name}</div>
+      </div>
       {(datePart || timePart) && (
         <div className="vbf-mobile-summary-dt">
           {[datePart, timePart].filter(Boolean).join(' · ')}

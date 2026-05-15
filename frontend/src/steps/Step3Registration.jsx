@@ -111,8 +111,19 @@ export default function Step3Registration() {
   }
 
   // ── Section B: Insurance ──────────────────────────────────────────────────
-  const [hasInsurance,   setHasInsurance]   = useState(patientData.hasInsurance   || false);
-  const [insuranceName,  setInsuranceName]  = useState(patientData.insuranceName  || '');
+  // Pre-fill from urlParams.insurance if the user came via WordPress booking modal.
+  // 'self-pay' means no insurance; any real plan slug means yes.
+  const [hasInsurance, setHasInsurance] = useState(() => {
+    if (patientData.hasInsurance !== undefined) return patientData.hasInsurance;
+    const ins = urlParams.insurance || '';
+    return !!ins && ins !== 'self-pay';
+  });
+  const [insuranceName, setInsuranceName] = useState(() => {
+    if (patientData.insuranceName !== undefined) return patientData.insuranceName;
+    const ins = urlParams.insurance || '';
+    if (!ins || ins === 'self-pay') return '';
+    return INSURANCE_OPTIONS.some((o) => o.value === ins) ? ins : '';
+  });
   const [groupId,        setGroupId]        = useState(patientData.groupId        || '');
   const [memberId,       setMemberId]       = useState(patientData.memberId       || '');
 
@@ -484,7 +495,7 @@ export default function Step3Registration() {
       </div>
 
       {/* SMS consent */}
-      <div style={{ marginTop: 12 }}>
+      <div style={{ marginTop: 0 }}>
         <label className="vbf-checkbox-wrap">
           <input
             type="checkbox"
@@ -521,7 +532,7 @@ export default function Step3Registration() {
       })}
 
       {/* Email consent */}
-      <div style={{ marginTop: 12 }}>
+      <div style={{ marginTop: 0 }}>
         <label className="vbf-checkbox-wrap">
           <input
             type="checkbox"
@@ -654,7 +665,7 @@ export default function Step3Registration() {
 
           {/* Group/Member only shown for plans that use them */}
           {showGroupMember && (
-            <div className="vbf-fields-row" style={{ marginTop: 0 }}>
+            <div className="vbf-fields-row" style={{ marginTop: 16 }}>
               {inp('groupId', groupId, setGroupId, {
                 label: 'Group ID',
                 placeholder: 'Group number from card',
@@ -731,7 +742,10 @@ export default function Step3Registration() {
           onClick={() => setCurrentStep(2)}
           disabled={submitting}
         >
-          ← Back
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4.22,9.28l-4-4A.751.751,0,0,1,.235,4.2L4.22.22A.75.75,0,0,1,5.28,1.281L2.561,4H14.75a.75.75,0,0,1,0,1.5H2.561L5.28,8.22A.75.75,0,1,1,4.22,9.28Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+          </svg>
+          Back
         </button>
         <button
           className="vbf-btn vbf-btn--primary"
@@ -745,7 +759,12 @@ export default function Step3Registration() {
               Booking…
             </>
           ) : (
-            'Book Appointment'
+            <>
+              Book Appointment
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M10.22,9.28a.75.75,0,0,1,0-1.06l2.72-2.72H.75A.75.75,0,0,1,.75,4H12.938L10.22,1.281A.75.75,0,1,1,11.281.22l4,4a.749.749,0,0,1,0,1.06l-4,4a.75.75,0,0,1-1.061,0Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+              </svg>
+            </>
           )}
         </button>
       </div>

@@ -3,6 +3,9 @@ import providerContacts from './data/provider-contacts.json';
 
 const BookingContext = createContext(null);
 
+// Athena practice ID — used by both URL parsing and URL generation
+export const ATHENA_PRACTICE_ID = '31533';
+
 export const SERVICE_LABELS = {
   psychiatry:           'Psychiatric Medication Management',
   'therapy-individual': 'Mental Health Therapy',
@@ -31,13 +34,30 @@ export const LOCATION_INFO = {
   },
 };
 
+// Athena portal uses composite IDs like "31533-1" ({practiceId}-{athenaId}).
+// Strip the practice-ID prefix so we get just the plain Athena ID.
+function extractAthenaId(compositeId) {
+  if (!compositeId) return '';
+  const dash = compositeId.indexOf('-');
+  return dash !== -1 ? compositeId.slice(dash + 1) : compositeId;
+}
+
 function parseUrlParams() {
   const p = new URLSearchParams(window.location.search);
+
+  const locationId     = p.get('locationId')     || '';
+  const practitionerId = p.get('practitionerId') || '';
+
+  // Prefer explicit departmentId/providerId; fall back to extracting from
+  // locationId/practitionerId (WordPress JetEngine sends the composite form).
+  const departmentId = p.get('departmentId') || extractAthenaId(locationId);
+  const providerId   = p.get('providerId')   || extractAthenaId(practitionerId);
+
   return {
-    locationId:      p.get('locationId')      || '',
-    practitionerId:  p.get('practitionerId')  || '',
-    departmentId:    p.get('departmentId')    || '',
-    providerId:      p.get('providerId')      || '',
+    locationId,
+    practitionerId,
+    departmentId,
+    providerId,
     dob:             p.get('dob')             || '',
     patientType:     p.get('patientType')     || '',
     service:         p.get('service')         || '',
@@ -57,6 +77,12 @@ export function BookingProvider({ children }) {
 
   const [providerInfo, setProviderInfo] = useState(null);
   const providerLoading = false;
+
+  // Provider-specific params derived from provider-contacts.json
+  // (not from URL — minAge/maxAge/telehealthLocs are no longer in the URL)
+  const [providerMinAge,        setProviderMinAge]        = useState(0);
+  const [providerMaxAge,        setProviderMaxAge]        = useState(100);
+  const [providerTelehealthLocs,setProviderTelehealthLocs]= useState('');
 
   // Step 1
   const [patientType, setPatientType]         = useState(urlParams.patientType || '');
@@ -89,6 +115,10 @@ export function BookingProvider({ children }) {
         specialties: found.specialties || [],
         specialty:   found.specialty || '',
       });
+      // Derive provider-specific params from JSON — these are no longer in the URL
+      setProviderMinAge(found.minAge ?? 0);
+      setProviderMaxAge(found.maxAge ?? 100);
+      setProviderTelehealthLocs(found.telehealthLocs || '');
     }
   }, [urlParams.providerId]);
 
@@ -101,6 +131,9 @@ export function BookingProvider({ children }) {
     setCurrentStep,
     providerInfo,
     providerLoading,
+    providerMinAge,
+    providerMaxAge,
+    providerTelehealthLocs,
     locationInfo,
     serviceLabel,
     patientType,  setPatientType,

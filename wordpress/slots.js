@@ -514,6 +514,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
 
+      // ── Collect all redirect params NOW, before closeModal() resets the form ──
+      var bookingData = {
+        locationId:      locationId,
+        practitionerId:  practitionerId || locationId,
+        dob:             dob,
+        patientType:     patientType,
+        service:         service,
+        visitType:       visitType,
+        telehealthState: telehealthState,
+        insurance:       insurance,
+      };
+
       // ── Insurance soft warning ─────────────────────────
       if (!checkInsuranceMatch(insurance, insurancesRaw)) {
         showMsg(
@@ -523,44 +535,28 @@ document.addEventListener('DOMContentLoaded', function () {
         );
         addContinueBtn(function () {
           closeModal();
-          redirect(locationId, practitionerId);
+          redirect(bookingData);
         });
         return;
       }
 
       closeModal();
-      redirect(locationId, practitionerId);
+      redirect(bookingData);
     });
   }
 
   // ── Redirect ──────────────────────────────────────────
-  function redirect(locationId, practitionerId) {
+  // Receives a pre-captured data object — never re-reads from the DOM
+  // (closeModal resets the form before this runs, so DOM reads would be empty).
+  function redirect(data) {
     var bookingPage = 'https://booking-frontend-717838047212.us-central1.run.app/';
-    var form   = document.getElementById('vantage-booking-form');
-    var getVal = function (name) {
-      var el = form ? form.querySelector('[name="' + name + '"]') : null;
-      return el ? (el.value || '') : '';
-    };
-    var getChecked = function (name) {
-      var el = form ? form.querySelector('[name="' + name + '"]:checked') : null;
-      return el ? el.value : '';
-    };
-    var params = new URLSearchParams({
-      locationId:      locationId     || '',
-      practitionerId:  practitionerId || locationId || '',
-      departmentId:    getVal('department_id'),
-      providerId:      getVal('provider_id'),
-      dob:             getVal('dob'),
-      patientType:     getChecked('patient_type'),
-      service:         getVal('service_type'),
-      visitType:       getChecked('visit_type'),
-      telehealthState: getChecked('telehealth_state'),
-      insurance:       getVal('insurance'),
-      providerName:    getVal('provider_name'),
-      minAge:          getVal('provider_min_age'),
-      maxAge:          getVal('provider_max_age'),
-      telehealthLocs:  getVal('provider_telehealth_locs'),
-    });
+    var params = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(data).filter(function (pair) {
+          return pair[1] !== '' && pair[1] != null;
+        })
+      )
+    );
     window.location.href = bookingPage + '?' + params.toString();
   }
 

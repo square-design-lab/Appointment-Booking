@@ -3,7 +3,7 @@
     "athena_provider_id": "28",
     "departmentId": "5",
     "name": "Suzanne Aoun, MD",
-    "provider_title": "Psychiatrist",
+    "provider_title": "Child & Adolescent Psychiatrist",
     "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
@@ -15,7 +15,7 @@
     "acceptingNew": true,
     "minAge": 5,
     "maxAge": 17,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -49,7 +49,7 @@
     "athena_provider_id": "8",
     "departmentId": "1",
     "name": "Emily Campbell, NP",
-    "provider_title": "Psychiatric Nurse Practitioner",
+    "provider_title": "Adult Psychiatric Medication Management",
     "credentials": "DNP",
     "specialty": "Psychiatry",
     "specialties": [
@@ -62,7 +62,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 64,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -112,7 +112,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 64,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -158,7 +158,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 64,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -205,7 +205,7 @@
     "acceptingNew": false,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -241,7 +241,7 @@
   },
   {
     "athena_provider_id": "47",
-    "departmentId": "1",
+    "departmentId": "5",
     "name": "Nora Davis, LPCC, LADC",
     "provider_title": "Individual Therapist",
     "credentials": "LPCC, LADC",
@@ -253,7 +253,7 @@
     "acceptingNew": true,
     "minAge": 0,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -277,7 +277,7 @@
   },
   {
     "athena_provider_id": "26",
-    "departmentId": "1",
+    "departmentId": "8",
     "name": "Sabrina Eller, LPCC",
     "provider_title": "Individual Therapist",
     "credentials": "LPCC",
@@ -291,7 +291,7 @@
     "acceptingNew": false,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -344,7 +344,7 @@
     "acceptingNew": true,
     "minAge": 17,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -393,7 +393,7 @@
     "acceptingNew": false,
     "minAge": 12,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn,telehealth - wi",
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -446,7 +446,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -495,7 +495,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 64,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -533,7 +533,7 @@
     "athena_provider_id": "10",
     "departmentId": "5",
     "name": "Claire Garber, DO",
-    "provider_title": "Psychiatrist",
+    "provider_title": "Child & Adolescent Psychiatrist",
     "credentials": "DO",
     "specialty": "Psychiatry",
     "specialties": [
@@ -547,7 +547,7 @@
     "acceptingNew": true,
     "minAge": 5,
     "maxAge": 17,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -582,7 +582,7 @@
     "athena_provider_id": "1",
     "departmentId": "1",
     "name": "Justin Gerstner, MD",
-    "provider_title": "Psychiatrist",
+    "provider_title": "Child, Adolescent & Adult Psychiatrist",
     "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
@@ -597,7 +597,7 @@
     "acceptingNew": true,
     "minAge": 5,
     "maxAge": 64,
-    "telehealthLocs": "telehealth - mn,telehealth - wi",
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -645,7 +645,7 @@
     "acceptingNew": false,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -681,7 +681,7 @@
     "athena_provider_id": "27",
     "departmentId": "5",
     "name": "Krystle Holliday, MA",
-    "provider_title": "Individual Therapist",
+    "provider_title": "Child and Parent Therapist",
     "credentials": "MA",
     "specialty": "Therapy",
     "specialties": [
@@ -695,7 +695,7 @@
     "acceptingNew": true,
     "minAge": 0,
     "maxAge": 12,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -738,7 +738,7 @@
     "acceptingNew": false,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -774,7 +774,7 @@
     "athena_provider_id": "18",
     "departmentId": "8",
     "name": "Anna King Laubach, LICSW",
-    "provider_title": "Individual and Couples Therapist",
+    "provider_title": "Individual Therapist",
     "credentials": "LICSW",
     "specialty": "Therapy",
     "specialties": [
@@ -789,7 +789,7 @@
     "acceptingNew": true,
     "minAge": 10,
     "maxAge": 60,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -824,7 +824,7 @@
     "athena_provider_id": "39",
     "departmentId": "8",
     "name": "Ally Kuye, PMHNP",
-    "provider_title": "Psychiatric Nurse Practitioner",
+    "provider_title": "Child & Adolescent Nurse Practitioner",
     "credentials": "PMHNP",
     "specialty": "Psychiatry",
     "specialties": [
@@ -836,7 +836,7 @@
     "acceptingNew": true,
     "minAge": 3,
     "maxAge": 20,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -884,7 +884,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -931,7 +931,7 @@
     "acceptingNew": true,
     "minAge": 5,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -973,7 +973,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1004,7 +1004,7 @@
     "athena_provider_id": "13",
     "departmentId": "1",
     "name": "Ann Monson Slagle, PA-C",
-    "provider_title": "Psychiatric Physician Assistant",
+    "provider_title": "Adult Psychiatric Medication Management",
     "credentials": "PA-C",
     "specialty": "Psychiatry",
     "specialties": [
@@ -1016,7 +1016,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1048,7 +1048,7 @@
   },
   {
     "athena_provider_id": "35",
-    "departmentId": "1",
+    "departmentId": "5",
     "name": "Lisa Morgel Cryns, LMFT",
     "provider_title": "Individual Therapist",
     "credentials": "LMFT",
@@ -1062,7 +1062,7 @@
     "acceptingNew": true,
     "minAge": 13,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1106,7 +1106,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1137,7 +1137,7 @@
     "athena_provider_id": "7",
     "departmentId": "1",
     "name": "Lauren Nievinski, PA-C",
-    "provider_title": "Psychiatric Physician Assistant",
+    "provider_title": "Adult Psychiatric Medication Management",
     "credentials": "PA-C",
     "specialty": "Psychiatry",
     "specialties": [
@@ -1149,7 +1149,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1183,7 +1183,7 @@
     "athena_provider_id": "15",
     "departmentId": "1",
     "name": "Lola Oluwa-Okougbo, PMHNP",
-    "provider_title": "Psychiatric Nurse Practitioner",
+    "provider_title": "Psychiatric Medication Management",
     "credentials": "PMHNP",
     "specialty": "Psychiatry",
     "specialties": [
@@ -1195,7 +1195,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1239,7 +1239,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1270,7 +1270,7 @@
     "athena_provider_id": "11",
     "departmentId": "8",
     "name": "Sara Polley, MD",
-    "provider_title": "Psychiatrist",
+    "provider_title": "Child, Adolescent, Adult & Addiction Psychiatrist",
     "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
@@ -1282,7 +1282,7 @@
     "acceptingNew": true,
     "minAge": 5,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn,telehealth - wi",
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1332,7 +1332,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1363,7 +1363,7 @@
     "athena_provider_id": "14",
     "departmentId": "5",
     "name": "Julie Sabin, LPCC",
-    "provider_title": "Individual Therapist",
+    "provider_title": "Child Therapist",
     "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
@@ -1377,7 +1377,7 @@
     "acceptingNew": true,
     "minAge": 3,
     "maxAge": 17,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1427,7 +1427,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1472,7 +1472,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1520,7 +1520,7 @@
     "acceptingNew": true,
     "minAge": 14,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn,telehealth - wi",
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1566,7 +1566,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1596,7 +1596,7 @@
     "athena_provider_id": "31",
     "departmentId": "8",
     "name": "Amanda Windyk, LICSW",
-    "provider_title": "Individual and Couples Therapist",
+    "provider_title": "Individual, Couples, and Family Therapist",
     "credentials": "LICSW",
     "specialty": "Therapy",
     "specialties": [
@@ -1610,7 +1610,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1645,7 +1645,7 @@
   },
   {
     "athena_provider_id": "17",
-    "departmentId": "1",
+    "departmentId": "5",
     "name": "Karla Wise, LPCC",
     "provider_title": "Individual Therapist",
     "credentials": "LPCC",
@@ -1659,7 +1659,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn,telehealth - wi",
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1703,7 +1703,7 @@
     "acceptingNew": true,
     "minAge": 18,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1733,7 +1733,7 @@
   },
   {
     "athena_provider_id": "46",
-    "departmentId": "1",
+    "departmentId": "8",
     "name": "Gina Ashley, LPCC",
     "provider_title": "Individual Therapist",
     "credentials": "LPCC",
@@ -1747,7 +1747,7 @@
     "acceptingNew": true,
     "minAge": 0,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",
@@ -1785,7 +1785,7 @@
     "acceptingNew": true,
     "minAge": 0,
     "maxAge": 100,
-    "telehealthLocs": "telehealth - mn",
+    "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
       "Americas PPO",

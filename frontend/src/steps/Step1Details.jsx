@@ -83,6 +83,10 @@ const IN_PERSON_ONLY = ['tms', 'psych-testing'];
 export default function Step1Details() {
   const {
     urlParams,
+    providerInfo,
+    providerMinAge,
+    providerMaxAge,
+    providerTelehealthLocs,
     setCurrentStep,
     patientType,    setPatientType,
     visitType,      setVisitType,
@@ -109,8 +113,8 @@ export default function Step1Details() {
   const [nextPending,      setNextPending]      = useState(false);
   const slotsCheckIdRef = useRef(0);
 
-  // Derived telehealth provider state
-  const { hasMN, hasWI } = parseTelehealthLocs(urlParams.telehealthLocs);
+  // Derived telehealth provider state (from provider-contacts.json via context)
+  const { hasMN, hasWI } = parseTelehealthLocs(providerTelehealthLocs);
 
   // If telehealthState is already pre-filled from URL params, silently consume it
   useEffect(() => {
@@ -156,11 +160,11 @@ export default function Step1Details() {
     }
     const err = getTelehealthStateError(
       telehealthState,
-      urlParams.telehealthLocs,
-      urlParams.providerName || ''
+      providerTelehealthLocs,
+      providerInfo?.name || ''
     );
     setThStateError(err);
-  }, [visitType, telehealthState, urlParams.telehealthLocs, urlParams.providerName]);
+  }, [visitType, telehealthState, providerTelehealthLocs, providerInfo?.name]);
 
   // Background slot check — fires whenever reason or visitType changes
   useEffect(() => {
@@ -216,8 +220,8 @@ export default function Step1Details() {
     const parts = dob.split('-');
     if (parts.length !== 3 || parts[0].length !== 4) return null;
     const age = calculateAge(dob);
-    const minAge = parseInt(urlParams.minAge || '0', 10);
-    const maxAge = parseInt(urlParams.maxAge || '100', 10);
+    const minAge = providerMinAge;
+    const maxAge = providerMaxAge;
     if (age < minAge || age > maxAge) {
       const maxDisplay = maxAge >= 100 ? '100+' : String(maxAge);
       return `This provider sees patients aged ${minAge}–${maxDisplay}. Based on your date of birth you are ${age} years old, which is outside this range. Please call (651) 217-1480 for help finding the right provider.`;
@@ -280,7 +284,7 @@ export default function Step1Details() {
     }
   }
 
-  const providerDisplayName = urlParams.providerName || 'your provider';
+  const providerDisplayName = providerInfo?.name || 'your provider';
 
   return (
     <div className="vbf-card">
@@ -327,7 +331,7 @@ export default function Step1Details() {
             checked={visitType === 'telehealth'} onChange={() => { setVisitType('telehealth'); setSelectedReason(null); }}
           />
           <label htmlFor="vt-telehealth" className={visitType === 'telehealth' ? 'vbf-checked' : ''}>
-            Telehealth / Video Visit
+            Telehealth / Virtual
           </label>
         </div>
 

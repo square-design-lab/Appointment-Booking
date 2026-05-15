@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import providers from '../data/provider-contacts.json';
 import logoSrc from '../assets/logo.png';
 import { fetchBatchAvailability } from '../api/bookingApi';
+import { ATHENA_PRACTICE_ID } from '../BookingContext';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -113,49 +114,60 @@ function getInitials(name) {
 function buildBookingUrl(provider) {
   const service = SPECIALTY_TO_SERVICE[provider.specialties[0]] || '';
   const params = new URLSearchParams({
-    providerId:     provider.athena_provider_id,
-    providerName:   provider.name,
-    departmentId:   provider.departmentId,
+    locationId:     `${ATHENA_PRACTICE_ID}-${provider.departmentId}`,
+    practitionerId: `${ATHENA_PRACTICE_ID}-${provider.athena_provider_id}`,
     service,
-    telehealthLocs: provider.telehealthLocs || '',
-    minAge:         provider.minAge != null ? String(provider.minAge) : '0',
-    maxAge:         provider.maxAge != null ? String(provider.maxAge) : '100',
   });
   return BASE_URL + '?' + params.toString();
 }
 
 // ── ProviderCard ─────────────────────────────────────────────────────────────
 
-function ProviderCard({ provider, hasSlots }) {
+function ProviderCard({ provider, hasSlots, availabilityLoading }) {
   const [imgError, setImgError] = useState(false);
   const locationName = DEPT_NAMES[provider.departmentId] || '';
+  const hasTelehealth = !!(provider.telehealthLocs || '').trim();
+  const locationDisplay = locationName
+    ? hasTelehealth ? `${locationName}, Telehealth` : locationName
+    : hasTelehealth ? 'Telehealth' : '';
   const tags = (provider.specialties || []).slice(0, 3);
   const bookingUrl = buildBookingUrl(provider);
 
+  // canBook = we've confirmed slots exist; don't link while still loading or if none
+  const canBook = !availabilityLoading && hasSlots !== false;
+
+  const photoInner = (
+    <div className="vpd-card-photo-wrap">
+      {provider.photo && !imgError ? (
+        <img
+          src={provider.photo}
+          alt={provider.name}
+          className="vpd-card-photo"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className="vpd-card-initials" aria-hidden="true">
+          {getInitials(provider.name)}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="vpd-card">
-      <a href={bookingUrl} className="vpd-card-photo-link" tabIndex={-1} aria-hidden="true">
-        <div className="vpd-card-photo-wrap">
-          {provider.photo && !imgError ? (
-            <img
-              src={provider.photo}
-              alt={provider.name}
-              className="vpd-card-photo"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="vpd-card-initials" aria-hidden="true">
-              {getInitials(provider.name)}
-            </div>
-          )}
-        </div>
-      </a>
+      {canBook ? (
+        <a href={bookingUrl} className="vpd-card-photo-link" tabIndex={-1} aria-hidden="true">
+          {photoInner}
+        </a>
+      ) : (
+        photoInner
+      )}
 
       <div className="vpd-card-body">
         <div className="vpd-card-name">{provider.name}</div>
         <div className="vpd-card-title">{provider.provider_title}</div>
-        {locationName && (
-          <div className="vpd-card-location">{locationName}</div>
+        {locationDisplay && (
+          <div className="vpd-card-location">{locationDisplay}</div>
         )}
         {tags.length > 0 && (
           <div className="vpd-card-tags">
@@ -167,7 +179,9 @@ function ProviderCard({ provider, hasSlots }) {
       </div>
 
       <div className="vpd-card-footer">
-        {hasSlots === false ? (
+        {availabilityLoading ? (
+          <span className="vpd-avail-loading">Checking availability…</span>
+        ) : hasSlots === false ? (
           <p className="vpd-no-avail-msg">No online availability — call us to schedule</p>
         ) : (
           <a
@@ -199,6 +213,15 @@ export default function ProviderDirectory() {
   // null = loading, Map<providerId, bool> once resolved
   const [availability, setAvailability] = useState(null);
 
+  // Responsive search placeholder
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
   useEffect(() => {
     const list = providers.map((p) => ({
       providerId:   String(p.athena_provider_id),
@@ -222,7 +245,7 @@ export default function ProviderDirectory() {
 
       // Location — "telehealth" is a virtual location option
       if (locationFilter === 'telehealth') {
-        if (!(p.telehealthLocs || '').includes('telehealth - mn')) return false;
+        if (!(p.telehealthLocs || '').toLowerCase().includes('telehealth - mn')) return false;
       } else if (locationFilter) {
         if (p.departmentId !== locationFilter) return false;
       }
@@ -319,18 +342,48 @@ export default function ProviderDirectory() {
         <div className="vpd-filters">
           {/* Search */}
           <div className="vpd-search-row">
+            {isMobile && (
+              <p className="vpd-search-mobile-label">
+                Find your Provider by searching for a Condition, Service, Treatment, Provider Name, or Practice Location.
+              </p>
+            )}
             <input
               type="search"
               className="vpd-search"
-              placeholder="Search by name, specialty, condition, or location…"
+              placeholder={isMobile ? 'Search..' : 'Enter a Condition, Service, Treatment, Provider Name, or Practice Location'}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               aria-label="Search providers"
             />
           </div>
 
-          {/* Row 1: Service | Location | Insurance */}
+          {/* Row 1: Accepting New | Patient Age | Service */}
           <div className="vpd-filter-row">
+            <label className="vpd-telehealth-label">
+              <input
+                type="checkbox"
+                className="vpd-telehealth-check"
+                checked={acceptingNew}
+                onChange={(e) => setAcceptingNew(e.target.checked)}
+              />
+              <span>Accepting New Patients</span>
+            </label>
+
+            <div className="vpd-age-wrap">
+              <label className="vpd-age-label" htmlFor="vpd-age-input">Patients age</label>
+              <input
+                id="vpd-age-input"
+                type="number"
+                className="vpd-age-input"
+                placeholder="Patients age in years"
+                min="0"
+                max="120"
+                value={ageFilter}
+                onChange={(e) => setAgeFilter(e.target.value)}
+                aria-label="Filter by patient age"
+              />
+            </div>
+
             <select
               className="vpd-select"
               value={serviceFilter}
@@ -342,7 +395,10 @@ export default function ProviderDirectory() {
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
+          </div>
 
+          {/* Row 2: Location | Insurance | What We Treat */}
+          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={locationFilter}
@@ -367,10 +423,7 @@ export default function ProviderDirectory() {
                 <option key={ins} value={ins}>{ins}</option>
               ))}
             </select>
-          </div>
 
-          {/* Row 2: What We Treat | Treatment Approach | Accepting New checkbox */}
-          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={treatFilter}
@@ -382,7 +435,10 @@ export default function ProviderDirectory() {
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
+          </div>
 
+          {/* Row 3: Treatment Approach | Gender | Language */}
+          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={approachFilter}
@@ -394,34 +450,6 @@ export default function ProviderDirectory() {
                 <option key={a} value={a}>{a}</option>
               ))}
             </select>
-
-            <label className="vpd-telehealth-label">
-              <input
-                type="checkbox"
-                className="vpd-telehealth-check"
-                checked={acceptingNew}
-                onChange={(e) => setAcceptingNew(e.target.checked)}
-              />
-              <span>Accepting New Patients</span>
-            </label>
-          </div>
-
-          {/* Row 3: Patient Age | Gender | Language */}
-          <div className="vpd-filter-row">
-            <div className="vpd-age-wrap">
-              <label className="vpd-age-label" htmlFor="vpd-age-input">Patients age</label>
-              <input
-                id="vpd-age-input"
-                type="number"
-                className="vpd-age-input"
-                placeholder="age in years"
-                min="0"
-                max="120"
-                value={ageFilter}
-                onChange={(e) => setAgeFilter(e.target.value)}
-                aria-label="Filter by patient age"
-              />
-            </div>
 
             <select
               className="vpd-select"
@@ -484,7 +512,8 @@ export default function ProviderDirectory() {
               <ProviderCard
                 key={p.athena_provider_id}
                 provider={p}
-                hasSlots={availability ? availability.get(String(p.athena_provider_id)) : undefined}
+                availabilityLoading={availability === null}
+                hasSlots={availability?.get(String(p.athena_provider_id))}
               />
             ))}
           </div>

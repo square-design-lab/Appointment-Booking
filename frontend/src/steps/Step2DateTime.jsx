@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { useBooking } from '../BookingContext';
+import { useBooking, ATHENA_PRACTICE_ID } from '../BookingContext';
 import { fetchSlots, fetchBatchAvailability } from '../api/bookingApi';
 import providerContacts from '../data/provider-contacts.json';
 import TimeSlotGrid from '../components/TimeSlotGrid';
@@ -197,13 +197,28 @@ export default function Step2DateTime() {
     );
   }, [similarProviders, similarAvailability]);
 
-  // Build a redirect URL for a similar provider (reuses current params, swaps provider)
+  // Build a redirect URL for a similar provider.
+  // Generates the same format WordPress produces:
+  //   locationId/practitionerId  → composite (practiceId-athenaId)
+  //   departmentId/providerId    → plain Athena IDs
+  // Provider-specific params (minAge, maxAge, telehealthLocs) come from the
+  // target provider's own data; session params (dob, service, etc.) are kept.
   function similarProviderUrl(provider) {
-    const base = { ...urlParams };
-    base.providerId   = String(provider.athena_provider_id);
-    base.providerName = provider.name;
+    const provId = String(provider.athena_provider_id);
+    const deptId = String(provider.departmentId);
     const qs = new URLSearchParams(
-      Object.fromEntries(Object.entries(base).filter(([, v]) => v !== ''))
+      Object.fromEntries(
+        Object.entries({
+          locationId:      `${ATHENA_PRACTICE_ID}-${deptId}`,
+          practitionerId:  `${ATHENA_PRACTICE_ID}-${provId}`,
+          dob:             urlParams.dob             || '',
+          patientType:     urlParams.patientType     || '',
+          service:         urlParams.service         || '',
+          visitType:       urlParams.visitType       || '',
+          telehealthState: urlParams.telehealthState || '',
+          insurance:       urlParams.insurance       || '',
+        }).filter(([, v]) => v !== '')
+      )
     );
     return `/book/?${qs.toString()}`;
   }
@@ -314,7 +329,10 @@ export default function Step2DateTime() {
           className="vbf-btn vbf-btn--ghost"
           onClick={() => setCurrentStep(1)}
         >
-          ← Back
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4.22,9.28l-4-4A.751.751,0,0,1,.235,4.2L4.22.22A.75.75,0,0,1,5.28,1.281L2.561,4H14.75a.75.75,0,0,1,0,1.5H2.561L5.28,8.22A.75.75,0,1,1,4.22,9.28Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+          </svg>
+          Back
         </button>
         <button
           className="vbf-btn vbf-btn--primary"
@@ -322,7 +340,10 @@ export default function Step2DateTime() {
           disabled={!canProceed}
           aria-disabled={!canProceed}
         >
-          Next: Registration →
+          Next: Registration
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.22,9.28a.75.75,0,0,1,0-1.06l2.72-2.72H.75A.75.75,0,0,1,.75,4H12.938L10.22,1.281A.75.75,0,1,1,11.281.22l4,4a.749.749,0,0,1,0,1.06l-4,4a.75.75,0,0,1-1.061,0Z" transform="translate(4.25 7.25)" fill="currentColor"/>
+          </svg>
         </button>
       </div>
     </div>
