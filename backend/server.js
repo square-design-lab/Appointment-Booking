@@ -892,7 +892,7 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
     if (city)          createBody.city           = city;
     if (state)         createBody.state          = state;
     if (legalSex)      createBody.sex            = legalSex;
-    if (preferredName) createBody.firstnameused  = preferredName;
+    if (preferredName) createBody.preferredname  = preferredName;
 
     const created = await athenaPost(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/patients`,
@@ -958,11 +958,20 @@ app.post('/api/booking/book', async (req, res) => {
     const errBody = err.response?.data;
     const errMsg  = (typeof errBody === 'string' ? errBody : errBody?.error || '').toLowerCase();
 
-    if (errMsg.includes('slot') || errMsg.includes('already') || status === 409) {
+    if (
+      status === 409 ||
+      errMsg.includes('slot') ||
+      errMsg.includes('already') ||
+      errMsg.includes('not open') ||
+      errMsg.includes('not available') ||
+      errMsg.includes('unavailable') ||
+      errMsg.includes('cannot be booked') ||
+      errMsg.includes('already scheduled')
+    ) {
       return res.json({ errorType: 'slot_taken' });
     }
 
-    console.error('[booking/book] Athena error:', status, err.message);
+    console.error('[booking/book] Athena error:', status, err.message, JSON.stringify(errBody));
     await alertSupport(`Booking failed — Athena error ${status} on appointment ${appointmentId}.`);
     return res.json({ errorType: 'generic' });
   }
