@@ -831,7 +831,11 @@ app.post('/api/booking/batch-availability', async (req, res) => {
 // 2. No match → POST /patients to create new record
 // 3. Multiple matches → return errorType "duplicate" (staff must resolve)
 app.post('/api/booking/find-or-create-patient', async (req, res) => {
-  const { firstname, lastname, dob, departmentId, phone, email, zip } = req.body;
+  const {
+    firstname, lastname, dob, departmentId,
+    phone, phoneType, email, zip,
+    address1, address2, city, state, legalSex,
+  } = req.body;
 
   if (!firstname || !lastname || !dob || !departmentId) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -843,11 +847,16 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
     return res.status(400).json({ error: 'Invalid date format' });
   }
 
+  // Map phone type to the correct Athena field name
+  const phoneField = phoneType === 'mobile' ? 'mobilephone'
+                   : phoneType === 'work'   ? 'workphone'
+                   :                          'homephone';
+
   try {
     const matchParams = { firstname, lastname, dob: athenaDob, departmentid: departmentId };
-    if (phone) matchParams.homephone = phone;
-    if (email) matchParams.email     = email;
-    if (zip)   matchParams.zip       = zip;
+    if (phone) matchParams[phoneField] = phone;
+    if (email) matchParams.email       = email;
+    if (zip)   matchParams.zip         = zip;
 
     const matchData = await athenaGet(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/patients/enhancedbestmatch`,
@@ -875,9 +884,14 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
       dob:          athenaDob,
       departmentid: departmentId,
     };
-    if (phone) createBody.homephone   = phone;
-    if (email) createBody.email       = email;
-    if (zip)   createBody.zip         = zip;
+    if (phone)    createBody[phoneField] = phone;
+    if (email)    createBody.email       = email;
+    if (zip)      createBody.zip         = zip;
+    if (address1) createBody.address1    = address1;
+    if (address2) createBody.address2    = address2;
+    if (city)     createBody.city        = city;
+    if (state)    createBody.state       = state;
+    if (legalSex) createBody.sex         = legalSex;
 
     const created = await athenaPost(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/patients`,

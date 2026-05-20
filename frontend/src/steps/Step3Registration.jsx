@@ -202,8 +202,14 @@ export default function Step3Registration() {
         dob,
         departmentId: urlParams.departmentId,
         phone:        phone.trim(),
+        phoneType,
         email:        email.trim().toLowerCase(),
         zip:          zip.trim(),
+        address1:     address1.trim(),
+        address2:     address2.trim(),
+        city:         city.trim(),
+        state,
+        legalSex,
       });
 
       if (result.errorType === 'duplicate') {
