@@ -197,17 +197,18 @@ export default function Step3Registration() {
     let patientId;
     try {
       const result = await findOrCreatePatient({
-        firstname:    firstName.trim(),
-        lastname:     lastName.trim(),
+        firstname:     firstName.trim(),
+        lastname:      lastName.trim(),
+        preferredName: preferredName.trim(),
         dob,
-        departmentId: urlParams.departmentId,
-        phone:        phone.trim(),
+        departmentId:  urlParams.departmentId,
+        phone:         phone.trim(),
         phoneType,
-        email:        email.trim().toLowerCase(),
-        zip:          zip.trim(),
-        address1:     address1.trim(),
-        address2:     address2.trim(),
-        city:         city.trim(),
+        email:         email.trim().toLowerCase(),
+        zip:           zip.trim(),
+        address1:      address1.trim(),
+        address2:      address2.trim(),
+        city:          city.trim(),
         state,
         legalSex,
       });

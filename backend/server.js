@@ -832,7 +832,7 @@ app.post('/api/booking/batch-availability', async (req, res) => {
 // 3. Multiple matches → return errorType "duplicate" (staff must resolve)
 app.post('/api/booking/find-or-create-patient', async (req, res) => {
   const {
-    firstname, lastname, dob, departmentId,
+    firstname, lastname, preferredName, dob, departmentId,
     phone, phoneType, email, zip,
     address1, address2, city, state, legalSex,
   } = req.body;
@@ -884,14 +884,15 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
       dob:          athenaDob,
       departmentid: departmentId,
     };
-    if (phone)    createBody[phoneField] = phone;
-    if (email)    createBody.email       = email;
-    if (zip)      createBody.zip         = zip;
-    if (address1) createBody.address1    = address1;
-    if (address2) createBody.address2    = address2;
-    if (city)     createBody.city        = city;
-    if (state)    createBody.state       = state;
-    if (legalSex) createBody.sex         = legalSex;
+    if (phone)         createBody[phoneField]    = phone;
+    if (email)         createBody.email          = email;
+    if (zip)           createBody.zip            = zip;
+    if (address1)      createBody.address1       = address1;
+    if (address2)      createBody.address2       = address2;
+    if (city)          createBody.city           = city;
+    if (state)         createBody.state          = state;
+    if (legalSex)      createBody.sex            = legalSex;
+    if (preferredName) createBody.firstnameused  = preferredName;
 
     const created = await athenaPost(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/patients`,
