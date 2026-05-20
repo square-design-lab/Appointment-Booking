@@ -894,8 +894,9 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
 
     return res.json({ patientId: String(newPid), isNew: true });
   } catch (err) {
-    const status = err.response?.status;
-    console.error('[booking/find-or-create-patient] Athena error:', status, err.message);
+    const status   = err.response?.status;
+    const errBody  = err.response?.data;
+    console.error('[booking/find-or-create-patient] Athena error:', status, err.message, JSON.stringify(errBody));
     if (status === 400) {
       return res.status(400).json({ error: 'invalid_patient_data' });
     }
@@ -921,6 +922,20 @@ app.post('/api/booking/book', async (req, res) => {
       `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}`,
       body
     );
+
+    // Also write patient notes to the appointment Notes section so they are
+    // visible alongside the service and insurance notes in athenaNet.
+    if (notes && notes.trim()) {
+      try {
+        await athenaPost(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}/notes`,
+          { notetext: `Notes from patient: ${notes.trim()}`, displayonschedule: 'true' }
+        );
+      } catch (noteErr) {
+        // Best-effort — do not fail the booking if note write fails
+        console.error('[booking/book] Patient note write error:', noteErr.response?.status, noteErr.message);
+      }
+    }
 
     return res.json({ success: true, appointmentDetails: data });
   } catch (err) {
