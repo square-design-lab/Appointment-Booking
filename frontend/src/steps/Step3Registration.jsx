@@ -243,6 +243,8 @@ export default function Step3Registration() {
         patientId,
         reasonId:      selectedReason?.reasonId,
         notes:         notes.trim() || undefined,
+        providerId:    urlParams.providerId,
+        departmentId:  urlParams.departmentId,
       });
 
       if (result.errorType === 'slot_taken') {

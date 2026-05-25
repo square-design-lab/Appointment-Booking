@@ -708,8 +708,8 @@ app.post('/api/booking/reasons', async (req, res) => {
         { departmentid: departmentId, providerid: providerId }
       );
       raw = Array.isArray(data) ? data : (data.patientappointmentreasons || []);
-      reasonsCache.set(cacheKey, { raw, expiresAt: next6amCentralMs() });
-      console.log(`[booking/reasons] cached ${raw.length} reasons for ${cacheKey}`);
+      reasonsCache.set(cacheKey, { raw, expiresAt: Date.now() + 48 * 60 * 60 * 1000 });
+      console.log(`[booking/reasons] cached ${raw.length} reasons for ${cacheKey} (48h TTL)`);
     } catch (err) {
       console.error('[booking/reasons] Athena error:', err.response?.status, err.message);
       return res.status(503).json({ error: 'service_unavailable' });
@@ -848,9 +848,9 @@ app.post('/api/booking/batch-availability', async (req, res) => {
     })
   );
 
-  // Cache for 5 minutes
+  // Cache for 4 hours — rolling window, resets from time of last miss
   batchAvailCache.results   = results;
-  batchAvailCache.expiresAt = Date.now() + 5 * 60 * 1000;
+  batchAvailCache.expiresAt = Date.now() + 4 * 60 * 60 * 1000;
   console.log(`[batch-availability] checked ${results.length} providers; ${results.filter((r) => r.hasSlots).length} have slots`);
 
   return res.json({ results });
@@ -975,7 +975,7 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
 // HIPAA: do not log patientId or notes.
 // Athena Communicator sends confirmation email automatically — do NOT suppress it.
 app.post('/api/booking/book', async (req, res) => {
-  const { appointmentId, patientId, reasonId, notes } = req.body;
+  const { appointmentId, patientId, reasonId, notes, providerId, departmentId } = req.body;
 
   if (!appointmentId || !patientId || !reasonId) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -1002,6 +1002,52 @@ app.post('/api/booking/book', async (req, res) => {
         // Best-effort — do not fail the booking if note write fails
         console.error('[booking/book] Patient note write error:', noteErr.response?.status, noteErr.message);
       }
+    }
+
+    // Fire-and-forget: refresh this provider's slots in WordPress via vantage-api.
+    // Runs in the background — never delays the booking confirmation response.
+    if (providerId && departmentId && process.env.VANTAGE_API_URL && process.env.VANTAGE_API_SECRET) {
+      fetch(`${process.env.VANTAGE_API_URL}/api/sync-single-provider`, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'x-sync-secret': process.env.VANTAGE_API_SECRET,
+        },
+        body: JSON.stringify({ providerId: String(providerId), departmentId: String(departmentId) }),
+      }).catch((err) => {
+        console.warn('[booking/book] vantage-api sync trigger failed (non-blocking):', err.message);
+      });
+    }
+
+    // Fire-and-forget: re-check this provider's availability and update their entry
+    // in batchAvailCache so the booking app directory reflects the change immediately.
+    // Only runs if cache is populated; never delays the booking confirmation response.
+    if (providerId && departmentId && batchAvailCache.results) {
+      (async () => {
+        try {
+          const availData = await athenaGet(
+            `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+            {
+              providerid:   String(providerId),
+              departmentid: String(departmentId),
+              startdate:    todayMMDDYYYY(),
+              enddate:      futureDateMMDDYYYY(90),
+              reasonid:     '-1',
+            }
+          );
+          const appts    = Array.isArray(availData) ? availData : (availData.appointments || []);
+          const hasSlots = appts.length > 0;
+          const idx      = batchAvailCache.results.findIndex(
+            (r) => String(r.providerId) === String(providerId)
+          );
+          if (idx !== -1) {
+            batchAvailCache.results[idx] = { ...batchAvailCache.results[idx], hasSlots };
+            console.log(`[booking/book] batchAvailCache updated: provider ${providerId} hasSlots=${hasSlots}`);
+          }
+        } catch (err) {
+          console.warn('[booking/book] batchAvail cache update failed (non-blocking):', err.message);
+        }
+      })();
     }
 
     return res.json({ success: true, appointmentDetails: data });
@@ -1168,6 +1214,25 @@ app.post('/api/booking/create-patient-case', async (req, res) => {
     );
     return res.json({ success: false });
   }
+});
+
+// ─── GET /api/booking/clear-availability-cache ───────────────────────────────
+// Browser-callable emergency endpoint. Expires the batchAvailCache so the next
+// directory load fetches fresh availability from Athena.
+// Usage: https://booking-backend-717838047212.us-central1.run.app/api/booking/clear-availability-cache?secret=vantage-sync-2026
+app.get('/api/booking/clear-availability-cache', (req, res) => {
+  const secret = req.query.secret;
+  if (process.env.VANTAGE_API_SECRET && secret !== process.env.VANTAGE_API_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  batchAvailCache.results   = null;
+  batchAvailCache.expiresAt = 0;
+  console.log('[booking] batchAvailCache manually cleared via browser');
+  return res.json({
+    success:   true,
+    message:   'Availability cache cleared. Next directory load will fetch fresh data from Athena.',
+    clearedAt: new Date().toISOString(),
+  });
 });
 
 // ─── GET /api/booking/health ─────────────────────────────────────────────────
