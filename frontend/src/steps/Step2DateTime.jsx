@@ -103,15 +103,14 @@ export default function Step2DateTime() {
     }
   }, [selectedReason?.reasonId, urlParams.providerId, urlParams.departmentId, mergeSlots]);
 
-  // On mount: fetch the default window (today → +90 days) and mark first 3 months
+  // On mount: fetch current month only (today → end of current month).
+  // Subsequent months load on demand via handleMonthChange.
   useEffect(() => {
     const d = new Date();
-    for (let i = 0; i < 3; i++) {
-      const y = d.getFullYear() + Math.floor((d.getMonth() + i) / 12);
-      const m = (d.getMonth() + i) % 12;
-      fetchedMonthsRef.current.add(`${y}-${m}`);
-    }
-    loadSlots(undefined, undefined);
+    d.setHours(0, 0, 0, 0);
+    fetchedMonthsRef.current.add(`${d.getFullYear()}-${d.getMonth()}`);
+    const endOfMonth = lastDayOfMonth(d.getFullYear(), d.getMonth());
+    loadSlots(dateToAthena(d), dateToAthena(endOfMonth));
   // loadSlots is stable for the lifetime of this step
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

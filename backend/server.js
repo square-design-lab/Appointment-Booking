@@ -660,6 +660,31 @@ function futureDateMMDDYYYY(daysAhead) {
   }).format(d);
 }
 
+// ─── Reasons cache ────────────────────────────────────────────────────────────
+// Keyed by "departmentId:providerId". Raw Athena response is cached; patientType
+// filtering happens after each cache hit so one entry serves new + returning.
+// Expires at the next 6 AM America/Chicago — reasons change infrequently and the
+// Athena rep confirmed they can be cached for a full day.
+
+const reasonsCache = new Map();
+
+function next6amCentralMs() {
+  const now   = new Date();
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago',
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour12: false,
+  }).formatToParts(now);
+  const p = {};
+  for (const { type, value } of parts) p[type] = parseInt(value, 10);
+  const hour        = p.hour === 24 ? 0 : p.hour;
+  const currentSec  = hour * 3600 + p.minute * 60 + p.second;
+  const target6amSec = 6 * 3600;
+  let secsUntil = target6amSec - currentSec;
+  if (secsUntil <= 0) secsUntil += 24 * 3600; // already past 6 AM today — target tomorrow
+  return Date.now() + secsUntil * 1000;
+}
+
 // ─── POST /api/booking/reasons ────────────────────────────────────────────────
 // Returns appointment reasons for a given provider + department.
 // Filters by patient type (new / returning / all).
@@ -670,35 +695,42 @@ app.post('/api/booking/reasons', async (req, res) => {
     return res.status(400).json({ error: 'Missing departmentId or providerId' });
   }
 
-  try {
-    const data = await athenaGet(
-      `/v1/${process.env.ATHENA_PRACTICE_ID}/patientappointmentreasons`,
-      { departmentid: departmentId, providerid: providerId }
-    );
+  const cacheKey = `${departmentId}:${providerId}`;
+  const cached   = reasonsCache.get(cacheKey);
 
-    const raw = Array.isArray(data)
-      ? data
-      : (data.patientappointmentreasons || []);
-
-    const reasons = raw.filter((r) => {
-      const rt = (r.reasontype || '').toLowerCase();
-      if (patientType === 'new')                      return rt === 'new'      || rt === 'all';
-      if (patientType === 'returning' || patientType === 'existing') return rt === 'existing' || rt === 'all';
-      return true;
-    }).map((r) => ({
-      reasonId:         String(r.reasonid),
-      reason:           r.reason,
-      reasonType:       r.reasontype,
-      description:      r.description || '',
-      schedulingMaxDays: r.schedulingmaxdays,
-      schedulingMinHours: r.schedulingminhours,
-    }));
-
-    return res.json({ reasons });
-  } catch (err) {
-    console.error('[booking/reasons] Athena error:', err.response?.status, err.message);
-    return res.status(503).json({ error: 'service_unavailable' });
+  let raw;
+  if (cached && Date.now() < cached.expiresAt) {
+    raw = cached.raw;
+  } else {
+    try {
+      const data = await athenaGet(
+        `/v1/${process.env.ATHENA_PRACTICE_ID}/patientappointmentreasons`,
+        { departmentid: departmentId, providerid: providerId }
+      );
+      raw = Array.isArray(data) ? data : (data.patientappointmentreasons || []);
+      reasonsCache.set(cacheKey, { raw, expiresAt: next6amCentralMs() });
+      console.log(`[booking/reasons] cached ${raw.length} reasons for ${cacheKey}`);
+    } catch (err) {
+      console.error('[booking/reasons] Athena error:', err.response?.status, err.message);
+      return res.status(503).json({ error: 'service_unavailable' });
+    }
   }
+
+  const reasons = raw.filter((r) => {
+    const rt = (r.reasontype || '').toLowerCase();
+    if (patientType === 'new')                                       return rt === 'new'      || rt === 'all';
+    if (patientType === 'returning' || patientType === 'existing')   return rt === 'existing' || rt === 'all';
+    return true;
+  }).map((r) => ({
+    reasonId:          String(r.reasonid),
+    reason:            r.reason,
+    reasonType:        r.reasontype,
+    description:       r.description || '',
+    schedulingMaxDays: r.schedulingmaxdays,
+    schedulingMinHours: r.schedulingminhours,
+  }));
+
+  return res.json({ reasons });
 });
 
 // ─── POST /api/booking/slots ──────────────────────────────────────────────────
