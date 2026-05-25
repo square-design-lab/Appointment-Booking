@@ -923,7 +923,7 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
 // HIPAA: do not log patientId or notes.
 // Athena Communicator sends confirmation email automatically — do NOT suppress it.
 app.post('/api/booking/book', async (req, res) => {
-  const { appointmentId, patientId, reasonId, notes } = req.body;
+  const { appointmentId, patientId, reasonId, notes, isNew } = req.body;
 
   if (!appointmentId || !patientId || !reasonId) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -969,6 +969,21 @@ app.post('/api/booking/book', async (req, res) => {
       errMsg.includes('already scheduled')
     ) {
       return res.json({ errorType: 'slot_taken' });
+    }
+
+    // Roll back the newly created patient record so no orphan remains in Athena.
+    // Only applies when isNew=true — existing patients are never touched.
+    // Slot-taken errors return early above and do NOT reach here.
+    if (isNew && patientId) {
+      try {
+        await athenaPut(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/patients/${patientId}`,
+          { status: 'd' }
+        );
+        console.log('[booking/book] Rolled back newly created patient due to booking failure');
+      } catch (rollbackErr) {
+        console.error('[booking/book] Patient rollback failed:', rollbackErr.response?.status, rollbackErr.message);
+      }
     }
 
     console.error('[booking/book] Athena error:', status, err.message, JSON.stringify(errBody));

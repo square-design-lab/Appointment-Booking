@@ -195,6 +195,7 @@ export default function Step3Registration() {
 
     // 1 — Find or create patient
     let patientId;
+    let isNew = false;
     try {
       const result = await findOrCreatePatient({
         firstname:     firstName.trim(),
@@ -219,6 +220,7 @@ export default function Step3Registration() {
         return;
       }
       patientId = result.patientId;
+      isNew     = result.isNew || false;
     } catch {
       setSubmitError('generic');
       setSubmitting(false);
@@ -233,6 +235,7 @@ export default function Step3Registration() {
         patientId,
         reasonId:      selectedReason?.reasonId,
         notes:         notes.trim() || undefined,
+        isNew,
       });
 
       if (result.errorType === 'slot_taken') {
