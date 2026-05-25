@@ -195,7 +195,6 @@ export default function Step3Registration() {
 
     // 1 — Find or create patient
     let patientId;
-    let isNew = false;
     try {
       const result = await findOrCreatePatient({
         firstname:     firstName.trim(),
@@ -212,6 +211,7 @@ export default function Step3Registration() {
         city:          city.trim(),
         state,
         legalSex,
+        appointmentId: selectedAppointmentId,
       });
 
       if (result.errorType === 'duplicate') {
@@ -219,8 +219,16 @@ export default function Step3Registration() {
         setSubmitting(false);
         return;
       }
+      // Slot was taken before patient could be created — go back to Step 2
+      if (result.errorType === 'slot_taken') {
+        sessionStorage.setItem('vbf_slot_taken', '1');
+        setSelectedTime(null);
+        setSelectedAppointmentId(null);
+        setSubmitting(false);
+        setCurrentStep(2);
+        return;
+      }
       patientId = result.patientId;
-      isNew     = result.isNew || false;
     } catch {
       setSubmitError('generic');
       setSubmitting(false);
@@ -235,7 +243,6 @@ export default function Step3Registration() {
         patientId,
         reasonId:      selectedReason?.reasonId,
         notes:         notes.trim() || undefined,
-        isNew,
       });
 
       if (result.errorType === 'slot_taken') {

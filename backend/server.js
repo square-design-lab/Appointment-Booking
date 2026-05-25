@@ -835,6 +835,7 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
     firstname, lastname, preferredName, dob, departmentId,
     phone, phoneType, email, zip,
     address1, address2, city, state, legalSex,
+    appointmentId,
   } = req.body;
 
   if (!firstname || !lastname || !dob || !departmentId) {
@@ -875,6 +876,25 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
         `Booking alert: duplicate patient records for ${firstname} ${lastname} — staff review needed.`
       );
       return res.json({ errorType: 'duplicate' });
+    }
+
+    // No match — verify the slot is still open before creating a new patient.
+    // This prevents an orphan patient record if the slot was taken between
+    // Step 2 (slot selection) and Step 3 (form submit).
+    // Fail open: if the check itself errors (network, etc.) we proceed anyway.
+    if (appointmentId) {
+      try {
+        const apptData = await athenaGet(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}`
+        );
+        const slotStatus = (apptData.appointmentstatus || apptData.status || '').toLowerCase();
+        if (slotStatus && slotStatus !== 'o' && slotStatus !== 'open') {
+          console.log('[booking/find-or-create-patient] Slot pre-check: not open, aborting patient creation');
+          return res.json({ errorType: 'slot_taken' });
+        }
+      } catch (slotCheckErr) {
+        console.warn('[booking/find-or-create-patient] Slot pre-check failed, proceeding:', slotCheckErr.response?.status);
+      }
     }
 
     // No match — create new patient
@@ -923,7 +943,7 @@ app.post('/api/booking/find-or-create-patient', async (req, res) => {
 // HIPAA: do not log patientId or notes.
 // Athena Communicator sends confirmation email automatically — do NOT suppress it.
 app.post('/api/booking/book', async (req, res) => {
-  const { appointmentId, patientId, reasonId, notes, isNew } = req.body;
+  const { appointmentId, patientId, reasonId, notes } = req.body;
 
   if (!appointmentId || !patientId || !reasonId) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -969,21 +989,6 @@ app.post('/api/booking/book', async (req, res) => {
       errMsg.includes('already scheduled')
     ) {
       return res.json({ errorType: 'slot_taken' });
-    }
-
-    // Roll back the newly created patient record so no orphan remains in Athena.
-    // Only applies when isNew=true — existing patients are never touched.
-    // Slot-taken errors return early above and do NOT reach here.
-    if (isNew && patientId) {
-      try {
-        await athenaPut(
-          `/v1/${process.env.ATHENA_PRACTICE_ID}/patients/${patientId}`,
-          { status: 'd' }
-        );
-        console.log('[booking/book] Rolled back newly created patient due to booking failure');
-      } catch (rollbackErr) {
-        console.error('[booking/book] Patient rollback failed:', rollbackErr.response?.status, rollbackErr.message);
-      }
     }
 
     console.error('[booking/book] Athena error:', status, err.message, JSON.stringify(errBody));
