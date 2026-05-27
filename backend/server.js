@@ -1091,18 +1091,19 @@ const SERVICE_NOTE_LABELS = {
 };
 
 app.post('/api/booking/write-service-note', async (req, res) => {
-  const { appointmentId, serviceSlug } = req.body;
+  const { appointmentId, serviceSlug, patientType } = req.body;
 
   if (!appointmentId || !serviceSlug) {
     return res.json({ success: false });
   }
 
-  const label = SERVICE_NOTE_LABELS[serviceSlug] || serviceSlug;
+  const label      = SERVICE_NOTE_LABELS[serviceSlug] || serviceSlug;
+  const visitLabel = patientType === 'new' ? 'Intake' : 'Follow Up';
 
   try {
     await athenaPost(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}/notes`,
-      { notetext: `Patient selected service: ${label}`, displayonschedule: 'true' }
+      { notetext: `Web Scheduling: ${visitLabel}, ${label}`, displayonschedule: 'true' }
     );
     return res.json({ success: true });
   } catch (err) {
@@ -1116,22 +1117,22 @@ app.post('/api/booking/write-service-note', async (req, res) => {
 // for staff to process. A full patient insurance API integration can be
 // added later once Athena patient insurance IDs are available.
 app.post('/api/booking/update-insurance', async (req, res) => {
-  const { appointmentId, insuranceName, groupId, memberId } = req.body;
+  const { appointmentId, insuranceName, groupId, memberId, email, phone, phoneType, dob, reasonName } = req.body;
 
   if (!appointmentId || !insuranceName) {
     return res.json({ success: false });
   }
 
   const noteText =
-    `Insurance submitted online:\n` +
-    `Provider: ${insuranceName}\n` +
-    `Group ID: ${groupId || '—'}\n` +
-    `Member ID: ${memberId || '—'}`;
+    `Reported reason for booking: (Patient Email: ${email || ''}, ` +
+    `Phone: ${phone || ''}, Type: ${phoneType || ''}, Patient DOB: ${dob || ''}, ` +
+    `Insurance: ${insuranceName}, Group ID: ${groupId || '—'}, Member ID: ${memberId || '—'}) ` +
+    `REASON: ${reasonName || ''}`;
 
   try {
     await athenaPost(
       `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}/notes`,
-      { notetext: noteText, displayonschedule: 'false' }
+      { notetext: noteText, displayonschedule: 'true' }
     );
     return res.json({ success: true });
   } catch (err) {

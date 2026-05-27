@@ -174,6 +174,7 @@ export default function Step3Registration() {
     insuranceName: hasInsurance && !insuranceName        ? 'Please select an insurance provider.' : null,
     groupId:      showGroupMember && !groupId.trim()     ? 'Group ID is required.'             : null,
     memberId:     showGroupMember && !memberId.trim()    ? 'Member ID is required.'            : null,
+    notes:        !notes.trim()                          ? 'Please describe your reason for visit.' : null,
     termsAccepted:!termsAccepted                         ? 'You must accept the terms to continue.' : null,
   };
 
@@ -242,7 +243,7 @@ export default function Step3Registration() {
         appointmentId: selectedAppointmentId,
         patientId,
         reasonId:      selectedReason?.reasonId,
-        notes:         notes.trim() || undefined,
+        notes:         notes.trim(),
         providerId:    urlParams.providerId,
         departmentId:  urlParams.departmentId,
       });
@@ -279,7 +280,7 @@ export default function Step3Registration() {
     // 3 — Write service note (best-effort)
     if (urlParams.service) {
       try {
-        await writeServiceNote({ appointmentId: bookedId, serviceSlug: urlParams.service });
+        await writeServiceNote({ appointmentId: bookedId, serviceSlug: urlParams.service, patientType: urlParams.patientType });
       } catch { /* non-fatal */ }
     }
 
@@ -291,6 +292,11 @@ export default function Step3Registration() {
           insuranceName: insuranceLabel,
           groupId:       showGroupMember ? groupId.trim() : '',
           memberId:      showGroupMember ? memberId.trim() : '',
+          email:         email.trim().toLowerCase(),
+          phone:         phone.trim(),
+          phoneType,
+          dob,
+          reasonName:    selectedReason?.reason || '',
         });
       } catch { /* non-fatal */ }
     }
@@ -706,21 +712,26 @@ export default function Step3Registration() {
 
       <div className="vbf-field">
         <label className="vbf-label" htmlFor="vbf-notes">
-          Notes for your provider
-          <span style={{ fontWeight: 400, color: 'var(--c-text-muted)', marginLeft: 6 }}>
-            (optional)
-          </span>
+          Reason for visit or information for your provider<span className="vbf-label-req"> *</span>
         </label>
         <textarea
           id="vbf-notes"
-          className="vbf-textarea"
+          className={`vbf-textarea${fieldError('notes') ? ' vbf-input--error' : ''}`}
           value={notes}
           onChange={(e) => setNotes(e.target.value.slice(0, 500))}
+          onBlur={() => touch('notes')}
           placeholder="Anything that will help your provider prepare for your visit"
           rows={4}
           maxLength={500}
+          aria-required="true"
+          aria-describedby={fieldError('notes') ? 'vbf-notes-err' : undefined}
         />
         <div className="vbf-char-count">{notes.length} / 500</div>
+        {fieldError('notes') && (
+          <div id="vbf-notes-err" className="vbf-field-error" role="alert">
+            <span>⚠</span> {fieldError('notes')}
+          </div>
+        )}
       </div>
 
       {/* ════════════════════════════════════════════════════════════
