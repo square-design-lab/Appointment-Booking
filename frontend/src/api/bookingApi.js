@@ -51,6 +51,13 @@ export function bookAppointment(data) {
   });
 }
 
+export function registerAndBook(data) {
+  return apiFetch('/api/booking/register-and-book', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
 export function writeServiceNote(data) {
   return apiFetch('/api/booking/write-service-note', {
     method: 'POST',

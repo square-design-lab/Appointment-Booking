@@ -1,8 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useBooking } from '../BookingContext';
 import {
-  findOrCreatePatient,
-  bookAppointment,
+  registerAndBook,
   writeServiceNote,
   updateInsurance,
   sendAlert,
@@ -194,10 +193,11 @@ export default function Step3Registration() {
     setSubmitting(true);
     setSubmitError(null);
 
-    // 1 — Find or create patient
+    // 1 — Register patient + book appointment (atomic)
     let patientId;
+    let bookedId;
     try {
-      const result = await findOrCreatePatient({
+      const result = await registerAndBook({
         firstname:     firstName.trim(),
         lastname:      lastName.trim(),
         preferredName: preferredName.trim(),
@@ -213,6 +213,9 @@ export default function Step3Registration() {
         state,
         legalSex,
         appointmentId: selectedAppointmentId,
+        reasonId:      selectedReason?.reasonId,
+        notes:         notes.trim(),
+        providerId:    urlParams.providerId,
       });
 
       if (result.errorType === 'duplicate') {
@@ -220,7 +223,6 @@ export default function Step3Registration() {
         setSubmitting(false);
         return;
       }
-      // Slot was taken before patient could be created — go back to Step 2
       if (result.errorType === 'slot_taken') {
         sessionStorage.setItem('vbf_slot_taken', '1');
         setSelectedTime(null);
@@ -229,35 +231,6 @@ export default function Step3Registration() {
         setCurrentStep(2);
         return;
       }
-      patientId = result.patientId;
-    } catch {
-      setSubmitError('generic');
-      setSubmitting(false);
-      return;
-    }
-
-    // 2 — Book appointment
-    let bookedId;
-    try {
-      const result = await bookAppointment({
-        appointmentId: selectedAppointmentId,
-        patientId,
-        reasonId:      selectedReason?.reasonId,
-        notes:         notes.trim(),
-        providerId:    urlParams.providerId,
-        departmentId:  urlParams.departmentId,
-      });
-
-      if (result.errorType === 'slot_taken') {
-        // Signal Step 2 to show the slot-taken banner, then navigate back
-        sessionStorage.setItem('vbf_slot_taken', '1');
-        setSelectedTime(null);
-        setSelectedAppointmentId(null);
-        setSubmitting(false);
-        setCurrentStep(2);
-        return;
-      }
-
       if (result.errorType === 'generic' || !result.success) {
         setSubmitError('generic');
         try {
@@ -267,7 +240,8 @@ export default function Step3Registration() {
         return;
       }
 
-      bookedId = selectedAppointmentId;
+      patientId = result.patientId;
+      bookedId  = selectedAppointmentId;
     } catch {
       setSubmitError('generic');
       try {

@@ -1075,6 +1075,218 @@ app.post('/api/booking/book', async (req, res) => {
   }
 });
 
+// ─── POST /api/booking/register-and-book ─────────────────────────────────────
+// HIPAA: never log req.body — contains PHI (name, DOB, phone, email).
+// Atomically: find-or-create patient + book appointment in one call.
+// If booking fails for a newly-created patient, marks the patient inactive
+// (Athena status 'i') to prevent orphan records — Athena has no patient delete.
+app.post('/api/booking/register-and-book', async (req, res) => {
+  const {
+    firstname, lastname, preferredName, dob, departmentId,
+    phone, phoneType, email, zip,
+    address1, address2, city, state, legalSex,
+    appointmentId, reasonId, notes, providerId,
+  } = req.body;
+
+  if (!firstname || !lastname || !dob || !departmentId || !appointmentId || !reasonId) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const athenaDob = normalizeDob(dob);
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(athenaDob)) {
+    return res.status(400).json({ error: 'Invalid date format' });
+  }
+
+  const phoneField = phoneType === 'mobile' ? 'mobilephone'
+                   : phoneType === 'work'   ? 'workphone'
+                   :                          'homephone';
+
+  // ── Step 1: Find existing patient ────────────────────────────────────────
+  let patientId;
+  let isNew = false;
+
+  try {
+    const matchParams = { firstname, lastname, dob: athenaDob, departmentid: departmentId };
+    if (phone) matchParams[phoneField] = phone;
+    if (email) matchParams.email       = email;
+    if (zip)   matchParams.zip         = zip;
+
+    const matchData = await athenaGet(
+      `/v1/${process.env.ATHENA_PRACTICE_ID}/patients/enhancedbestmatch`,
+      matchParams
+    );
+
+    const patients = Array.isArray(matchData) ? matchData : (matchData.patients || []);
+
+    if (patients.length === 1) {
+      patientId = String(patients[0].patientid || patients[0].enterprisepatientid);
+      isNew = false;
+    } else if (patients.length > 1) {
+      await alertSupport(
+        `Booking alert: duplicate patient records for ${firstname} ${lastname} — staff review needed.`
+      );
+      return res.json({ errorType: 'duplicate' });
+    } else {
+      // No match — slot pre-check before creating patient
+      try {
+        const apptData = await athenaGet(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}`
+        );
+        const slotStatus = (apptData.appointmentstatus || apptData.status || '').toLowerCase();
+        if (slotStatus && slotStatus !== 'o' && slotStatus !== 'open') {
+          console.log('[booking/register-and-book] Slot pre-check: not open, aborting');
+          return res.json({ errorType: 'slot_taken' });
+        }
+      } catch (slotCheckErr) {
+        console.warn('[booking/register-and-book] Slot pre-check failed, proceeding:', slotCheckErr.response?.status);
+      }
+
+      // Create new patient
+      const createBody = {
+        firstname,
+        lastname,
+        dob:          athenaDob,
+        departmentid: departmentId,
+      };
+      if (phone)         createBody[phoneField]   = phone;
+      if (email)         createBody.email         = email;
+      if (zip)           createBody.zip           = zip;
+      if (address1)      createBody.address1      = address1;
+      if (address2)      createBody.address2      = address2;
+      if (city)          createBody.city          = city;
+      if (state)         createBody.state         = state;
+      if (legalSex)      createBody.sex           = legalSex;
+      if (preferredName) createBody.preferredname = preferredName;
+
+      const created = await athenaPost(
+        `/v1/${process.env.ATHENA_PRACTICE_ID}/patients`,
+        createBody
+      );
+
+      const newPatients = Array.isArray(created) ? created : (created.patients || [created]);
+      const newPid = newPatients[0]?.patientid;
+
+      if (!newPid) {
+        console.error('[booking/register-and-book] Patient created but no ID returned');
+        return res.status(500).json({ error: 'patient_create_failed' });
+      }
+
+      patientId = String(newPid);
+      isNew = true;
+    }
+  } catch (err) {
+    const status  = err.response?.status;
+    const errBody = err.response?.data;
+    console.error('[booking/register-and-book] Patient step error:', status, err.message, JSON.stringify(errBody));
+    if (status === 400) {
+      return res.status(400).json({ error: 'invalid_patient_data' });
+    }
+    return res.status(503).json({ error: 'service_unavailable' });
+  }
+
+  // ── Step 2: Book appointment ──────────────────────────────────────────────
+  const bookBody = { patientid: patientId, reasonid: reasonId };
+  if (notes && notes.trim()) bookBody.patientinstructions = notes.trim();
+
+  try {
+    const data = await athenaPut(
+      `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}`,
+      bookBody
+    );
+
+    // Write patient notes (best-effort)
+    if (notes && notes.trim()) {
+      try {
+        await athenaPost(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/${appointmentId}/notes`,
+          { notetext: `Notes from patient: ${notes.trim()}`, displayonschedule: 'true' }
+        );
+      } catch (noteErr) {
+        console.error('[booking/register-and-book] Patient note write error:', noteErr.response?.status, noteErr.message);
+      }
+    }
+
+    // Fire-and-forget: refresh this provider's slots in WordPress via vantage-api
+    if (providerId && departmentId && process.env.VANTAGE_API_URL && process.env.VANTAGE_API_SECRET) {
+      fetch(`${process.env.VANTAGE_API_URL}/api/sync-single-provider`, {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'x-sync-secret': process.env.VANTAGE_API_SECRET,
+        },
+        body: JSON.stringify({ providerId: String(providerId), departmentId: String(departmentId) }),
+      }).catch((syncErr) => {
+        console.warn('[booking/register-and-book] vantage-api sync trigger failed (non-blocking):', syncErr.message);
+      });
+    }
+
+    // Fire-and-forget: update this provider's entry in batchAvailCache
+    if (providerId && departmentId && batchAvailCache.results) {
+      (async () => {
+        try {
+          const availData = await athenaGet(
+            `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+            {
+              providerid:   String(providerId),
+              departmentid: String(departmentId),
+              startdate:    todayMMDDYYYY(),
+              enddate:      futureDateMMDDYYYY(90),
+              reasonid:     '-1',
+            }
+          );
+          const appts    = Array.isArray(availData) ? availData : (availData.appointments || []);
+          const hasSlots = appts.length > 0;
+          const idx      = batchAvailCache.results.findIndex(
+            (r) => String(r.providerId) === String(providerId)
+          );
+          if (idx !== -1) {
+            batchAvailCache.results[idx] = { ...batchAvailCache.results[idx], hasSlots };
+            console.log(`[booking/register-and-book] batchAvailCache updated: provider ${providerId} hasSlots=${hasSlots}`);
+          }
+        } catch (cacheErr) {
+          console.warn('[booking/register-and-book] batchAvail cache update failed (non-blocking):', cacheErr.message);
+        }
+      })();
+    }
+
+    return res.json({ success: true, patientId, isNew, appointmentDetails: data });
+  } catch (err) {
+    const status  = err.response?.status;
+    const errBody = err.response?.data;
+    const errMsg  = (typeof errBody === 'string' ? errBody : errBody?.error || '').toLowerCase();
+
+    // Booking failed — if patient was newly created, mark inactive to prevent orphan record
+    if (isNew) {
+      try {
+        await athenaPut(
+          `/v1/${process.env.ATHENA_PRACTICE_ID}/patients/${patientId}`,
+          { status: 'i' }
+        );
+        console.log(`[booking/register-and-book] New patient ${patientId} marked inactive after booking failure`);
+      } catch (inactiveErr) {
+        console.error('[booking/register-and-book] Failed to mark patient inactive:', inactiveErr.response?.status, inactiveErr.message);
+      }
+    }
+
+    if (
+      status === 409 ||
+      errMsg.includes('slot') ||
+      errMsg.includes('already') ||
+      errMsg.includes('not open') ||
+      errMsg.includes('not available') ||
+      errMsg.includes('unavailable') ||
+      errMsg.includes('cannot be booked') ||
+      errMsg.includes('already scheduled')
+    ) {
+      return res.json({ errorType: 'slot_taken' });
+    }
+
+    console.error('[booking/register-and-book] Booking error:', status, err.message, JSON.stringify(errBody));
+    await alertSupport(`Booking failed — Athena error ${status} on appointment ${appointmentId}.`);
+    return res.json({ errorType: 'generic' });
+  }
+});
+
 // ─── POST /api/booking/write-service-note ────────────────────────────────────
 // Best-effort — errors are logged but do NOT bubble up to the client.
 const SERVICE_NOTE_LABELS = {
