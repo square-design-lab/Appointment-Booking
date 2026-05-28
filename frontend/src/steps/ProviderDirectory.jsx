@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import providers from '../data/provider-contacts.json';
 import logoSrc from '../assets/logo.png';
-import { fetchBatchAvailability } from '../api/bookingApi';
+import { fetchBatchAvailability, fetchSchedulingMeta } from '../api/bookingApi';
 import { ATHENA_PRACTICE_ID } from '../BookingContext';
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -55,6 +55,20 @@ const ALL_INSURANCE = [
   'Other Commercial Insurance',
   'Self-Pay',
 ];
+
+// Time-of-day: sourced from monthly scheduling-meta endpoint (no extra API cost on page load)
+// Availability speed: sourced from real-time batch-availability (4-hour cache)
+const ALL_SCHEDULING = [
+  { value: 'Morning',                label: 'Morning (before 12pm)' },
+  { value: 'Mid Day',                label: 'Mid Day (12pm–5pm)' },
+  { value: 'Evening',                label: 'Evening (after 5pm)' },
+  { value: 'Weekends',               label: 'Weekends' },
+  { value: 'Opening This Week',      label: 'Opening This Week' },
+  { value: 'In Less Than Two Weeks', label: 'In Less Than Two Weeks' },
+  { value: 'Within One Month',       label: 'Within One Month' },
+];
+
+const SCHEDULING_TIME_OF_DAY = new Set(['Morning', 'Mid Day', 'Evening', 'Weekends']);
 
 const ALL_WHAT_WE_TREAT = [
   'Anxiety and Worry',
@@ -199,19 +213,24 @@ function ProviderCard({ provider, hasSlots, availabilityLoading }) {
 // ── ProviderDirectory ────────────────────────────────────────────────────────
 
 export default function ProviderDirectory() {
-  const [serviceFilter,   setServiceFilter]   = useState('');
-  const [locationFilter,  setLocationFilter]  = useState('');
-  const [insuranceFilter, setInsuranceFilter] = useState('');
-  const [treatFilter,     setTreatFilter]     = useState('');
-  const [approachFilter,  setApproachFilter]  = useState('');
-  const [genderFilter,    setGenderFilter]    = useState('');
-  const [languageFilter,  setLanguageFilter]  = useState('');
-  const [ageFilter,       setAgeFilter]       = useState('');
-  const [acceptingNew,    setAcceptingNew]    = useState(false);
-  const [search,          setSearch]          = useState('');
+  const [serviceFilter,    setServiceFilter]    = useState('');
+  const [locationFilter,   setLocationFilter]   = useState('');
+  const [insuranceFilter,  setInsuranceFilter]  = useState('');
+  const [schedulingFilter, setSchedulingFilter] = useState('');
+  const [treatFilter,      setTreatFilter]      = useState('');
+  const [approachFilter,   setApproachFilter]   = useState('');
+  const [genderFilter,     setGenderFilter]     = useState('');
+  const [languageFilter,   setLanguageFilter]   = useState('');
+  const [ageFilter,        setAgeFilter]        = useState('');
+  const [acceptingNew,     setAcceptingNew]     = useState(false);
+  const [search,           setSearch]           = useState('');
 
   // null = loading, Map<providerId, bool> once resolved
-  const [availability, setAvailability] = useState(null);
+  const [availability,    setAvailability]    = useState(null);
+  // Map<providerId, number|null> — days until next open slot (from batch-availability)
+  const [nextSlotDaysMap, setNextSlotDaysMap] = useState(new Map());
+  // { [providerId]: string[] } — time-of-day prefs from scheduling-meta (monthly cache)
+  const [schedulingMeta,  setSchedulingMeta]  = useState({});
 
   // Responsive search placeholder
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
@@ -222,6 +241,8 @@ export default function ProviderDirectory() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
+  // Batch availability — real-time, 4-hour server cache.
+  // Also populates nextSlotDaysMap for availability-speed scheduling filters.
   useEffect(() => {
     const list = providers.map((p) => ({
       providerId:   String(p.athena_provider_id),
@@ -229,17 +250,30 @@ export default function ProviderDirectory() {
     }));
     fetchBatchAvailability(list)
       .then((data) => {
-        const map = new Map();
-        for (const { providerId, hasSlots } of data.results || []) {
-          map.set(String(providerId), hasSlots);
+        const availMap = new Map();
+        const daysMap  = new Map();
+        for (const { providerId, hasSlots, nextSlotDays } of data.results || []) {
+          availMap.set(String(providerId), hasSlots);
+          daysMap.set(String(providerId), nextSlotDays ?? null);
         }
-        setAvailability(map);
+        setAvailability(availMap);
+        setNextSlotDaysMap(daysMap);
       })
       .catch(() => setAvailability(new Map())); // fail open — show all book buttons
   }, []);
 
+  // Scheduling meta — time-of-day preferences, monthly server cache.
+  // Returns instantly on cache hit; triggers ~46 Athena calls only on cache miss (~once/month).
+  useEffect(() => {
+    fetchSchedulingMeta()
+      .then((data) => setSchedulingMeta(data.providers || {}))
+      .catch(() => {}); // fail silently — filter just won't narrow on time-of-day
+  }, []);
+
   const filtered = useMemo(() => {
     return providers.filter((p) => {
+      const pid = String(p.athena_provider_id);
+
       // Service
       if (serviceFilter && !(p.specialties || []).includes(serviceFilter)) return false;
 
@@ -254,6 +288,21 @@ export default function ProviderDirectory() {
 
       // Insurance
       if (insuranceFilter && !(p.insurance || []).includes(insuranceFilter)) return false;
+
+      // Scheduling preference
+      if (schedulingFilter) {
+        if (SCHEDULING_TIME_OF_DAY.has(schedulingFilter)) {
+          // Time-of-day: sourced from monthly schedulingMeta
+          if (!(schedulingMeta[pid] || []).includes(schedulingFilter)) return false;
+        } else {
+          // Availability speed: sourced from real-time nextSlotDaysMap
+          const days = nextSlotDaysMap.get(pid);
+          if (days == null) return false;
+          if (schedulingFilter === 'Opening This Week'       && days > 7)  return false;
+          if (schedulingFilter === 'In Less Than Two Weeks'  && days > 14) return false;
+          if (schedulingFilter === 'Within One Month'        && days > 31) return false;
+        }
+      }
 
       // What We Treat
       if (treatFilter && !(p.whatWeTreat || []).includes(treatFilter)) return false;
@@ -300,14 +349,15 @@ export default function ProviderDirectory() {
 
       return true;
     });
-  }, [serviceFilter, locationFilter, insuranceFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search]);
+  }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search, schedulingMeta, nextSlotDaysMap]);
 
-  const hasFilters = serviceFilter || locationFilter || insuranceFilter || treatFilter || approachFilter || genderFilter || languageFilter || ageFilter || acceptingNew || search;
+  const hasFilters = serviceFilter || locationFilter || insuranceFilter || schedulingFilter || treatFilter || approachFilter || genderFilter || languageFilter || ageFilter || acceptingNew || search;
 
   function clearFilters() {
     setServiceFilter('');
     setLocationFilter('');
     setInsuranceFilter('');
+    setSchedulingFilter('');
     setTreatFilter('');
     setApproachFilter('');
     setGenderFilter('');
@@ -322,6 +372,8 @@ export default function ProviderDirectory() {
     : locationFilter === 'telehealth-wi'
     ? 'Telehealth - WI'
     : DEPT_NAMES[locationFilter] || '';
+
+  const schedulingLabel = ALL_SCHEDULING.find((s) => s.value === schedulingFilter)?.label || schedulingFilter;
 
   return (
     <div className="vpd-root">
@@ -365,7 +417,7 @@ export default function ProviderDirectory() {
             />
           </div>
 
-          {/* Row 1: Accepting New | Patient Age | Service */}
+          {/* Row 1: Accepting New | Patient Age */}
           <div className="vpd-filter-row">
             <label className="vpd-telehealth-label">
               <input
@@ -391,7 +443,10 @@ export default function ProviderDirectory() {
                 aria-label="Filter by patient age"
               />
             </div>
+          </div>
 
+          {/* Row 2: Service | Location */}
+          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={serviceFilter}
@@ -403,10 +458,7 @@ export default function ProviderDirectory() {
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
-          </div>
 
-          {/* Row 2: Location | Insurance | What We Treat */}
-          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={locationFilter}
@@ -420,7 +472,10 @@ export default function ProviderDirectory() {
               <option value="telehealth-mn">Telehealth - MN</option>
               <option value="telehealth-wi">Telehealth - WI</option>
             </select>
+          </div>
 
+          {/* Row 3: Insurance | Scheduling Preference */}
+          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={insuranceFilter}
@@ -435,6 +490,21 @@ export default function ProviderDirectory() {
 
             <select
               className="vpd-select"
+              value={schedulingFilter}
+              onChange={(e) => setSchedulingFilter(e.target.value)}
+              aria-label="Filter by scheduling preference"
+            >
+              <option value="">Scheduling Preference</option>
+              {ALL_SCHEDULING.map((s) => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Row 4: What We Treat | Treatment Approach */}
+          <div className="vpd-filter-row">
+            <select
+              className="vpd-select"
               value={treatFilter}
               onChange={(e) => setTreatFilter(e.target.value)}
               aria-label="Filter by what we treat"
@@ -444,10 +514,7 @@ export default function ProviderDirectory() {
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
-          </div>
 
-          {/* Row 3: Treatment Approach | Gender | Language */}
-          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={approachFilter}
@@ -459,7 +526,10 @@ export default function ProviderDirectory() {
                 <option key={a} value={a}>{a}</option>
               ))}
             </select>
+          </div>
 
+          {/* Row 5: Gender | Language */}
+          <div className="vpd-filter-row">
             <select
               className="vpd-select"
               value={genderFilter}
@@ -488,16 +558,17 @@ export default function ProviderDirectory() {
           {/* Active filter chips */}
           {hasFilters && (
             <div className="vpd-active-filters">
-              {serviceFilter   && <span className="vpd-chip">{serviceFilter}   <button onClick={() => setServiceFilter('')}   aria-label="Remove">×</button></span>}
-              {locationFilter  && <span className="vpd-chip">{locationLabel}   <button onClick={() => setLocationFilter('')}  aria-label="Remove">×</button></span>}
-              {insuranceFilter && <span className="vpd-chip">{insuranceFilter} <button onClick={() => setInsuranceFilter('')} aria-label="Remove">×</button></span>}
-              {treatFilter     && <span className="vpd-chip">{treatFilter}     <button onClick={() => setTreatFilter('')}     aria-label="Remove">×</button></span>}
-              {approachFilter  && <span className="vpd-chip">{approachFilter}  <button onClick={() => setApproachFilter('')}  aria-label="Remove">×</button></span>}
-              {genderFilter    && <span className="vpd-chip">{genderFilter}    <button onClick={() => setGenderFilter('')}    aria-label="Remove">×</button></span>}
-              {languageFilter  && <span className="vpd-chip">{languageFilter}  <button onClick={() => setLanguageFilter('')}  aria-label="Remove">×</button></span>}
-              {ageFilter       && <span className="vpd-chip">Age: {ageFilter}  <button onClick={() => setAgeFilter('')}       aria-label="Remove">×</button></span>}
-              {acceptingNew    && <span className="vpd-chip">Accepting New Patients <button onClick={() => setAcceptingNew(false)} aria-label="Remove">×</button></span>}
-              {search          && <span className="vpd-chip">"{search}" <button onClick={() => setSearch('')} aria-label="Remove">×</button></span>}
+              {serviceFilter    && <span className="vpd-chip">{serviceFilter}    <button onClick={() => setServiceFilter('')}    aria-label="Remove">×</button></span>}
+              {locationFilter   && <span className="vpd-chip">{locationLabel}    <button onClick={() => setLocationFilter('')}   aria-label="Remove">×</button></span>}
+              {insuranceFilter  && <span className="vpd-chip">{insuranceFilter}  <button onClick={() => setInsuranceFilter('')}  aria-label="Remove">×</button></span>}
+              {schedulingFilter && <span className="vpd-chip">{schedulingLabel}  <button onClick={() => setSchedulingFilter('')} aria-label="Remove">×</button></span>}
+              {treatFilter      && <span className="vpd-chip">{treatFilter}      <button onClick={() => setTreatFilter('')}      aria-label="Remove">×</button></span>}
+              {approachFilter   && <span className="vpd-chip">{approachFilter}   <button onClick={() => setApproachFilter('')}   aria-label="Remove">×</button></span>}
+              {genderFilter     && <span className="vpd-chip">{genderFilter}     <button onClick={() => setGenderFilter('')}     aria-label="Remove">×</button></span>}
+              {languageFilter   && <span className="vpd-chip">{languageFilter}   <button onClick={() => setLanguageFilter('')}   aria-label="Remove">×</button></span>}
+              {ageFilter        && <span className="vpd-chip">Age: {ageFilter}   <button onClick={() => setAgeFilter('')}        aria-label="Remove">×</button></span>}
+              {acceptingNew     && <span className="vpd-chip">Accepting New Patients <button onClick={() => setAcceptingNew(false)} aria-label="Remove">×</button></span>}
+              {search           && <span className="vpd-chip">"{search}" <button onClick={() => setSearch('')} aria-label="Remove">×</button></span>}
               <button className="vpd-clear-btn" onClick={clearFilters}>Clear all</button>
             </div>
           )}

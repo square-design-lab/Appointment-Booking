@@ -92,3 +92,7 @@ export function createPatientCase(data) {
     body: JSON.stringify(data),
   });
 }
+
+export function fetchSchedulingMeta() {
+  return apiFetch('/api/booking/scheduling-meta');
+}

@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
-const twilio = require('twilio');
+const cors    = require('cors');
+const axios   = require('axios');
+const twilio  = require('twilio');
+const fs      = require('fs');
+const path    = require('path');
 
 const app = express();
 app.use(express.json());
@@ -811,6 +813,99 @@ app.post('/api/booking/slots', async (req, res) => {
 
 const batchAvailCache = { results: null, expiresAt: 0 };
 
+// ─── Scheduling-meta cache ────────────────────────────────────────────────────
+// Stores time-of-day availability patterns (Morning / Mid Day / Evening / Weekends)
+// per provider. Computed from 4-week slot data; refreshed at most once per 30 days.
+// Persisted to disk so it survives deploys (Cloud Run ephemeral FS — best-effort).
+
+const SCHEDULING_META_PATH = path.join(__dirname, 'scheduling-meta.json');
+const SCHEDULING_META_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+let schedulingMetaCache = { lastUpdated: null, providers: {}, expiresAt: 0 };
+
+// Load from disk on startup (skip if expired)
+(function loadSchedulingMetaFromDisk() {
+  try {
+    if (fs.existsSync(SCHEDULING_META_PATH)) {
+      const raw = JSON.parse(fs.readFileSync(SCHEDULING_META_PATH, 'utf8'));
+      if (raw && raw.expiresAt && Date.now() < raw.expiresAt) {
+        schedulingMetaCache = raw;
+        console.log('[scheduling-meta] Loaded from disk, expires:', new Date(raw.expiresAt).toISOString());
+      } else {
+        console.log('[scheduling-meta] Disk cache expired — will refresh on first request');
+      }
+    }
+  } catch (err) {
+    console.warn('[scheduling-meta] Could not load from disk:', err.message);
+  }
+})();
+
+// Classify a provider's slot list into time-of-day preference tags
+function classifySlots(appointments) {
+  const prefs = new Set();
+  for (const appt of appointments) {
+    const time = appt.starttime || ''; // "HH:MM"
+    const date = appt.date      || ''; // "MM/DD/YYYY"
+    if (time) {
+      const [h, m] = time.split(':').map(Number);
+      const mins = h * 60 + (m || 0);
+      if (mins < 720)       prefs.add('Morning');   // before 12:00
+      else if (mins < 1020) prefs.add('Mid Day');   // 12:00–17:00
+      else                  prefs.add('Evening');   // after 17:00
+    }
+    if (date) {
+      const [mm, dd, yyyy] = date.split('/');
+      if (mm && dd && yyyy) {
+        const dow = new Date(`${yyyy}-${mm}-${dd}`).getDay();
+        if (dow === 0 || dow === 6) prefs.add('Weekends');
+      }
+    }
+  }
+  return [...prefs];
+}
+
+// Refresh scheduling-meta for all providers. Runs ~once/month.
+// Sequential (not parallel) to avoid hammering Athena — each call is cheap.
+async function refreshSchedulingMeta() {
+  const today   = todayMMDDYYYY();
+  const endDate = futureDateMMDDYYYY(28);
+  console.log(`[scheduling-meta] Refreshing for ${providerContacts.length} providers (28-day window)…`);
+
+  const providerResults = {};
+  for (const p of providerContacts) {
+    const providerId   = String(p.athena_provider_id);
+    const departmentId = String(p.departmentId);
+    try {
+      const data = await athenaGet(
+        `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+        { providerid: providerId, departmentid: departmentId, startdate: today, enddate: endDate, reasonid: '-1' }
+      );
+      const appts = Array.isArray(data) ? data : (data.appointments || []);
+      providerResults[providerId] = classifySlots(appts);
+    } catch (err) {
+      console.warn(`[scheduling-meta] provider ${providerId} failed:`, err.response?.status ?? err.message);
+      providerResults[providerId] = [];
+    }
+  }
+
+  const newCache = {
+    lastUpdated: new Date().toISOString(),
+    providers:   providerResults,
+    expiresAt:   Date.now() + SCHEDULING_META_TTL_MS,
+  };
+  schedulingMetaCache = newCache;
+
+  // Persist to disk (best-effort)
+  try {
+    fs.writeFileSync(SCHEDULING_META_PATH, JSON.stringify(newCache), 'utf8');
+    console.log('[scheduling-meta] Persisted to disk');
+  } catch (err) {
+    console.warn('[scheduling-meta] Disk write failed (non-fatal):', err.message);
+  }
+  console.log('[scheduling-meta] Refresh complete');
+  return newCache;
+}
+
 app.post('/api/booking/batch-availability', async (req, res) => {
   const { providers } = req.body;
   if (!Array.isArray(providers) || providers.length === 0) {
@@ -827,6 +922,8 @@ app.post('/api/booking/batch-availability', async (req, res) => {
   const today   = todayMMDDYYYY();
   const endDate = futureDateMMDDYYYY(90);
 
+  const todayMs = (() => { const d = new Date(); d.setHours(0,0,0,0); return d.getTime(); })();
+
   const results = await Promise.all(
     providers.map(async ({ providerId, departmentId }) => {
       try {
@@ -841,9 +938,21 @@ app.post('/api/booking/batch-availability', async (req, res) => {
           }
         );
         const appts = Array.isArray(data) ? data : (data.appointments || []);
-        return { providerId: String(providerId), hasSlots: appts.length > 0 };
+        if (appts.length === 0) return { providerId: String(providerId), hasSlots: false, nextSlotDays: null };
+
+        // Find earliest slot date and compute days from today
+        let minMs = Infinity;
+        for (const appt of appts) {
+          const [mm, dd, yyyy] = (appt.date || '').split('/');
+          if (mm && dd && yyyy) {
+            const ms = new Date(`${yyyy}-${mm}-${dd}`).getTime();
+            if (ms < minMs) minMs = ms;
+          }
+        }
+        const nextSlotDays = minMs !== Infinity ? Math.round((minMs - todayMs) / 86400000) : null;
+        return { providerId: String(providerId), hasSlots: true, nextSlotDays };
       } catch {
-        return { providerId: String(providerId), hasSlots: true }; // fail open
+        return { providerId: String(providerId), hasSlots: true, nextSlotDays: null }; // fail open
       }
     })
   );
@@ -1446,6 +1555,40 @@ app.get('/api/booking/clear-availability-cache', (req, res) => {
     message:   'Availability cache cleared. Next directory load will fetch fresh data from Athena.',
     clearedAt: new Date().toISOString(),
   });
+});
+
+// ─── GET /api/booking/scheduling-meta ────────────────────────────────────────
+// Returns time-of-day scheduling preferences (Morning/Mid Day/Evening/Weekends)
+// per provider. Served from a 30-day in-memory + disk cache.
+// First request after cache expiry triggers a synchronous refresh (~46 Athena calls).
+app.get('/api/booking/scheduling-meta', async (_req, res) => {
+  const hasData = schedulingMetaCache.providers && Object.keys(schedulingMetaCache.providers).length > 0;
+  if (hasData && Date.now() < schedulingMetaCache.expiresAt) {
+    return res.json({ lastUpdated: schedulingMetaCache.lastUpdated, providers: schedulingMetaCache.providers });
+  }
+  try {
+    const fresh = await refreshSchedulingMeta();
+    return res.json({ lastUpdated: fresh.lastUpdated, providers: fresh.providers });
+  } catch (err) {
+    console.error('[scheduling-meta] Refresh error:', err.message);
+    return res.json({ lastUpdated: null, providers: {} }); // fail open
+  }
+});
+
+// ─── GET /api/booking/refresh-scheduling-meta ─────────────────────────────────
+// Manual trigger to force a scheduling-meta refresh (e.g. mid-month schedule change).
+// Usage: /api/booking/refresh-scheduling-meta?secret=<VANTAGE_API_SECRET>
+app.get('/api/booking/refresh-scheduling-meta', async (req, res) => {
+  const secret = req.query.secret;
+  if (process.env.VANTAGE_API_SECRET && secret !== process.env.VANTAGE_API_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    const fresh = await refreshSchedulingMeta();
+    return res.json({ success: true, lastUpdated: fresh.lastUpdated, providersCount: Object.keys(fresh.providers).length });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 });
 
 // ─── GET /api/booking/health ─────────────────────────────────────────────────
