@@ -1686,7 +1686,7 @@
   .vpd-select,
   .vpd-age-wrap {
     flex: unset;
-    width: calc((100% - 20px) / 3);
+    width: calc((100% - 10px) / 2);
   }
 }
 
