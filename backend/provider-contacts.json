@@ -13,7 +13,7 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 5,
+    "minAge": 3,
     "maxAge": 17,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -54,6 +54,7 @@
     "specialty": "Psychiatry",
     "specialties": [
       "Psychiatric Medication Management",
+      "ADHD Evaluation",
       "Psychopharmacologic Testing"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Emily-web-hs.webp",
@@ -61,7 +62,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 64,
+    "maxAge": 65,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -111,7 +112,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 64,
+    "maxAge": 60,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -150,14 +151,15 @@
     "credentials": "LMFT",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Couples Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lisa-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 64,
+    "minAge": 20,
+    "maxAge": 50,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -204,7 +206,7 @@
     "mobile_number": "",
     "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -246,13 +248,16 @@
     "provider_title": "Individual Therapist",
     "credentials": "LPCC, LADC",
     "specialty": "Therapy",
-    "specialties": [],
+    "specialties": [
+      "Mental Health Therapy",
+      "Teen Therapy"
+    ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Nora-HS-web.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 0,
-    "maxAge": 100,
+    "acceptingNew": false,
+    "minAge": 13,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -268,8 +273,26 @@
       "United Healthcare",
       "United Behavioral Health"
     ],
-    "whatWeTreat": [],
-    "treatmentApproach": [],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "ADHD",
+      "Relationship and Couples Issues",
+      "Family Conflict and Parenting Support",
+      "Grief and Loss",
+      "Life Transitions and Stress",
+      "Substance Use and Addiction",
+      "Self-Esteem and Identity",
+      "LGBTQ+",
+      "Women's Mental Health",
+      "Men's Mental Health",
+      "Chronic Illness"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
     "gender": "Female",
     "languages": [
       "English"
@@ -288,9 +311,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Sabrina-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": false,
+    "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 50,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -341,9 +364,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Jenna-HS2-1.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 17,
-    "maxAge": 100,
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -445,7 +468,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 75,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -492,9 +515,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Adam-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 64,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -596,7 +619,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 5,
-    "maxAge": 64,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
@@ -643,8 +666,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
-    "minAge": 18,
-    "maxAge": 100,
+    "minAge": 20,
+    "maxAge": 85,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -687,6 +710,7 @@
     "specialties": [
       "Mental Health Therapy",
       "Family Therapy",
+      "Couples Therapy",
       "Child Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Krystle-web-hs.webp",
@@ -736,7 +760,7 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
-    "minAge": 18,
+    "minAge": 20,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -786,9 +810,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Anna-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 10,
-    "maxAge": 60,
+    "acceptingNew": false,
+    "minAge": 14,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -835,7 +859,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 3,
-    "maxAge": 20,
+    "maxAge": 25,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -883,7 +907,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -929,7 +953,7 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 5,
+    "minAge": 13,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -965,14 +989,16 @@
     "credentials": "MA",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Couples Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Brooke-M-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 100,
+    "minAge": 15,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1008,13 +1034,14 @@
     "credentials": "PA-C",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management"
+      "Psychiatric Medication Management",
+      "ADHD Evaluation"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ann-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 16,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1054,13 +1081,15 @@
     "credentials": "LMFT",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Family Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/LisaM-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 13,
+    "acceptingNew": false,
+    "minAge": 12,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1103,9 +1132,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Laura-M-2-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 85,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1141,14 +1170,15 @@
     "credentials": "PA-C",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management"
+      "Psychiatric Medication Management",
+      "ADHD Evaluation"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lauren-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 65,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1193,7 +1223,7 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 5,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1231,13 +1261,14 @@
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
-      "Couples Therapy"
+      "Couples Therapy",
+      "Family Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Steve-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 16,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1274,14 +1305,15 @@
     "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management"
+      "Psychiatric Medication Management",
+      "ADHD Evaluation"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Polley-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 5,
-    "maxAge": 100,
+    "acceptingNew": false,
+    "minAge": 0,
+    "maxAge": 40,
     "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
       "Aetna",
@@ -1329,9 +1361,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Brittany-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1374,9 +1406,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Julie-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 3,
-    "maxAge": 17,
+    "maxAge": 21,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1424,9 +1456,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/SuzanneS-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1464,13 +1496,14 @@
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
-      "Couples Therapy"
+      "Couples Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/03/Jtagg-hs-web.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 13,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1512,7 +1545,9 @@
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
-      "Couples Therapy"
+      "Couples Therapy",
+      "Family Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ashley-web-hs.webp",
     "sms_opt_in": false,
@@ -1558,14 +1593,18 @@
     "credentials": "MA",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Family Therapy",
+      "Couples Therapy",
+      "Child Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Rachel-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 100,
+    "acceptingNew": false,
+    "minAge": 10,
+    "maxAge": 90,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1602,13 +1641,15 @@
     "specialties": [
       "Mental Health Therapy",
       "Family Therapy",
-      "Couples Therapy"
+      "Couples Therapy",
+      "Child Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Amanda-web-HS.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 10,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1651,13 +1692,14 @@
     "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Karla-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
+    "acceptingNew": false,
+    "minAge": 16,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN, Telehealth - WI",
     "insurance": [
@@ -1700,9 +1742,9 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Maryellen-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
+    "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 100,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1739,14 +1781,15 @@
     "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Teen Therapy"
     ],
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Gina-web-Headshot.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 0,
-    "maxAge": 100,
+    "minAge": 16,
+    "maxAge": 75,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1762,8 +1805,20 @@
       "United Healthcare",
       "United Behavioral Health"
     ],
-    "whatWeTreat": [],
-    "treatmentApproach": [],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Grief and Loss",
+      "Life Transitions and Stress",
+      "Self-Esteem and Identity",
+      "Women's Mental Health",
+      "Perinatal and Maternal Mental Health"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
     "gender": "Female",
     "languages": [
       "English"
@@ -1783,8 +1838,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 0,
-    "maxAge": 100,
+    "minAge": 18,
+    "maxAge": 55,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1800,7 +1855,375 @@
       "United Healthcare",
       "United Behavioral Health"
     ],
-    "whatWeTreat": [],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "ADHD",
+      "Relationship and Couples Issues",
+      "Family Conflict and Parenting Support",
+      "Grief and Loss",
+      "Life Transitions and Stress",
+      "Substance Use and Addiction",
+      "Eating and Body Image",
+      "Self-Esteem and Identity",
+      "Women's Mental Health",
+      "Men's Mental Health",
+      "Bipolar Disorder"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "IFS (Internal Family Systems)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "49",
+    "departmentId": "8",
+    "name": "Ali Kanan",
+    "provider_title": "Individual and Family Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Family Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 15,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "ADHD",
+      "Relationship and Couples Issues",
+      "Family Conflict and Parenting Support",
+      "Grief and Loss",
+      "Life Transitions and Stress",
+      "Bipolar Disorder",
+      "Personality Disorders",
+      "Autism Spectrum and Neurodivergence",
+      "Eating and Body Image",
+      "Sleep and Insomnia",
+      "Self-Esteem and Identity",
+      "Anger Management",
+      "Perinatal and Maternal Mental Health",
+      "LGBTQ+",
+      "Men's Mental Health",
+      "Chronic Illness"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "IFS (Internal Family Systems)",
+      "Parenting Therapy",
+      "Exposure Therapy",
+      "Executive Function Coaching"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "45",
+    "departmentId": "8",
+    "name": "Tamara Pribnow",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 65,
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Life Transitions and Stress",
+      "Self-Esteem and Identity",
+      "LGBTQ+"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "36",
+    "departmentId": "8",
+    "name": "Laura Anderson",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 80,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Life Transitions and Stress"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "48",
+    "departmentId": "8",
+    "name": "Andrew Gernand",
+    "provider_title": "Psychiatric Medication Management",
+    "credentials": "",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatric Medication Management"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 80,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "ADHD",
+      "Substance Use and Addiction",
+      "OCD (Obsessive Compulsive Disorder)",
+      "Bipolar Disorder",
+      "Autism Spectrum and Neurodivergence",
+      "Personality Disorders",
+      "Eating and Body Image",
+      "Sleep and Insomnia",
+      "Anger Management",
+      "Perinatal and Maternal Mental Health",
+      "LGBTQ+",
+      "Women's Mental Health",
+      "Men's Mental Health",
+      "Chronic Illness"
+    ],
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "50",
+    "departmentId": "8",
+    "name": "Brianna Lundgren",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 16,
+    "maxAge": 80,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Life Transitions and Stress"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "42",
+    "departmentId": "8",
+    "name": "Michael Richardson",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 5,
+    "maxAge": 80,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Life Transitions and Stress"
+    ],
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ]
+  },
+  {
+    "athena_provider_id": "51",
+    "departmentId": "1",
+    "name": "Janae Rothe",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 80,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Healthcare",
+      "United Behavioral Health",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Anxiety and Worry",
+      "Depression and Low Mood",
+      "Trauma and PTSD",
+      "Life Transitions and Stress"
+    ],
     "treatmentApproach": [],
     "gender": "Female",
     "languages": [
