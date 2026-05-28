@@ -42,7 +42,9 @@
     "treatmentApproach": [],
     "gender": "Female",
     "languages": [
-      "English"
+      "English",
+      "French",
+      "Arabic"
     ]
   },
   {
@@ -327,8 +329,7 @@
       "Optum",
       "UCare",
       "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
+      "United Behavioral Health"
     ],
     "whatWeTreat": [
       "Anxiety and Worry",
@@ -791,7 +792,8 @@
     "treatmentApproach": [],
     "gender": "Non-binary",
     "languages": [
-      "English"
+      "English",
+      "Polish"
     ]
   },
   {
@@ -1249,7 +1251,8 @@
     "treatmentApproach": [],
     "gender": "Female",
     "languages": [
-      "English"
+      "English",
+      "Yoruba"
     ]
   },
   {
@@ -1892,7 +1895,7 @@
       "Mental Health Therapy",
       "Family Therapy"
     ],
-    "photo": "",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Ali-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
@@ -1911,8 +1914,7 @@
       "Optum",
       "UCare",
       "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
+      "United Behavioral Health"
     ],
     "whatWeTreat": [
       "Anxiety and Worry",
@@ -1958,7 +1960,7 @@
     "specialties": [
       "Mental Health Therapy"
     ],
-    "photo": "",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Tamara-Web-HS.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
@@ -1977,8 +1979,7 @@
       "Optum",
       "UCare",
       "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
+      "United Behavioral Health"
     ],
     "whatWeTreat": [
       "Anxiety and Worry",
@@ -2108,7 +2109,7 @@
     "specialties": [
       "Mental Health Therapy"
     ],
-    "photo": "",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Bri-hs-web.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
@@ -2121,14 +2122,8 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "HealthPartners",
-      "Medica",
       "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
+      "UCare"
     ],
     "whatWeTreat": [
       "Anxiety and Worry",

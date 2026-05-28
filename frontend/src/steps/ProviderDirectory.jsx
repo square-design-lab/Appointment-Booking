@@ -96,7 +96,7 @@ const ALL_TREATMENT_APPROACH = [
 
 const ALL_GENDERS = ['Female', 'Male', 'Non-binary'];
 
-const ALL_LANGUAGES = ['English', 'Spanish', 'Other'];
+const ALL_LANGUAGES = ['Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -243,9 +243,11 @@ export default function ProviderDirectory() {
       // Service
       if (serviceFilter && !(p.specialties || []).includes(serviceFilter)) return false;
 
-      // Location — "telehealth" is a virtual location option
-      if (locationFilter === 'telehealth') {
-        if (!(p.telehealthLocs || '').toLowerCase().includes('telehealth - mn')) return false;
+      // Location
+      if (locationFilter === 'telehealth-mn') {
+        if (!(p.telehealthLocs || '').includes('Telehealth - MN')) return false;
+      } else if (locationFilter === 'telehealth-wi') {
+        if (!(p.telehealthLocs || '').includes('Telehealth - WI')) return false;
       } else if (locationFilter) {
         if (p.departmentId !== locationFilter) return false;
       }
@@ -262,8 +264,12 @@ export default function ProviderDirectory() {
       // Gender
       if (genderFilter && p.gender !== genderFilter) return false;
 
-      // Language
-      if (languageFilter && !(p.languages || []).includes(languageFilter)) return false;
+      // Language — "Other" matches any provider who speaks a language besides English
+      if (languageFilter === 'Other') {
+        if (!(p.languages || []).some((l) => l !== 'English')) return false;
+      } else if (languageFilter) {
+        if (!(p.languages || []).includes(languageFilter)) return false;
+      }
 
       // Age
       if (ageFilter !== '') {
@@ -311,8 +317,10 @@ export default function ProviderDirectory() {
     setSearch('');
   }
 
-  const locationLabel = locationFilter === 'telehealth'
-    ? 'Telehealth'
+  const locationLabel = locationFilter === 'telehealth-mn'
+    ? 'Telehealth - MN'
+    : locationFilter === 'telehealth-wi'
+    ? 'Telehealth - WI'
     : DEPT_NAMES[locationFilter] || '';
 
   return (
@@ -409,7 +417,8 @@ export default function ProviderDirectory() {
               <option value="1">Stillwater</option>
               <option value="8">Edina</option>
               <option value="5">St. Anthony</option>
-              <option value="telehealth">Telehealth / Virtual</option>
+              <option value="telehealth-mn">Telehealth - MN</option>
+              <option value="telehealth-wi">Telehealth - WI</option>
             </select>
 
             <select
