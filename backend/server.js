@@ -840,12 +840,17 @@ let schedulingMetaCache = { lastUpdated: null, providers: {}, expiresAt: 0 };
   }
 })();
 
-// Classify a provider's slot list into time-of-day preference tags
-function classifySlots(appointments) {
-  const prefs = new Set();
+// Classify a provider's slot list into scheduling preference tags.
+// refreshDateMs = UTC midnight of the day the refresh runs (for availability-speed tags).
+function classifySlots(appointments, refreshDateMs) {
+  const prefs    = new Set();
+  let   minDays  = Infinity;
+
   for (const appt of appointments) {
     const time = appt.starttime || ''; // "HH:MM"
     const date = appt.date      || ''; // "MM/DD/YYYY"
+
+    // Time-of-day tags
     if (time) {
       const [h, m] = time.split(':').map(Number);
       const mins = h * 60 + (m || 0);
@@ -853,23 +858,36 @@ function classifySlots(appointments) {
       else if (mins < 1020) prefs.add('Mid Day');   // 12:00–17:00
       else                  prefs.add('Evening');   // after 17:00
     }
+
+    // Weekend + availability-speed tags
     if (date) {
       const [mm, dd, yyyy] = date.split('/');
       if (mm && dd && yyyy) {
-        const dow = new Date(`${yyyy}-${mm}-${dd}`).getDay();
+        const slotMs = new Date(`${yyyy}-${mm}-${dd}`).getTime();
+        const dow    = new Date(`${yyyy}-${mm}-${dd}`).getDay();
         if (dow === 0 || dow === 6) prefs.add('Weekends');
+        const days = Math.round((slotMs - refreshDateMs) / 86400000);
+        if (days >= 0 && days < minDays) minDays = days;
       }
     }
   }
+
+  // Availability-speed tags — based on earliest slot relative to refresh date
+  if (minDays <= 7)  prefs.add('Opening This Week');
+  if (minDays <= 14) prefs.add('In Less Than Two Weeks');
+  if (minDays <= 31) prefs.add('Within One Month');
+
   return [...prefs];
 }
 
 // Refresh scheduling-meta for all providers. Runs ~once/month.
 // Sequential (not parallel) to avoid hammering Athena — each call is cheap.
 async function refreshSchedulingMeta() {
-  const today   = todayMMDDYYYY();
-  const endDate = futureDateMMDDYYYY(28);
-  console.log(`[scheduling-meta] Refreshing for ${providerContacts.length} providers (28-day window)…`);
+  const today         = todayMMDDYYYY();
+  const endDate       = futureDateMMDDYYYY(31); // cover full "Within One Month" window
+  const rd            = new Date(); rd.setHours(0, 0, 0, 0);
+  const refreshDateMs = rd.getTime();
+  console.log(`[scheduling-meta] Refreshing for ${providerContacts.length} providers (31-day window)…`);
 
   const providerResults = {};
   for (const p of providerContacts) {
@@ -881,7 +899,7 @@ async function refreshSchedulingMeta() {
         { providerid: providerId, departmentid: departmentId, startdate: today, enddate: endDate, reasonid: '-1' }
       );
       const appts = Array.isArray(data) ? data : (data.appointments || []);
-      providerResults[providerId] = classifySlots(appts);
+      providerResults[providerId] = classifySlots(appts, refreshDateMs);
     } catch (err) {
       console.warn(`[scheduling-meta] provider ${providerId} failed:`, err.response?.status ?? err.message);
       providerResults[providerId] = [];
@@ -922,8 +940,6 @@ app.post('/api/booking/batch-availability', async (req, res) => {
   const today   = todayMMDDYYYY();
   const endDate = futureDateMMDDYYYY(90);
 
-  const todayMs = (() => { const d = new Date(); d.setHours(0,0,0,0); return d.getTime(); })();
-
   const results = await Promise.all(
     providers.map(async ({ providerId, departmentId }) => {
       try {
@@ -938,21 +954,9 @@ app.post('/api/booking/batch-availability', async (req, res) => {
           }
         );
         const appts = Array.isArray(data) ? data : (data.appointments || []);
-        if (appts.length === 0) return { providerId: String(providerId), hasSlots: false, nextSlotDays: null };
-
-        // Find earliest slot date and compute days from today
-        let minMs = Infinity;
-        for (const appt of appts) {
-          const [mm, dd, yyyy] = (appt.date || '').split('/');
-          if (mm && dd && yyyy) {
-            const ms = new Date(`${yyyy}-${mm}-${dd}`).getTime();
-            if (ms < minMs) minMs = ms;
-          }
-        }
-        const nextSlotDays = minMs !== Infinity ? Math.round((minMs - todayMs) / 86400000) : null;
-        return { providerId: String(providerId), hasSlots: true, nextSlotDays };
+        return { providerId: String(providerId), hasSlots: appts.length > 0 };
       } catch {
-        return { providerId: String(providerId), hasSlots: true, nextSlotDays: null }; // fail open
+        return { providerId: String(providerId), hasSlots: true }; // fail open
       }
     })
   );

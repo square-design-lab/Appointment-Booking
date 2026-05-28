@@ -68,7 +68,6 @@ const ALL_SCHEDULING = [
   { value: 'Within One Month',       label: 'Within One Month' },
 ];
 
-const SCHEDULING_TIME_OF_DAY = new Set(['Morning', 'Mid Day', 'Evening', 'Weekends']);
 
 const ALL_WHAT_WE_TREAT = [
   'Anxiety and Worry',
@@ -110,7 +109,7 @@ const ALL_TREATMENT_APPROACH = [
 
 const ALL_GENDERS = ['Female', 'Male', 'Non-binary'];
 
-const ALL_LANGUAGES = ['Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
+const ALL_LANGUAGES = ['English', 'Spanish', 'Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -226,11 +225,9 @@ export default function ProviderDirectory() {
   const [search,           setSearch]           = useState('');
 
   // null = loading, Map<providerId, bool> once resolved
-  const [availability,    setAvailability]    = useState(null);
-  // Map<providerId, number|null> — days until next open slot (from batch-availability)
-  const [nextSlotDaysMap, setNextSlotDaysMap] = useState(new Map());
-  // { [providerId]: string[] } — time-of-day prefs from scheduling-meta (monthly cache)
-  const [schedulingMeta,  setSchedulingMeta]  = useState({});
+  const [availability,   setAvailability]   = useState(null);
+  // { [providerId]: string[] } — all scheduling prefs from scheduling-meta (monthly cache)
+  const [schedulingMeta, setSchedulingMeta] = useState({});
 
   // Responsive search placeholder
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
@@ -241,8 +238,7 @@ export default function ProviderDirectory() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  // Batch availability — real-time, 4-hour server cache.
-  // Also populates nextSlotDaysMap for availability-speed scheduling filters.
+  // Batch availability — real-time, 4-hour server cache (show/hide Book button only).
   useEffect(() => {
     const list = providers.map((p) => ({
       providerId:   String(p.athena_provider_id),
@@ -251,13 +247,10 @@ export default function ProviderDirectory() {
     fetchBatchAvailability(list)
       .then((data) => {
         const availMap = new Map();
-        const daysMap  = new Map();
-        for (const { providerId, hasSlots, nextSlotDays } of data.results || []) {
+        for (const { providerId, hasSlots } of data.results || []) {
           availMap.set(String(providerId), hasSlots);
-          daysMap.set(String(providerId), nextSlotDays ?? null);
         }
         setAvailability(availMap);
-        setNextSlotDaysMap(daysMap);
       })
       .catch(() => setAvailability(new Map())); // fail open — show all book buttons
   }, []);
@@ -289,20 +282,8 @@ export default function ProviderDirectory() {
       // Insurance
       if (insuranceFilter && !(p.insurance || []).includes(insuranceFilter)) return false;
 
-      // Scheduling preference
-      if (schedulingFilter) {
-        if (SCHEDULING_TIME_OF_DAY.has(schedulingFilter)) {
-          // Time-of-day: sourced from monthly schedulingMeta
-          if (!(schedulingMeta[pid] || []).includes(schedulingFilter)) return false;
-        } else {
-          // Availability speed: sourced from real-time nextSlotDaysMap
-          const days = nextSlotDaysMap.get(pid);
-          if (days == null) return false;
-          if (schedulingFilter === 'Opening This Week'       && days > 7)  return false;
-          if (schedulingFilter === 'In Less Than Two Weeks'  && days > 14) return false;
-          if (schedulingFilter === 'Within One Month'        && days > 31) return false;
-        }
-      }
+      // Scheduling preference — all tags sourced from monthly scheduling-meta
+      if (schedulingFilter && !(schedulingMeta[pid] || []).includes(schedulingFilter)) return false;
 
       // What We Treat
       if (treatFilter && !(p.whatWeTreat || []).includes(treatFilter)) return false;
@@ -349,7 +330,7 @@ export default function ProviderDirectory() {
 
       return true;
     });
-  }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search, schedulingMeta, nextSlotDaysMap]);
+  }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search, schedulingMeta]);
 
   const hasFilters = serviceFilter || locationFilter || insuranceFilter || schedulingFilter || treatFilter || approachFilter || genderFilter || languageFilter || ageFilter || acceptingNew || search;
 
@@ -519,9 +500,9 @@ export default function ProviderDirectory() {
               className="vpd-select"
               value={approachFilter}
               onChange={(e) => setApproachFilter(e.target.value)}
-              aria-label="Filter by treatment approach"
+              aria-label="Filter by modalities"
             >
-              <option value="">Treatment Approach</option>
+              <option value="">Modalities</option>
               {ALL_TREATMENT_APPROACH.map((a) => (
                 <option key={a} value={a}>{a}</option>
               ))}
