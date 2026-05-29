@@ -125,12 +125,16 @@ function getInitials(name) {
 }
 
 function buildBookingUrl(provider) {
-  const service = SPECIALTY_TO_SERVICE[provider.specialties[0]] || '';
+  const services = provider.services || [];
   const params = new URLSearchParams({
     locationId:     `${ATHENA_PRACTICE_ID}-${provider.departmentId}`,
     practitionerId: `${ATHENA_PRACTICE_ID}-${provider.athena_provider_id}`,
-    service,
   });
+  // Only include service in URL when provider offers exactly one —
+  // multi-service providers show the service selector in Step 1.
+  if (services.length === 1) {
+    params.set('service', services[0]);
+  }
   return BASE_URL + '?' + params.toString();
 }
 
