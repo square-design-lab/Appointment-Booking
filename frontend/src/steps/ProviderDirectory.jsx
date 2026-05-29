@@ -111,6 +111,31 @@ const ALL_GENDERS = ['Female', 'Male', 'Non-binary'];
 
 const ALL_LANGUAGES = ['English', 'Spanish', 'Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
 
+// ── URL ↔ filter sync ────────────────────────────────────────────────────────
+
+// Reverse of SPECIALTY_TO_SERVICE: slug → display name
+const SERVICE_SLUG_TO_SPECIALTY = Object.fromEntries(
+  Object.entries(SPECIALTY_TO_SERVICE).map(([display, slug]) => [slug, display])
+);
+
+function parseDirectoryParams() {
+  const p = new URLSearchParams(window.location.search);
+  const serviceSlug = p.get('service') || '';
+  return {
+    service:    SERVICE_SLUG_TO_SPECIALTY[serviceSlug] || '',
+    location:   p.get('location')   || '',
+    insurance:  p.get('insurance')  || '',
+    scheduling: p.get('scheduling') || '',
+    treat:      p.get('treat')      || '',
+    approach:   p.get('approach')   || '',
+    gender:     p.get('gender')     || '',
+    language:   p.get('language')   || '',
+    age:        p.get('age')        || '',
+    accepting:  p.get('accepting')  === '1',
+    search:     p.get('search')     || '',
+  };
+}
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function getInitials(name) {
@@ -210,17 +235,19 @@ function ProviderCard({ provider, hasSlots, availabilityLoading }) {
 // ── ProviderDirectory ────────────────────────────────────────────────────────
 
 export default function ProviderDirectory() {
-  const [serviceFilter,    setServiceFilter]    = useState('');
-  const [locationFilter,   setLocationFilter]   = useState('');
-  const [insuranceFilter,  setInsuranceFilter]  = useState('');
-  const [schedulingFilter, setSchedulingFilter] = useState('');
-  const [treatFilter,      setTreatFilter]      = useState('');
-  const [approachFilter,   setApproachFilter]   = useState('');
-  const [genderFilter,     setGenderFilter]     = useState('');
-  const [languageFilter,   setLanguageFilter]   = useState('');
-  const [ageFilter,        setAgeFilter]        = useState('');
-  const [acceptingNew,     setAcceptingNew]     = useState(false);
-  const [search,           setSearch]           = useState('');
+  // Initialise each filter from URL params (lazy — runs once on mount)
+  const [initParams] = useState(parseDirectoryParams);
+  const [serviceFilter,    setServiceFilter]    = useState(initParams.service);
+  const [locationFilter,   setLocationFilter]   = useState(initParams.location);
+  const [insuranceFilter,  setInsuranceFilter]  = useState(initParams.insurance);
+  const [schedulingFilter, setSchedulingFilter] = useState(initParams.scheduling);
+  const [treatFilter,      setTreatFilter]      = useState(initParams.treat);
+  const [approachFilter,   setApproachFilter]   = useState(initParams.approach);
+  const [genderFilter,     setGenderFilter]     = useState(initParams.gender);
+  const [languageFilter,   setLanguageFilter]   = useState(initParams.language);
+  const [ageFilter,        setAgeFilter]        = useState(initParams.age);
+  const [acceptingNew,     setAcceptingNew]     = useState(initParams.accepting);
+  const [search,           setSearch]           = useState(initParams.search);
 
   // null = loading, Map<providerId, bool> once resolved
   const [availability,   setAvailability]   = useState(null);
@@ -235,6 +262,25 @@ export default function ProviderDirectory() {
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, []);
+
+  // Sync filter state → URL (replaceState so back button isn't polluted)
+  useEffect(() => {
+    const params = new URLSearchParams();
+    const slug = SPECIALTY_TO_SERVICE[serviceFilter] || '';
+    if (slug)             params.set('service',    slug);
+    if (locationFilter)   params.set('location',   locationFilter);
+    if (insuranceFilter)  params.set('insurance',  insuranceFilter);
+    if (schedulingFilter) params.set('scheduling', schedulingFilter);
+    if (treatFilter)      params.set('treat',      treatFilter);
+    if (approachFilter)   params.set('approach',   approachFilter);
+    if (genderFilter)     params.set('gender',     genderFilter);
+    if (languageFilter)   params.set('language',   languageFilter);
+    if (ageFilter)        params.set('age',        ageFilter);
+    if (acceptingNew)     params.set('accepting',  '1');
+    if (search)           params.set('search',     search);
+    const qs = params.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
+  }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search]);
 
   // Batch availability — real-time, 4-hour server cache (show/hide Book button only).
   useEffect(() => {
