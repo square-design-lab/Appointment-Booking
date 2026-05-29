@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useBooking } from '../BookingContext';
+import { useBooking, SERVICE_LABELS } from '../BookingContext';
 import { fetchReasons, fetchSlots } from '../api/bookingApi';
 import ReasonCard from '../components/ReasonCard';
 import ErrorScreen from '../components/ErrorScreen';
@@ -88,12 +88,16 @@ export default function Step1Details() {
     providerMaxAge,
     providerTelehealthLocs,
     setCurrentStep,
+    selectedService, setSelectedService,
     patientType,    setPatientType,
     visitType,      setVisitType,
     telehealthState, setTelehealthState,
     dob,            setDob,
     selectedReason, setSelectedReason,
   } = useBooking();
+
+  // Effective service slug — URL takes priority, otherwise user-selected
+  const effectiveService = urlParams.service || selectedService;
 
   // Reasons state
   const [reasons, setReasons]               = useState([]);
@@ -122,6 +126,21 @@ export default function Step1Details() {
       setTelehealthState(urlParams.telehealthState);
     }
   }, [urlParams.telehealthState]);
+
+  // Auto-select single service when no URL service and provider has exactly one service
+  useEffect(() => {
+    if (urlParams.service) return;
+    const services = providerInfo?.services || [];
+    if (services.length === 1) setSelectedService(services[0]);
+  }, [providerInfo?.services, urlParams.service]);
+
+  // When selectedService changes (or reasons load), auto-select the matching reason
+  useEffect(() => {
+    if (urlParams.service) return; // URL service auto-selection handled in loadReasons
+    if (!selectedService || !reasons.length) return;
+    const match = findBestReasonMatch(selectedService, reasons);
+    setSelectedReason(match || null);
+  }, [selectedService, reasons]);
 
   // Load reasons when patientType, departmentId, or providerId changes
   const loadReasons = useCallback(() => {
@@ -231,10 +250,10 @@ export default function Step1Details() {
 
   // In-person only service check
   function getInPersonOnlyError() {
-    if (!urlParams.service || visitType !== 'telehealth') return null;
-    if (IN_PERSON_ONLY.includes(urlParams.service)) {
+    if (!effectiveService || visitType !== 'telehealth') return null;
+    if (IN_PERSON_ONLY.includes(effectiveService)) {
       const labels = { tms: 'TMS', 'psych-testing': 'Psychopharmacologic Testing' };
-      return `${labels[urlParams.service] || 'This service'} is only available in-person. Please select In-Person.`;
+      return `${labels[effectiveService] || 'This service'} is only available in-person. Please select In-Person.`;
     }
     return null;
   }
@@ -261,8 +280,13 @@ export default function Step1Details() {
     !inPersonError &&
     !urlParams.telehealthState;
 
+  // Provider services for the selector (only when service not in URL)
+  const providerServices = !urlParams.service ? (providerInfo?.services || []) : [];
+  const showServiceSelector = providerServices.length > 1;
+
   // All conditions except slot availability
   const baseReady =
+    !!effectiveService &&
     !!patientType &&
     !!visitType &&
     (visitType !== 'telehealth' || (!!telehealthState && !thStateError)) &&
@@ -289,6 +313,36 @@ export default function Step1Details() {
   return (
     <div className="vbf-card">
       <h1 className="vbf-step-title">Tell us about your visit</h1>
+
+      {/* ── 0. Service selection (only when service not in URL and provider offers multiple) ── */}
+      {showServiceSelector && (
+        <>
+          <div>
+            <div className="vbf-section-label">What type of service are you booking?</div>
+            <div className="vbf-toggle-group" role="radiogroup" aria-label="Service type">
+              {providerServices.map((slug) => (
+                <React.Fragment key={slug}>
+                  <input
+                    type="radio"
+                    id={`svc-${slug}`}
+                    name="serviceType"
+                    value={slug}
+                    checked={selectedService === slug}
+                    onChange={() => { setSelectedService(slug); setSelectedReason(null); }}
+                  />
+                  <label
+                    htmlFor={`svc-${slug}`}
+                    className={selectedService === slug ? 'vbf-checked' : ''}
+                  >
+                    {SERVICE_LABELS[slug] || slug}
+                  </label>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+          <div className="vbf-divider" />
+        </>
+      )}
 
       {/* ── 1. Patient history ─────────────────────────────────────── */}
       <div>

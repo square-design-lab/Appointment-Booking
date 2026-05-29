@@ -91,6 +91,9 @@ export function BookingProvider({ children }) {
   const [dob, setDob]                         = useState(urlParams.dob || '');
   const [selectedReason, setSelectedReason]   = useState(null);
 
+  // Service selection (used when service slug is not in URL)
+  const [selectedService, setSelectedService] = useState('');
+
   // Step 2
   const [selectedDate, setSelectedDate]               = useState(null);
   const [selectedTime, setSelectedTime]               = useState(null);
@@ -114,6 +117,7 @@ export function BookingProvider({ children }) {
         photo:       found.photo || null,
         specialties: found.specialties || [],
         specialty:   found.specialty || '',
+        services:    found.services || [],
       });
       // Derive provider-specific params from JSON — these are no longer in the URL
       setProviderMinAge(found.minAge ?? 0);
@@ -136,6 +140,7 @@ export function BookingProvider({ children }) {
     providerTelehealthLocs,
     locationInfo,
     serviceLabel,
+    selectedService, setSelectedService,
     patientType,  setPatientType,
     visitType,    setVisitType,
     telehealthState, setTelehealthState,

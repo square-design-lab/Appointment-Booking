@@ -68,6 +68,7 @@ const INSURANCE_OPTIONS = [
 export default function Step3Registration() {
   const {
     urlParams,
+    selectedService,
     dob,   setDob,
     setCurrentStep,
     selectedReason,
@@ -79,6 +80,8 @@ export default function Step3Registration() {
     setBookingConfirmation,
     visitType,
   } = useBooking();
+
+  const effectiveService = urlParams.service || selectedService;
 
   // ── Section A: Patient information ────────────────────────────────────────
   const [firstName,    setFirstName]    = useState(patientData.firstName    || '');
@@ -252,9 +255,9 @@ export default function Step3Registration() {
     }
 
     // 3 — Write service note (best-effort)
-    if (urlParams.service) {
+    if (effectiveService) {
       try {
-        await writeServiceNote({ appointmentId: bookedId, serviceSlug: urlParams.service, patientType: urlParams.patientType });
+        await writeServiceNote({ appointmentId: bookedId, serviceSlug: effectiveService, patientType: urlParams.patientType });
       } catch { /* non-fatal */ }
     }
 

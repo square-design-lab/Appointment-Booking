@@ -45,6 +45,9 @@
       "English",
       "French",
       "Arabic"
+    ],
+    "services": [
+      "psychiatry"
     ]
   },
   {
@@ -96,6 +99,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -143,6 +151,10 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   },
   {
@@ -191,6 +203,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   },
   {
@@ -241,6 +257,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -298,6 +317,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
@@ -350,6 +373,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -398,6 +424,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -452,6 +481,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
@@ -500,6 +533,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -551,6 +587,10 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   },
   {
@@ -600,6 +640,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -651,6 +696,12 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "tms",
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -699,6 +750,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -744,6 +798,12 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-child"
     ]
   },
   {
@@ -794,6 +854,10 @@
     "languages": [
       "English",
       "Polish"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   },
   {
@@ -844,6 +908,12 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-teen"
     ]
   },
   {
@@ -892,6 +962,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry"
     ]
   },
   {
@@ -937,6 +1010,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -981,6 +1057,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
@@ -1026,6 +1107,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-teen"
     ]
   },
   {
@@ -1073,6 +1159,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
     ]
   },
   {
@@ -1119,6 +1209,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-teen"
     ]
   },
   {
@@ -1134,8 +1229,7 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Laura-M-2-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true
-    ,
+    "acceptingNew": true,
     "minAge": 18,
     "maxAge": 85,
     "telehealthLocs": "Telehealth - MN",
@@ -1163,6 +1257,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -1210,6 +1307,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
     ]
   },
   {
@@ -1254,6 +1355,9 @@
     "languages": [
       "English",
       "Yoruba"
+    ],
+    "services": [
+      "psychiatry"
     ]
   },
   {
@@ -1299,6 +1403,11 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-family"
     ]
   },
   {
@@ -1349,6 +1458,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
     ]
   },
   {
@@ -1393,6 +1506,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   },
   {
@@ -1445,6 +1562,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
@@ -1489,6 +1611,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -1538,6 +1663,11 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-teen"
     ]
   },
   {
@@ -1587,6 +1717,12 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-family",
+      "therapy-teen"
     ]
   },
   {
@@ -1633,6 +1769,13 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
@@ -1686,6 +1829,13 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
@@ -1731,6 +1881,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
@@ -1775,6 +1929,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -1826,6 +1983,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
@@ -1883,6 +2044,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -1949,6 +2113,10 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family"
     ]
   },
   {
@@ -1997,6 +2165,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -2041,6 +2212,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -2098,6 +2272,9 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "psychiatry"
     ]
   },
   {
@@ -2113,7 +2290,7 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Bri-hs-web.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": false,
+    "acceptingNew": true,
     "minAge": 16,
     "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
@@ -2136,6 +2313,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -2180,6 +2360,9 @@
     "gender": "Male",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   },
   {
@@ -2224,6 +2407,9 @@
     "gender": "Female",
     "languages": [
       "English"
+    ],
+    "services": [
+      "therapy-individual"
     ]
   }
 ]
