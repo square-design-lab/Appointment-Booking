@@ -1547,6 +1547,25 @@ app.get('/api/booking/clear-availability-cache', (req, res) => {
   });
 });
 
+// ─── GET /api/booking/clear-reasons-cache ────────────────────────────────────
+// Browser-callable endpoint. Clears the in-memory reasons cache so the next
+// booking request fetches fresh reasons from Athena for all providers.
+// Usage: https://booking-backend-717838047212.us-central1.run.app/api/booking/clear-reasons-cache?secret=vantage-sync-2026
+app.get('/api/booking/clear-reasons-cache', (req, res) => {
+  const secret = req.query.secret;
+  if (process.env.VANTAGE_API_SECRET && secret !== process.env.VANTAGE_API_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const count = reasonsCache.size;
+  reasonsCache.clear();
+  console.log('[booking] reasonsCache manually cleared via browser');
+  return res.json({
+    success:   true,
+    message:   `Reasons cache cleared (${count} entries). Next booking request will fetch fresh reasons from Athena.`,
+    clearedAt: new Date().toISOString(),
+  });
+});
+
 // ─── GET /api/booking/scheduling-meta ────────────────────────────────────────
 // Returns time-of-day scheduling preferences (Morning/Mid Day/Evening/Weekends)
 // per provider. Served from a 30-day in-memory + disk cache.
