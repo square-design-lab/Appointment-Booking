@@ -737,15 +737,16 @@ app.post('/api/booking/reasons', async (req, res) => {
 
 // ─── POST /api/booking/slots ──────────────────────────────────────────────────
 // Returns open appointment slots grouped by date.
-// Strategy: try with the specific reasonId first (correct for production where
-// reasons are linked to appointment types). If Athena returns zero slots, retry
-// with reasonid=-1 (returns all open slots — needed for sandbox, and as a
-// safety net for any provider whose reasons aren't fully configured yet).
+// Always uses the specific reasonId — this is critical for production because
+// Athena's external scheduling rules (telehealth-only days, appointment duration
+// requirements, etc.) are only applied when a real reason ID is provided.
+// Using reasonid=-1 bypasses those rules and returns raw open blocks regardless
+// of day restrictions or whether consecutive blocks exist for the required duration.
 app.post('/api/booking/slots', async (req, res) => {
   const { reasonId, providerId, departmentId, startDate, endDate } = req.body;
 
-  if (!providerId || !departmentId) {
-    return res.status(400).json({ error: 'Missing providerId or departmentId' });
+  if (!providerId || !departmentId || !reasonId) {
+    return res.status(400).json({ error: 'Missing providerId, departmentId, or reasonId' });
   }
 
   const baseParams = {
@@ -756,28 +757,12 @@ app.post('/api/booking/slots', async (req, res) => {
   };
 
   try {
-    // Step 1 — specific reason (production path)
-    let appointments = [];
-    if (reasonId && reasonId !== '-1') {
-      const data = await athenaGet(
-        `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
-        { ...baseParams, reasonid: reasonId }
-      );
-      appointments = Array.isArray(data) ? data : (data.appointments || []);
-      if (appointments.length > 0) {
-        console.log(`[booking/slots] provider ${providerId}: ${appointments.length} slots via reasonId ${reasonId}`);
-      }
-    }
-
-    // Step 2 — fallback to -1 if specific reason returned nothing
-    if (appointments.length === 0) {
-      const data = await athenaGet(
-        `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
-        { ...baseParams, reasonid: '-1' }
-      );
-      appointments = Array.isArray(data) ? data : (data.appointments || []);
-      console.log(`[booking/slots] provider ${providerId}: ${appointments.length} slots via reasonId -1 (fallback)`);
-    }
+    const data = await athenaGet(
+      `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+      { ...baseParams, reasonid: reasonId }
+    );
+    const appointments = Array.isArray(data) ? data : (data.appointments || []);
+    console.log(`[booking/slots] provider ${providerId}: ${appointments.length} slots via reasonId ${reasonId}`);
 
     // Group slots by date
     const byDate = {};
