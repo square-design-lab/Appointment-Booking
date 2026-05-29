@@ -1457,12 +1457,6 @@ app.post('/api/booking/update-insurance', async (req, res) => {
 // correct office staff so staff can verify new vs. duplicate patient records.
 // HIPAA: internalnote contains PHI — never echo it back in logs.
 
-const CASE_ASSIGNED_TO = {
-  '1': 'STILLWATER OFFICE STAFF',
-  '5': 'SAINT ANTHONY OFFICE STAFF',
-  '8': 'EDINA OFFICE STAFF',
-};
-
 app.post('/api/booking/create-patient-case', async (req, res) => {
   const { patientId, departmentId, providerId, patientData: pd, appointmentData: ad } = req.body;
 
@@ -1471,7 +1465,7 @@ app.post('/api/booking/create-patient-case', async (req, res) => {
     return res.json({ success: false });
   }
 
-  const assignedTo = CASE_ASSIGNED_TO[String(departmentId)] || 'STILLWATER OFFICE STAFF';
+  const assignedTo = 'STILLWATER OFFICE STAFF';
 
   const noteText =
     `The patient booked an appointment online.\n` +
