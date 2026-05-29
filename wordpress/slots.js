@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Receives a pre-captured data object — never re-reads from the DOM
   // (closeModal resets the form before this runs, so DOM reads would be empty).
   function redirect(data) {
-    var bookingPage = 'https://booking-frontend-717838047212.us-central1.run.app/';
+    var bookingPage = 'https://book.vantagementalhealth.org/';
     var params = new URLSearchParams(
       Object.fromEntries(
         Object.entries(data).filter(function (pair) {

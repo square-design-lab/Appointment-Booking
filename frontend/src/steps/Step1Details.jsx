@@ -473,14 +473,14 @@ export default function Step1Details() {
           <span>
             This provider has no available appointments for the selected visit type. Please call{' '}
             <a href="tel:6512171480" style={{ fontWeight: 700 }}>(651) 217-1480</a> or{' '}
-            <a href="https://booking-frontend-717838047212.us-central1.run.app/">choose a different provider</a>.
+            <a href="https://book.vantagementalhealth.org/">choose a different provider</a>.
           </span>
         </div>
       )}
 
       {/* ── Navigation ────────────────────────────────────────────── */}
       <div className="vbf-nav">
-        <a href="https://booking-frontend-717838047212.us-central1.run.app/" className="vbf-btn vbf-btn--ghost">
+        <a href="https://book.vantagementalhealth.org/" className="vbf-btn vbf-btn--ghost">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M4.22,9.28l-4-4A.751.751,0,0,1,.235,4.2L4.22.22A.75.75,0,0,1,5.28,1.281L2.561,4H14.75a.75.75,0,0,1,0,1.5H2.561L5.28,8.22A.75.75,0,1,1,4.22,9.28Z" transform="translate(4.25 7.25)" fill="currentColor"/>
           </svg>

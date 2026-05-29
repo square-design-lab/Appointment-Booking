@@ -6,7 +6,7 @@ import { ATHENA_PRACTICE_ID } from '../BookingContext';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const BASE_URL = 'https://booking-frontend-717838047212.us-central1.run.app/';
+const BASE_URL = 'https://book.vantagementalhealth.org/';
 
 const DEPT_NAMES = {
   '1': 'Stillwater',

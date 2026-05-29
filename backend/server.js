@@ -13,7 +13,8 @@ const ALLOWED_ORIGINS = [
   'https://checkin.vantagementalhealth.org',
   'https://vantagementalhealth.org',
   'https://www.vantagementalhealth.org',
-  // Cloud Run — booking frontend service
+  // Booking frontend — subdomain (primary) and Cloud Run URL (both work)
+  'https://book.vantagementalhealth.org',
   'https://booking-frontend-717838047212.us-central1.run.app',
   'http://localhost:5173',
   'http://localhost:5174',
