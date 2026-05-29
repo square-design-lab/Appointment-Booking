@@ -26,11 +26,11 @@ export const LOCATION_INFO = {
   },
   '5': {
     name:    'Vantage Mental Health — St. Anthony',
-    address: '3401 Silver Lake Road NE, Suite 400, St. Anthony, MN 55418',
+    address: '2855 Anthony Ln S, Suite 201, Saint Anthony, MN 55418',
   },
   '8': {
     name:    'Vantage Mental Health — Edina',
-    address: '4010 W 65th Street, Suite 200, Edina, MN 55435',
+    address: '7401 Metro Blvd, Suite 425, Edina, MN 55439',
   },
 };
 
