@@ -795,7 +795,51 @@ app.post('/api/booking/slots', async (req, res) => {
 // ─── POST /api/booking/batch-availability ─────────────────────────────────────
 // Quick check: does each provider have any open slots in the next 90 days?
 // Used by the provider directory to show/hide the Book Appointment button.
-// Results are cached in memory for 5 minutes to reduce Athena API load.
+// Cache TTL is time-aware (CT timezone):
+//   Weekday 6am–6pm : 4-hour rolling window
+//   Weekday after 6pm / before 6am : until next 6am CT
+//   Weekend (Sat & Sun) : until next 6am CT (once-per-day refresh)
+
+// Returns the UTC timestamp of the next 6:00 AM US/Central after `from`.
+// Iterates hour-by-hour so DST transitions are handled correctly.
+function next6amCT(from) {
+  const candidate = new Date(from);
+  candidate.setMinutes(0, 0, 0);
+  candidate.setTime(candidate.getTime() + 3_600_000); // start from next full hour
+  for (let i = 0; i < 25; i++) {
+    const h = parseInt(
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Chicago',
+        hour:     '2-digit',
+        hour12:   false,
+      }).format(candidate)
+    );
+    if (h === 6) return candidate.getTime();
+    candidate.setTime(candidate.getTime() + 3_600_000);
+  }
+  return from.getTime() + 12 * 3_600_000; // safety fallback
+}
+
+// Returns the UTC timestamp at which the batch-availability cache should expire.
+function batchAvailExpiry() {
+  const now  = new Date();
+  const fmt  = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago',
+    hour:     '2-digit',
+    weekday:  'long',
+    hour12:   false,
+  });
+  const parts    = Object.fromEntries(fmt.formatToParts(now).map(p => [p.type, p.value]));
+  const ctHour   = parseInt(parts.hour);
+  const isWeekend = parts.weekday === 'Saturday' || parts.weekday === 'Sunday';
+
+  // Weekday business hours → 4-hour rolling TTL
+  if (!isWeekend && ctHour >= 6 && ctHour < 18) {
+    return now.getTime() + 4 * 3_600_000;
+  }
+  // Off-hours or weekend → cache until next 6am CT
+  return next6amCT(now);
+}
 
 const batchAvailCache = { results: null, expiresAt: 0 };
 
@@ -947,10 +991,10 @@ app.post('/api/booking/batch-availability', async (req, res) => {
     })
   );
 
-  // Cache for 4 hours — rolling window, resets from time of last miss
   batchAvailCache.results   = results;
-  batchAvailCache.expiresAt = Date.now() + 4 * 60 * 60 * 1000;
-  console.log(`[batch-availability] checked ${results.length} providers; ${results.filter((r) => r.hasSlots).length} have slots`);
+  batchAvailCache.expiresAt = batchAvailExpiry();
+  const ttlMins = Math.round((batchAvailCache.expiresAt - Date.now()) / 60_000);
+  console.log(`[batch-availability] checked ${results.length} providers; ${results.filter((r) => r.hasSlots).length} have slots; cache expires in ${ttlMins} min (${new Date(batchAvailCache.expiresAt).toISOString()})`);
 
   return res.json({ results });
 });
