@@ -1468,13 +1468,13 @@ app.post('/api/booking/create-patient-case', async (req, res) => {
   const assignedTo = 'STILLWATER OFFICE STAFF';
 
   const noteText =
-    `The patient booked an appointment online.\n` +
-    `Please verify if this is, in fact, a new patient or a\n` +
-    `duplicate record for an existing patient.\n\n` +
-    `Reason given for appointment: (Patient Email: ${pd?.email || ''},\n` +
+    `Please verify if this is, in fact, a new patient or a duplicate record for an existing patient.\n\n` +
+    `Patient information: (Patient Email: ${pd?.email || ''},\n` +
     `Phone: ${pd?.phone || ''}, Type: mobile, Patient DOB: ${pd?.dob || ''},\n` +
     `Insurance: ${pd?.insuranceName || 'None'}, Group ID: ${pd?.groupId || '-'},\n` +
-    `Member ID: ${pd?.memberId || '-'}) REASON: ${ad?.reasonName || ''}\n\n` +
+    `Member ID: ${pd?.memberId || '-'})\n` +
+    `REASON: ${ad?.reasonName || ''}, Appointment Type: ${ad?.reasonName || ''}\n` +
+    `Notes: ${pd?.notes || '-'}\n\n` +
     `Appointment Type: ${ad?.reasonName || ''}\n` +
     `Appointment Date: ${ad?.date || ''}\n` +
     `Appointment Time: ${ad?.time || ''}`;

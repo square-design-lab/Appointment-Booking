@@ -293,6 +293,7 @@ export default function Step3Registration() {
           insuranceName: insuranceLabel || 'None',
           groupId:       showGroupMember ? groupId.trim()  : '-',
           memberId:      showGroupMember ? memberId.trim() : '-',
+          notes:         notes.trim(),
         },
         appointmentData: {
           reasonName:   selectedReason?.reason || '',
