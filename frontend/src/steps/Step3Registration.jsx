@@ -763,7 +763,7 @@ export default function Step3Registration() {
         >
           {submitting ? (
             <>
-              <span className="vbf-spinner" aria-hidden="true" />
+              <span className="vbf-spinner vbf-spinner--dark" aria-hidden="true" />
               Booking…
             </>
           ) : (
