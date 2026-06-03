@@ -1566,6 +1566,59 @@ app.post('/api/booking/create-patient-case', async (req, res) => {
   }
 });
 
+// ─── GET /api/booking/refresh-provider-availability ──────────────────────────
+// Browser-callable endpoint. Fetches fresh availability for a single provider
+// from Athena (1 call) and updates their entry in batchAvailCache.
+// Usage: https://booking-backend-717838047212.us-central1.run.app/api/booking/refresh-provider-availability?providerId=31&departmentId=8&secret=vantage-sync-2026
+app.get('/api/booking/refresh-provider-availability', async (req, res) => {
+  const { providerId, departmentId, secret } = req.query;
+  if (process.env.VANTAGE_API_SECRET && secret !== process.env.VANTAGE_API_SECRET) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  if (!providerId || !departmentId) {
+    return res.status(400).json({ error: 'providerId and departmentId are required' });
+  }
+  try {
+    const data = await athenaGet(
+      `/v1/${process.env.ATHENA_PRACTICE_ID}/appointments/open`,
+      {
+        providerid:   providerId,
+        departmentid: departmentId,
+        startdate:    todayMMDDYYYY(),
+        enddate:      futureDateMMDDYYYY(90),
+        reasonid:     '-1',
+      }
+    );
+    const appts    = Array.isArray(data) ? data : (data.appointments || []);
+    const hasSlots = appts.length > 0;
+
+    // Update or insert the entry in batchAvailCache if cache exists
+    if (batchAvailCache.results) {
+      const idx = batchAvailCache.results.findIndex(
+        (r) => String(r.providerId) === String(providerId)
+      );
+      if (idx !== -1) {
+        batchAvailCache.results[idx] = { ...batchAvailCache.results[idx], hasSlots };
+      } else {
+        batchAvailCache.results.push({ providerId: String(providerId), hasSlots });
+      }
+    }
+
+    console.log(`[booking/refresh-provider-availability] provider ${providerId} dept ${departmentId} — hasSlots: ${hasSlots} (${appts.length} slots)`);
+    return res.json({
+      success:      true,
+      providerId:   String(providerId),
+      departmentId: String(departmentId),
+      hasSlots,
+      slotCount:    appts.length,
+      refreshedAt:  new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error('[booking/refresh-provider-availability] error:', err.message);
+    return res.status(503).json({ error: 'Failed to fetch availability from Athena', detail: err.message });
+  }
+});
+
 // ─── GET /api/booking/clear-availability-cache ───────────────────────────────
 // Browser-callable emergency endpoint. Expires the batchAvailCache so the next
 // directory load fetches fresh availability from Athena.
