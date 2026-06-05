@@ -1528,7 +1528,6 @@
 
 .vpd-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
 .vpd-card-photo-link {
@@ -1537,14 +1536,8 @@
   cursor: pointer;
 }
 
-.vpd-card-photo-link:hover .vpd-card-photo {
-  opacity: 0.88;
-  transition: opacity 0.15s ease;
-}
-
-.vpd-card-photo-link:hover .vpd-card-initials {
-  opacity: 0.85;
-  transition: opacity 0.15s ease;
+.vpd-card-photo-link:hover .vpd-card-photo-wrap::after {
+  background: rgba(66, 88, 83, 0.15);
 }
 
 .vpd-no-avail-msg {
@@ -1586,6 +1579,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.vpd-card-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(66, 88, 83, 0);
+  transition: background 0.15s ease;
+  pointer-events: none;
 }
 
 .vpd-card-photo {
