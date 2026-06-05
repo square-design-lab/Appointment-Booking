@@ -452,6 +452,8 @@ export default function ProviderDirectory() {
               </p>
             )}
             <input
+              id="vpd-search"
+              name="search"
               type="search"
               className="vpd-search"
               placeholder={isMobile ? 'Search..' : 'Enter a Condition, Service, Treatment, Provider Name, or Practice Location'}
@@ -465,6 +467,8 @@ export default function ProviderDirectory() {
           <div className="vpd-filter-row">
             <label className="vpd-telehealth-label">
               <input
+                id="vpd-accepting-new"
+                name="acceptingNew"
                 type="checkbox"
                 className="vpd-telehealth-check"
                 checked={acceptingNew}
