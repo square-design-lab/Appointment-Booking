@@ -4,6 +4,11 @@ import logoSrc from '../assets/logo.png';
 import { fetchBatchAvailability, fetchSchedulingMeta } from '../api/bookingApi';
 import { ATHENA_PRACTICE_ID } from '../BookingContext';
 
+function pushDataLayer(obj) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(obj);
+}
+
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const BASE_URL = 'https://book.vantagementalhealth.org/';
@@ -235,6 +240,11 @@ function ProviderCard({ provider, hasSlots, availabilityLoading }) {
 // ── ProviderDirectory ────────────────────────────────────────────────────────
 
 export default function ProviderDirectory() {
+  // GTM — fire once when directory is viewed
+  useEffect(() => {
+    pushDataLayer({ event: 'booking_directory_viewed' });
+  }, []);
+
   // Initialise each filter from URL params (lazy — runs once on mount)
   const [initParams] = useState(parseDirectoryParams);
   const [serviceFilter,    setServiceFilter]    = useState(initParams.service);

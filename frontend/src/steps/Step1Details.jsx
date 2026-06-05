@@ -4,6 +4,11 @@ import { fetchReasons, fetchSlots } from '../api/bookingApi';
 import ReasonCard from '../components/ReasonCard';
 import ErrorScreen from '../components/ErrorScreen';
 
+function pushDataLayer(obj) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(obj);
+}
+
 // Keyword sets for fuzzy-matching a service slug to an Athena reason name
 const SERVICE_KEYWORDS = {
   psychiatry:           ['psychiatr', 'medication management', 'med management'],
@@ -141,6 +146,17 @@ export default function Step1Details() {
     const match = findBestReasonMatch(selectedService, reasons);
     setSelectedReason(match || null);
   }, [selectedService, reasons]);
+
+  // GTM — fire once when provider info is loaded
+  useEffect(() => {
+    if (!providerInfo?.name) return;
+    pushDataLayer({
+      event:         'booking_step1_viewed',
+      provider_name: providerInfo.name,
+      service:       effectiveService || '',
+      location:      providerInfo.location || '',
+    });
+  }, [providerInfo?.name]);
 
   // Load reasons when patientType, departmentId, or providerId changes
   const loadReasons = useCallback(() => {

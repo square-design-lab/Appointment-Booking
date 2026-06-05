@@ -6,6 +6,11 @@ import { fetchSlots, fetchBatchAvailability } from '../api/bookingApi';
 import providerContacts from '../data/provider-contacts.json';
 import TimeSlotGrid from '../components/TimeSlotGrid';
 
+function pushDataLayer(obj) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(obj);
+}
+
 // ─── Date helpers ─────────────────────────────────────────────────────────────
 
 // Athena returns dates as MM/DD/YYYY — convert to YYYY-MM-DD key
@@ -53,7 +58,18 @@ export default function Step2DateTime() {
     selectedDate,    setSelectedDate,
     selectedTime,    setSelectedTime,
     selectedAppointmentId, setSelectedAppointmentId,
+    providerInfo,
+    selectedService,
   } = useBooking();
+
+  // GTM — fire once when step 2 mounts
+  useEffect(() => {
+    pushDataLayer({
+      event:         'booking_step2_viewed',
+      provider_name: providerInfo?.name || '',
+      service:       urlParams.service || selectedService || '',
+    });
+  }, []);
 
   // slotMap: Map<'YYYY-MM-DD', Array<{appointmentId, time, duration}>>
   const [slotMap, setSlotMap]         = useState(new Map());

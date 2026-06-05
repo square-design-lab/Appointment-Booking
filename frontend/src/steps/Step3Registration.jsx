@@ -1,5 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useBooking } from '../BookingContext';
+
+function pushDataLayer(obj) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(obj);
+}
 import {
   registerAndBook,
   writeServiceNote,
@@ -79,9 +84,19 @@ export default function Step3Registration() {
     patientData,           setPatientData,
     setBookingConfirmation,
     visitType,
+    providerInfo,
   } = useBooking();
 
   const effectiveService = urlParams.service || selectedService;
+
+  // GTM — fire once when step 3 mounts
+  useEffect(() => {
+    pushDataLayer({
+      event:         'booking_step3_viewed',
+      provider_name: providerInfo?.name || '',
+      service:       effectiveService   || '',
+    });
+  }, []);
 
   // ── Section A: Patient information ────────────────────────────────────────
   const [firstName,    setFirstName]    = useState(patientData.firstName    || '');
@@ -309,7 +324,18 @@ export default function Step3Registration() {
       console.error('Patient case creation failed (non-blocking):', e);
     }
 
-    // 6 — Store confirmation and advance
+    // 6 — GTM: booking completed conversion event
+    pushDataLayer({
+      event:            'booking_completed',
+      provider_name:    providerInfo?.name || '',
+      service:          effectiveService   || '',
+      location:         locationInfo?.name || '',
+      appointment_date: selectedDate
+        ? `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${selectedDate.getFullYear()}`
+        : '',
+    });
+
+    // 7 — Store confirmation and advance
     const snapshot = {
       firstName: firstName.trim(), lastName: lastName.trim(),
       preferredName: preferredName.trim(), legalSex, phone: phone.trim(),
