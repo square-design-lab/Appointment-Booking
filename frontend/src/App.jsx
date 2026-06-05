@@ -55,7 +55,7 @@ function BookingFlow() {
         {!isConfirmation && <ProgressBar currentStep={currentStep} />}
 
         <div className={`vbf-layout${isConfirmation ? ' vbf-layout--full' : ''}`}>
-          <main className="vbf-main">
+          <main className="vbf-main" aria-label="Booking form">
             {!isConfirmation && <MobileSummary />}
             {currentStep === 1 && <Step1Details />}
             {currentStep === 2 && (
@@ -78,12 +78,16 @@ function BookingFlow() {
           </main>
 
           {!isConfirmation && (
-            <aside className="vbf-sidebar-wrap">
+            <aside className="vbf-sidebar-wrap" aria-label="Booking summary">
               <Sidebar />
             </aside>
           )}
         </div>
       </div>
+
+      <footer className="vbf-footer">
+        <p>Copyright &copy; 2026. Vantage Mental Health. All Rights Reserved.</p>
+      </footer>
     </div>
   );
 }

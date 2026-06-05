@@ -469,6 +469,7 @@ export default function Step3Registration() {
         <div className="vbf-select-wrap">
           <select
             id="vbf-legalSex"
+            name="legalSex"
             className={`vbf-select${fieldError('legalSex') ? ' vbf-select--error' : ''}`}
             value={legalSex}
             onChange={(e) => setLegalSex(e.target.value)}
@@ -504,6 +505,7 @@ export default function Step3Registration() {
           <div className="vbf-select-wrap">
             <select
               id="vbf-phoneType"
+              name="phoneType"
               className={`vbf-select${fieldError('phoneType') ? ' vbf-select--error' : ''}`}
               value={phoneType}
               onChange={(e) => setPhoneType(e.target.value)}
@@ -610,6 +612,7 @@ export default function Step3Registration() {
           <div className="vbf-select-wrap">
             <select
               id="vbf-state"
+              name="state"
               className={`vbf-select${fieldError('state') ? ' vbf-select--error' : ''}`}
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -675,6 +678,7 @@ export default function Step3Registration() {
             <div className="vbf-select-wrap">
               <select
                 id="vbf-insuranceName"
+                name="insuranceName"
                 className={`vbf-select${fieldError('insuranceName') ? ' vbf-select--error' : ''}`}
                 value={insuranceName}
                 onChange={(e) => setInsuranceName(e.target.value)}

@@ -433,7 +433,7 @@ export default function ProviderDirectory() {
         </div>
       </header>
 
-      <div className="vpd-page">
+      <main className="vpd-page" aria-label="Provider directory">
         <div className="vpd-page-header">
           <h1 className="vpd-page-title">Book an Appointment</h1>
           <p className="vpd-page-subtitle">
@@ -496,6 +496,8 @@ export default function ProviderDirectory() {
           {/* Row 2: Service | Location */}
           <div className="vpd-filter-row">
             <select
+              id="vpd-filter-service"
+              name="serviceFilter"
               className="vpd-select"
               value={serviceFilter}
               onChange={(e) => setServiceFilter(e.target.value)}
@@ -508,6 +510,8 @@ export default function ProviderDirectory() {
             </select>
 
             <select
+              id="vpd-filter-location"
+              name="locationFilter"
               className="vpd-select"
               value={locationFilter}
               onChange={(e) => setLocationFilter(e.target.value)}
@@ -525,6 +529,8 @@ export default function ProviderDirectory() {
           {/* Row 3: Insurance | Scheduling Preference */}
           <div className="vpd-filter-row">
             <select
+              id="vpd-filter-insurance"
+              name="insuranceFilter"
               className="vpd-select"
               value={insuranceFilter}
               onChange={(e) => setInsuranceFilter(e.target.value)}
@@ -537,6 +543,8 @@ export default function ProviderDirectory() {
             </select>
 
             <select
+              id="vpd-filter-scheduling"
+              name="schedulingFilter"
               className="vpd-select"
               value={schedulingFilter}
               onChange={(e) => setSchedulingFilter(e.target.value)}
@@ -552,6 +560,8 @@ export default function ProviderDirectory() {
           {/* Row 4: What We Treat | Treatment Approach */}
           <div className="vpd-filter-row">
             <select
+              id="vpd-filter-treat"
+              name="treatFilter"
               className="vpd-select"
               value={treatFilter}
               onChange={(e) => setTreatFilter(e.target.value)}
@@ -564,6 +574,8 @@ export default function ProviderDirectory() {
             </select>
 
             <select
+              id="vpd-filter-approach"
+              name="approachFilter"
               className="vpd-select"
               value={approachFilter}
               onChange={(e) => setApproachFilter(e.target.value)}
@@ -579,6 +591,8 @@ export default function ProviderDirectory() {
           {/* Row 5: Gender | Language */}
           <div className="vpd-filter-row">
             <select
+              id="vpd-filter-gender"
+              name="genderFilter"
               className="vpd-select"
               value={genderFilter}
               onChange={(e) => setGenderFilter(e.target.value)}
@@ -591,6 +605,8 @@ export default function ProviderDirectory() {
             </select>
 
             <select
+              id="vpd-filter-language"
+              name="languageFilter"
               className="vpd-select"
               value={languageFilter}
               onChange={(e) => setLanguageFilter(e.target.value)}
@@ -646,7 +662,11 @@ export default function ProviderDirectory() {
             ))}
           </div>
         )}
-      </div>
+      </main>
+
+      <footer className="vbf-footer">
+        <p>Copyright &copy; 2026. Vantage Mental Health. All Rights Reserved.</p>
+      </footer>
     </div>
   );
 }
