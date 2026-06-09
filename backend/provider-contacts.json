@@ -2373,9 +2373,10 @@
     "credentials": "",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy"
+      "Mental Health Therapy",
+      "Teen Therapy"
     ],
-    "photo": "",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/06/Janae-Web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": false,
@@ -2409,7 +2410,8 @@
       "English"
     ],
     "services": [
-      "therapy-individual"
+      "therapy-individual",
+      "therapy-teen"
     ]
   }
 ]
