@@ -576,6 +576,11 @@
   background: var(--c-primary-hover);
 }
 
+.vbf-btn--primary.vpd-book-btn:hover:not(:disabled) {
+  background: var(--c-accent);
+}
+
+
 .vbf-btn--primary:disabled {
   background: var(--c-disabled-bg);
   color: var(--c-disabled-text);
