@@ -1529,7 +1529,22 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.15s, transform 0.15s;
+  transition: box-shadow 0.15s, transform 0.15s, opacity 0.45s ease, translate 0.45s ease;
+  opacity: 0;
+  translate: 0 18px;
+}
+
+.vpd-card--visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vpd-card {
+    opacity: 1;
+    translate: 0 0;
+    transition: box-shadow 0.15s;
+  }
 }
 
 .vpd-card:hover {

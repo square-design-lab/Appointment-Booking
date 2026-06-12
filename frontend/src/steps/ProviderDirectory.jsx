@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import providers from '../data/provider-contacts.json';
 import logoSrc from '../assets/logo.png';
 import { fetchBatchAvailability, fetchSchedulingMeta } from '../api/bookingApi';
@@ -165,7 +165,25 @@ function buildBookingUrl(provider) {
 // ── ProviderCard ─────────────────────────────────────────────────────────────
 
 function ProviderCard({ provider, hasSlots, availabilityLoading }) {
-  const [imgError, setImgError] = useState(false);
+  const [imgError,  setImgError]  = useState(false);
+  const [visible,   setVisible]   = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.08 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   const locationName = DEPT_NAMES[provider.departmentId] || '';
   const hasTelehealth = !!(provider.telehealthLocs || '').trim();
   const locationDisplay = locationName
@@ -195,7 +213,7 @@ function ProviderCard({ provider, hasSlots, availabilityLoading }) {
   );
 
   return (
-    <div className="vpd-card">
+    <div ref={cardRef} className={`vpd-card${visible ? ' vpd-card--visible' : ''}`}>
       {canBook ? (
         <a href={bookingUrl} className="vpd-card-photo-link" tabIndex={-1} aria-hidden="true">
           {photoInner}
