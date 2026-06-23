@@ -796,9 +796,10 @@ app.post('/api/booking/slots', async (req, res) => {
 // Quick check: does each provider have any open slots in the next 90 days?
 // Used by the provider directory to show/hide the Book Appointment button.
 // Cache TTL is time-aware (CT timezone):
-//   Weekday 6am–6pm : 4-hour rolling window
-//   Weekday after 6pm / before 6am : until next 6am CT
-//   Weekend (Sat & Sun) : until next 6am CT (once-per-day refresh)
+//   Weekday before noon  : until noon CT
+//   Weekday noon–6pm     : until 6pm CT
+//   Weekday after 6pm    : until next noon CT
+//   Weekend (Sat & Sun)  : until next 6am CT (once-per-day refresh)
 
 // Returns the UTC timestamp of the next 6:00 AM US/Central after `from`.
 // Iterates hour-by-hour so DST transitions are handled correctly.
@@ -820,6 +821,25 @@ function next6amCT(from) {
   return from.getTime() + 12 * 3_600_000; // safety fallback
 }
 
+// Returns the UTC timestamp of the next occurrence of targetHour:00 US/Central after `from`.
+function nextCTHour(targetHour, from) {
+  const candidate = new Date(from);
+  candidate.setMinutes(0, 0, 0);
+  candidate.setTime(candidate.getTime() + 3_600_000);
+  for (let i = 0; i < 25; i++) {
+    const h = parseInt(
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Chicago',
+        hour:     '2-digit',
+        hour12:   false,
+      }).format(candidate)
+    );
+    if (h === targetHour) return candidate.getTime();
+    candidate.setTime(candidate.getTime() + 3_600_000);
+  }
+  return from.getTime() + 12 * 3_600_000; // safety fallback
+}
+
 // Returns the UTC timestamp at which the batch-availability cache should expire.
 function batchAvailExpiry() {
   const now  = new Date();
@@ -833,11 +853,13 @@ function batchAvailExpiry() {
   const ctHour   = parseInt(parts.hour);
   const isWeekend = parts.weekday === 'Saturday' || parts.weekday === 'Sunday';
 
-  // Weekday business hours → 4-hour rolling TTL
-  if (!isWeekend && ctHour >= 6 && ctHour < 18) {
-    return now.getTime() + 4 * 3_600_000;
+  // Weekday: fixed sync points at noon and 6pm CT
+  if (!isWeekend) {
+    if (ctHour < 12) return nextCTHour(12, now); // before noon → expire at noon CT
+    if (ctHour < 18) return nextCTHour(18, now); // noon–6pm  → expire at 6pm CT
+    return nextCTHour(12, now);                  // after 6pm → expire at next noon CT
   }
-  // Off-hours or weekend → cache until next 6am CT
+  // Weekend → once per day at 6am CT
   return next6amCT(now);
 }
 
