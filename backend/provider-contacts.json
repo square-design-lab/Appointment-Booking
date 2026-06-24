@@ -1,18 +1,499 @@
 [
   {
-    "athena_provider_id": "28",
-    "departmentId": "5",
-    "name": "Suzanne Aoun, MD",
-    "provider_title": "Child & Adolescent Psychiatrist",
+    "athena_provider_id": "1",
+    "departmentId": "1",
+    "name": "Justin Gerstner, MD",
+    "provider_title": "Child, Adolescent & Adult Psychiatrist",
     "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management"
+      "Psychiatry Medication Management",
+      "Transcranial Magnetic Stimulation (TMS)",
+      "ADHD Evaluation",
+      "Psychopharmacologic Testing"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Aoun-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Gerstner-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 64,
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder",
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "tms",
+      "adhd",
+      "psych-testing"
+    ]
+  },
+  {
+    "athena_provider_id": "3",
+    "departmentId": "1",
+    "name": "Ashley Tix, LMFT",
+    "provider_title": "Individual & Couples Therapist",
+    "credentials": "LMFT",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ashley-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 14,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Personality Disorders"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-family",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "5",
+    "departmentId": "1",
+    "name": "Kirby Kaczor, LPCC",
+    "provider_title": "Individual and Couples Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Kirby-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [],
+    "gender": "Non-Binary",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
+    ]
+  },
+  {
+    "athena_provider_id": "6",
+    "departmentId": "1",
+    "name": "Demi Mancini, LPCC",
+    "provider_title": "Individual Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Demi-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Grief or Loss",
+      "Self-Esteem or Identity"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-child",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "7",
+    "departmentId": "1",
+    "name": "Lauren Nievinski, PA-C",
+    "provider_title": "Adult Psychiatric Medication Management",
+    "credentials": "PA-C",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management",
+      "ADHD Evaluation",
+      "Psychopharmacologic Testing"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lauren-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
+    ]
+  },
+  {
+    "athena_provider_id": "8",
+    "departmentId": "1",
+    "name": "Emily Campbell, DNP",
+    "provider_title": "Adult Psychiatric Medication Management",
+    "credentials": "DNP",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management",
+      "Psychopharmacologic Testing"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Emily-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare",
+      "Tricare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Substance Use  or Addiction",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd",
+      "psych-testing"
+    ]
+  },
+  {
+    "athena_provider_id": "10",
+    "departmentId": "5",
+    "name": "Claire Garber, DO",
+    "provider_title": "Child & Adolescent Psychiatrist",
+    "credentials": "DO",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management",
+      "ADHD Evaluation",
+      "Psychopharmacologic Testing"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Garber-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 17,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder",
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd",
+      "psych-testing"
+    ]
+  },
+  {
+    "athena_provider_id": "11",
+    "departmentId": "8",
+    "name": "Sara Polley, MD",
+    "provider_title": "Child, Adolescent, Adult & Addiction Psychiatrist",
+    "credentials": "MD",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management",
+      "ADHD Evaluation",
+      "Psychopharmacologic Testing"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Polley-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 5,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Substance Use  or Addiction",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder",
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
+    ]
+  },
+  {
+    "athena_provider_id": "13",
+    "departmentId": "1",
+    "name": "Ann Monson Slagle, PA-C",
+    "provider_title": "Adult Psychiatric Medication Management",
+    "credentials": "PA-C",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management",
+      "ADHD Evaluation",
+      "Psychopharmacologic Testing"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ann-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry",
+      "adhd"
+    ]
+  },
+  {
+    "athena_provider_id": "14",
+    "departmentId": "5",
+    "name": "Julie Sabin, LPCC, RPT-S",
+    "provider_title": "Child Therapist",
+    "credentials": "LPCC, RPT-S",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Child Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Julie-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
     "minAge": 3,
     "maxAge": 17,
     "telehealthLocs": "Telehealth - MN",
@@ -27,47 +508,49 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Autism Spectrum"
     ],
-    "treatmentApproach": [],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "Play Therapy",
+      "Exposure Therapy"
+    ],
     "gender": "Female",
     "languages": [
-      "English",
-      "French",
-      "Arabic"
+      "English"
     ],
     "services": [
-      "psychiatry"
+      "therapy-individual",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
-    "athena_provider_id": "8",
+    "athena_provider_id": "15",
     "departmentId": "1",
-    "name": "Emily Campbell, NP",
-    "provider_title": "Adult Psychiatric Medication Management",
-    "credentials": "DNP",
+    "name": "Lola Oluwa-Okougbo, PMHNP-BC",
+    "provider_title": "Psychiatric Medication Management",
+    "credentials": "PMHNP-BC",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management",
-      "ADHD Evaluation",
+      "Psychiatry Medication Management",
       "Psychopharmacologic Testing"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Emily-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lola-Profile-scaled.jpg",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 65,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -80,20 +563,72 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
       "United Behavioral Health",
-      "Tricare"
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Substance Use and Addiction",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Substance Use  or Addiction",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Sleep Issues",
       "Personality Disorders",
-      "Sleep and Insomnia"
+      "Bipolar Disorder",
+      "Perinatal or Maternal Mental Health",
+      "LGBTQ+ Related Concerns",
+      "Women’s Mental Health",
+      "Men’s Mental Health",
+      "Chronic Illness"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English",
+      "Other"
+    ],
+    "services": [
+      "psychiatry"
+    ]
+  },
+  {
+    "athena_provider_id": "17",
+    "departmentId": "5",
+    "name": "Karla Wise, LPCC",
+    "provider_title": "Individual Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Karla-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Personality Disorders"
     ],
     "treatmentApproach": [],
     "gender": "Female",
@@ -101,27 +636,28 @@
       "English"
     ],
     "services": [
-      "psychiatry",
-      "adhd",
-      "psych-testing"
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
-    "athena_provider_id": "37",
+    "athena_provider_id": "18",
     "departmentId": "8",
-    "name": "Saul Clayman, MA, LADC",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "MA, LADC",
+    "name": "Anna King Laubach, LICSW",
+    "provider_title": "Individual Therapist",
+    "credentials": "",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
-      "Couples Therapy"
+      "Family Therapy",
+      "Couples Therapy",
+      "Teen Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Saul-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Anna-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 10,
     "maxAge": 60,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -132,87 +668,35 @@
       "HealthPartners",
       "Medica",
       "Medicaid",
-      "UCare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues",
-      "Substance Use and Addiction",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Self-Esteem and Identity"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)",
-      "Exposure Therapy"
-    ],
-    "gender": "Male",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples"
-    ]
-  },
-  {
-    "athena_provider_id": "20",
-    "departmentId": "5",
-    "name": "Lisa Cross, LMFT",
-    "provider_title": "Individual Therapist",
-    "credentials": "LMFT",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lisa-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 20,
-    "maxAge": 50,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Grief and Loss",
-      "Perinatal and Maternal Mental Health",
-      "Women's Mental Health"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders"
     ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)"
-    ],
+    "treatmentApproach": [],
     "gender": "Female",
     "languages": [
       "English"
     ],
     "services": [
       "therapy-individual",
-      "therapy-couples"
+      "therapy-family",
+      "therapy-couples",
+      "therapy-teen"
     ]
   },
   {
     "athena_provider_id": "19",
     "departmentId": "1",
-    "name": "Laura Dabruzzi, LICSW",
+    "name": "Laura DaBruzzi, LICSW",
     "provider_title": "Individual Therapist",
     "credentials": "LICSW",
     "specialty": "Therapy",
@@ -224,7 +708,7 @@
     "mobile_number": "",
     "acceptingNew": false,
     "minAge": 18,
-    "maxAge": 80,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -237,21 +721,17 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Self-Esteem and Identity",
-      "Women's Mental Health"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)"
     ],
     "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
+      "ACT (Acceptance and Commitment Therapy)",
       "EMDR and ART"
     ],
     "gender": "Female",
@@ -263,22 +743,21 @@
     ]
   },
   {
-    "athena_provider_id": "47",
+    "athena_provider_id": "20",
     "departmentId": "5",
-    "name": "Nora Davis, LPCC, LADC",
+    "name": "Lisa Cross, LMFT",
     "provider_title": "Individual Therapist",
-    "credentials": "LPCC, LADC",
+    "credentials": "LMFT",
     "specialty": "Therapy",
     "specialties": [
-      "Mental Health Therapy",
-      "Teen Therapy"
+      "Mental Health Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Nora-HS-web.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lisa-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 13,
-    "maxAge": 80,
+    "minAge": 18,
+    "maxAge": 64,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -291,28 +770,16 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Family Conflict and Parenting Support",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Substance Use and Addiction",
-      "Self-Esteem and Identity",
-      "LGBTQ+",
-      "Women's Mental Health",
-      "Men's Mental Health",
-      "Chronic Illness"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
     ],
     "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)"
+      "ACT (Acceptance and Commitment Therapy)"
     ],
     "gender": "Female",
     "languages": [
@@ -320,113 +787,7 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "26",
-    "departmentId": "8",
-    "name": "Sabrina Eller, LPCC",
-    "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Sabrina-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 50,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Life Transitions and Stress",
-      "Autism Spectrum and Neurodivergence",
-      "Personality Disorders",
-      "Eating and Body Image",
-      "Self-Esteem and Identity"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "IFS (Internal Family Systems)"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "43",
-    "departmentId": "5",
-    "name": "Jenna Halvorson, LPCC",
-    "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Jenna-HS2-1.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medicaid",
-      "Medicare",
-      "UCare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Substance Use and Addiction",
-      "Bipolar Disorder",
-      "Personality Disorders",
-      "Eating and Body Image"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)",
-      "IFS (Internal Family Systems)"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
+      "therapy-couples"
     ]
   },
   {
@@ -458,24 +819,21 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
       "Personality Disorders",
-      "Self-Esteem and Identity"
+      "Bipolar Disorder",
+      "Autism Spectrum"
     ],
     "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
+      "ACT (Acceptance and Commitment Therapy)",
       "DBT (Dialectical Behavior Therapy)"
     ],
     "gender": "Female",
@@ -488,61 +846,10 @@
     ]
   },
   {
-    "athena_provider_id": "34",
-    "departmentId": "8",
-    "name": "Beth Falk, LICSW",
-    "provider_title": "Individual Therapist",
-    "credentials": "LICSW",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Beth-F-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 75,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Women's Mental Health",
-      "Chronic Illness"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
     "athena_provider_id": "22",
     "departmentId": "8",
     "name": "Adam Fieldson, LPCC",
-    "provider_title": "Individual and Couples Therapist",
+    "provider_title": "Individual & Couples Therapist",
     "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
@@ -554,7 +861,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 80,
+    "maxAge": 64,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -567,19 +874,13 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Substance Use and Addiction",
-      "Self-Esteem and Identity",
-      "Men's Mental Health"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
     ],
     "treatmentApproach": [
       "IFS (Internal Family Systems)"
@@ -594,23 +895,23 @@
     ]
   },
   {
-    "athena_provider_id": "10",
-    "departmentId": "5",
-    "name": "Claire Garber, DO",
-    "provider_title": "Child & Adolescent Psychiatrist",
-    "credentials": "DO",
-    "specialty": "Psychiatry",
+    "athena_provider_id": "23",
+    "departmentId": "8",
+    "name": "Brittany Reif-Wenner, LICSW",
+    "provider_title": "Individual & Couples Therapist",
+    "credentials": "LICSW",
+    "specialty": "Therapy",
     "specialties": [
-      "Psychiatric Medication Management",
-      "ADHD Evaluation",
-      "Psychopharmacologic Testing"
+      "Mental Health Therapy",
+      "Couples Therapy",
+      "Teen Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Garber-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Brittany-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 5,
-    "maxAge": 17,
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -623,17 +924,101 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
+    ]
+  },
+  {
+    "athena_provider_id": "24",
+    "departmentId": "8",
+    "name": "Suzanne Shanklin, LPCC",
+    "provider_title": "Individual Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/SuzanneS-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "25",
+    "departmentId": "8",
+    "name": "Rachel Whisney, MA",
+    "provider_title": "Individual Therapist",
+    "credentials": "MA",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Family Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Rachel-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medicaid",
+      "UCare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
       "Personality Disorders"
     ],
     "treatmentApproach": [],
@@ -642,84 +1027,29 @@
       "English"
     ],
     "services": [
-      "psychiatry",
-      "adhd",
-      "psych-testing"
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-child",
+      "therapy-teen"
     ]
   },
   {
-    "athena_provider_id": "1",
-    "departmentId": "1",
-    "name": "Justin Gerstner, MD",
-    "provider_title": "Child, Adolescent & Adult Psychiatrist",
-    "credentials": "MD",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management",
-      "Transcranial Magnetic Stimulation",
-      "ADHD Evaluation",
-      "Psychopharmacologic Testing"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Gerstner-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 5,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence",
-      "Personality Disorders"
-    ],
-    "treatmentApproach": [],
-    "gender": "Male",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "psychiatry",
-      "tms",
-      "adhd",
-      "psych-testing"
-    ]
-  },
-  {
-    "athena_provider_id": "32",
-    "departmentId": "5",
-    "name": "Anna Grimm, LMFT",
+    "athena_provider_id": "26",
+    "departmentId": "8",
+    "name": "Sabrina Eller, LPCC",
     "provider_title": "Individual Therapist",
-    "credentials": "LMFT",
+    "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/AnnaG-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Sabrina-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 20,
-    "maxAge": 85,
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -732,19 +1062,19 @@
       "Medicare",
       "Optum",
       "UCare",
+      "United Behavioral Health",
       "United Healthcare",
-      "United Behavioral Health"
+      "Tricare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
       "Personality Disorders"
     ],
     "treatmentApproach": [
-      "EMDR and ART",
-      "Brainspotting",
+      "ACT (Acceptance and Commitment Therapy)",
       "IFS (Internal Family Systems)"
     ],
     "gender": "Female",
@@ -772,8 +1102,8 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 0,
-    "maxAge": 12,
+    "minAge": 18,
+    "maxAge": 55,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -785,15 +1115,17 @@
       "UCare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Family Conflict and Parenting Support",
-      "Autism Spectrum and Neurodivergence"
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Self-Esteem or Identity",
+      "Family Conflict or Parenting Support",
+      "Relationship or Couples Issues"
     ],
     "treatmentApproach": [
-      "Parenting Therapy"
+      "CBT (Cognitive Behavioral Therapy)",
+      "Parenting Therapy",
+      "IFS (Internal Family Systems)"
     ],
     "gender": "Female",
     "languages": [
@@ -807,131 +1139,22 @@
     ]
   },
   {
-    "athena_provider_id": "5",
-    "departmentId": "1",
-    "name": "Kirby Kaczor, LPCC",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Kirby-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 20,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Autism Spectrum and Neurodivergence",
-      "Personality Disorders",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [],
-    "gender": "Non-binary",
-    "languages": [
-      "English",
-      "Polish"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples"
-    ]
-  },
-  {
-    "athena_provider_id": "18",
-    "departmentId": "8",
-    "name": "Anna King Laubach, LICSW",
-    "provider_title": "Individual Therapist",
-    "credentials": "LICSW",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Family Therapy",
-      "Couples Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Anna-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 14,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Family Conflict and Parenting Support",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Personality Disorders",
-      "Perinatal and Maternal Mental Health",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-family",
-      "therapy-couples",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "39",
-    "departmentId": "8",
-    "name": "Ally Kuye, PMHNP",
-    "provider_title": "Child & Adolescent Nurse Practitioner",
-    "credentials": "PMHNP",
+    "athena_provider_id": "28",
+    "departmentId": "5",
+    "name": "Suzanne Aoun, MD",
+    "provider_title": "Child & Adolescent Psychiatrist",
+    "credentials": "MD",
     "specialty": "Psychiatry",
     "specialties": [
-      "Psychiatric Medication Management"
+      "Psychiatry Medication Management",
+      "ADHD Evaluation"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Ally-web.jpg",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Aoun-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 3,
-    "maxAge": 25,
+    "minAge": 5,
+    "maxAge": 17,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -944,21 +1167,19 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
       "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence"
+      "Autism Spectrum"
     ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)"
-    ],
+    "treatmentApproach": [],
     "gender": "Female",
     "languages": [
       "English"
@@ -982,56 +1203,6 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress",
-      "Self-Esteem and Identity",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "6",
-    "departmentId": "1",
-    "name": "Demi Mancini, LPCC",
-    "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Child Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Demi-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 13,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -1045,567 +1216,13 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-child",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "40",
-    "departmentId": "5",
-    "name": "Brooke McColl, MA",
-    "provider_title": "Individual Therapist",
-    "credentials": "MA",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Brooke-M-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 15,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "13",
-    "departmentId": "1",
-    "name": "Ann Monson Slagle, PA-C",
-    "provider_title": "Adult Psychiatric Medication Management",
-    "credentials": "PA-C",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management",
-      "ADHD Evaluation"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ann-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 16,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Personality Disorders"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "psychiatry",
-      "adhd"
-    ]
-  },
-  {
-    "athena_provider_id": "35",
-    "departmentId": "5",
-    "name": "Lisa Morgel Cryns, LMFT",
-    "provider_title": "Individual Therapist",
-    "credentials": "LMFT",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Family Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/LisaM-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 12,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress",
-      "Autism Spectrum and Neurodivergence"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-family",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "44",
-    "departmentId": "1",
-    "name": "Laura Mortenson, LICSW",
-    "provider_title": "Individual Therapist",
-    "credentials": "LICSW",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Laura-M-2-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 85,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Grief and Loss",
-      "Life Transitions and Stress"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "7",
-    "departmentId": "1",
-    "name": "Lauren Nievinski, PA-C",
-    "provider_title": "Adult Psychiatric Medication Management",
-    "credentials": "PA-C",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management",
-      "ADHD Evaluation"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lauren-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 65,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Personality Disorders"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "psychiatry",
-      "adhd"
-    ]
-  },
-  {
-    "athena_provider_id": "15",
-    "departmentId": "1",
-    "name": "Lola Oluwa-Okougbo, PMHNP",
-    "provider_title": "Psychiatric Medication Management",
-    "credentials": "PMHNP",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Lola-Profile-scaled.jpg",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 5,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Bipolar Disorder"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English",
-      "Yoruba"
-    ],
-    "services": [
-      "psychiatry"
-    ]
-  },
-  {
-    "athena_provider_id": "38",
-    "departmentId": "5",
-    "name": "Steve Palmer, LMFT",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "LMFT",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy",
-      "Family Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Steve-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 16,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues"
-    ],
-    "treatmentApproach": [],
-    "gender": "Male",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples",
-      "therapy-family"
-    ]
-  },
-  {
-    "athena_provider_id": "11",
-    "departmentId": "8",
-    "name": "Sara Polley, MD",
-    "provider_title": "Child, Adolescent, Adult & Addiction Psychiatrist",
-    "credentials": "MD",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management",
-      "ADHD Evaluation"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Polley-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 0,
-    "maxAge": 40,
-    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
       "United Behavioral Health",
-      "Tricare"
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Substance Use and Addiction",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
-      "Autism Spectrum and Neurodivergence",
-      "Personality Disorders"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "psychiatry",
-      "adhd"
-    ]
-  },
-  {
-    "athena_provider_id": "23",
-    "departmentId": "8",
-    "name": "Brittany Reif-Wenner, LICSW",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "LICSW",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Brittany-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples"
-    ]
-  },
-  {
-    "athena_provider_id": "14",
-    "departmentId": "5",
-    "name": "Julie Sabin, LPCC",
-    "provider_title": "Child Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Child Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Julie-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 3,
-    "maxAge": 21,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Autism Spectrum and Neurodivergence",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "Play Therapy",
-      "Exposure Therapy"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-child",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "24",
-    "departmentId": "8",
-    "name": "Suzanne Shanklin, LPCC",
-    "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/SuzanneS-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "ADHD",
-      "Grief and Loss",
-      "LGBTQ+"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
     ],
     "treatmentApproach": [],
     "gender": "Female",
@@ -1614,277 +1231,6 @@
     ],
     "services": [
       "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "41",
-    "departmentId": "8",
-    "name": "Jennifer Tagg, LMFT",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "LMFT",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/03/Jtagg-hs-web.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 13,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "EMDR and ART",
-      "IFS (Internal Family Systems)"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "3",
-    "departmentId": "1",
-    "name": "Ashley Tix, LMFT",
-    "provider_title": "Individual and Couples Therapist",
-    "credentials": "LMFT",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Couples Therapy",
-      "Family Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Ashley-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 14,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Life Transitions and Stress",
-      "Chronic Illness"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-couples",
-      "therapy-family",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "25",
-    "departmentId": "8",
-    "name": "Rachel Whisney, MA",
-    "provider_title": "Individual Therapist",
-    "credentials": "MA",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Family Therapy",
-      "Couples Therapy",
-      "Child Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Rachel-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 10,
-    "maxAge": 90,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Relationship and Couples Issues",
-      "Grief and Loss",
-      "Self-Esteem and Identity"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-family",
-      "therapy-couples",
-      "therapy-child",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "31",
-    "departmentId": "8",
-    "name": "Amanda Windyk, LICSW",
-    "provider_title": "Individual, Couples, and Family Therapist",
-    "credentials": "LICSW",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Family Therapy",
-      "Couples Therapy",
-      "Child Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Amanda-web-HS.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 10,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues",
-      "Family Conflict and Parenting Support",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Perinatal and Maternal Mental Health"
-    ],
-    "treatmentApproach": [
-      "EMDR and ART"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-family",
-      "therapy-couples",
-      "therapy-child",
-      "therapy-teen"
-    ]
-  },
-  {
-    "athena_provider_id": "17",
-    "departmentId": "5",
-    "name": "Karla Wise, LPCC",
-    "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy",
-      "Teen Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2025/12/Karla-web-hs.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 16,
-    "maxAge": 100,
-    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Relationship and Couples Issues",
-      "Life Transitions and Stress"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-teen"
     ]
   },
   {
@@ -1902,7 +1248,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 80,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1915,17 +1261,653 @@
       "UCare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Personality Disorders"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "31",
+    "departmentId": "8",
+    "name": "Amanda Windyk, LICSW",
+    "provider_title": "Individual, Couples, and Family Therapist",
+    "credentials": "LICSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Family Therapy",
+      "Couples Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/Amanda-web-HS.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Blue Cross Blue Shield",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
       "Personality Disorders",
-      "Self-Esteem and Identity"
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [
+      "EMDR and ART"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-couples",
+      "therapy-child",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "32",
+    "departmentId": "5",
+    "name": "Anna Grimm, LMFT",
+    "provider_title": "Individual Therapist",
+    "credentials": "LMFT",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/AnnaG-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Personality Disorders"
+    ],
+    "treatmentApproach": [
+      "EMDR and ART",
+      "Brainspotting",
+      "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "33",
+    "departmentId": "8",
+    "name": "Hana Hassan, LPCC",
+    "provider_title": "Individual Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Hana-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "34",
+    "departmentId": "8",
+    "name": "Beth Falk, LICSW",
+    "provider_title": "Individual Therapist",
+    "credentials": "LICSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Beth-F-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 70,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Grief or Loss",
+      "Self-Esteem or Identity",
+      "Women’s Mental Health",
+      "Chronic Illness"
     ],
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)"
+      "ACT (Acceptance and Commitment Therapy)"
     ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "35",
+    "departmentId": "5",
+    "name": "Lisa Morgel Cryns, LMFT",
+    "provider_title": "Individual Therapist",
+    "credentials": "LMFT",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/01/LisaM-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 13,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "37",
+    "departmentId": "8",
+    "name": "Saul Clayman, MA, LADC",
+    "provider_title": "Individual and Couples Therapist",
+    "credentials": "MA, LADC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Saul-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 64,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "UCare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Substance Use  or Addiction",
+      "Obsessive Compulsive Disorder (OCD)"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "Exposure Therapy"
+    ],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
+    ]
+  },
+  {
+    "athena_provider_id": "38",
+    "departmentId": "5",
+    "name": "Steve Palmer, LMFT",
+    "provider_title": "Individual and Couples Therapist",
+    "credentials": "LMFT",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Steve-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Personality Disorders",
+      "Bipolar Disorder"
+    ],
+    "treatmentApproach": [],
+    "gender": "Male",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-family"
+    ]
+  },
+  {
+    "athena_provider_id": "39",
+    "departmentId": "8",
+    "name": "Ally Kuye, DNP",
+    "provider_title": "Child & Adolescent Nurse Practitioner",
+    "credentials": "DNP",
+    "specialty": "Psychiatry",
+    "specialties": [
+      "Psychiatry Medication Management"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Ally-web.jpg",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 3,
+    "maxAge": 20,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Bipolar Disorder",
+      "Autism Spectrum"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "psychiatry"
+    ]
+  },
+  {
+    "athena_provider_id": "40",
+    "departmentId": "5",
+    "name": "Brooke McColl, MA",
+    "provider_title": "Individual Therapist",
+    "credentials": "MA",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Brooke-M-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "UCare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Personality Disorders"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "41",
+    "departmentId": "8",
+    "name": "Jennifer Tagg, LMFT",
+    "provider_title": "Individual and Couples Therapist",
+    "credentials": "LMFT",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/03/Jtagg-hs-web.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": false,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "EMDR and ART",
+      "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples",
+      "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "43",
+    "departmentId": "5",
+    "name": "Jenna Halvorson, LPCC",
+    "provider_title": "Individual Therapist",
+    "credentials": "LPCC",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Teen Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/02/Jenna-HS2-1.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 17,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "44",
+    "departmentId": "1",
+    "name": "Laura Mortenson, LICSW",
+    "provider_title": "Individual Therapist",
+    "credentials": "LICSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Laura-M-2-web-hs.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)"
+    ],
+    "treatmentApproach": [],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual"
+    ]
+  },
+  {
+    "athena_provider_id": "45",
+    "departmentId": "8",
+    "name": "Tamara Pribnow, LICSW",
+    "provider_title": "Individual Therapist",
+    "credentials": "LICSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Tamara-Web-HS.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "Medicare",
+      "Optum",
+      "UCare",
+      "United Behavioral Health",
+      "United Healthcare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD"
+    ],
+    "treatmentApproach": [],
     "gender": "Female",
     "languages": [
       "English"
@@ -1950,7 +1932,7 @@
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 16,
-    "maxAge": 75,
+    "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -1963,18 +1945,18 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "United Behavioral Health",
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Self-Esteem and Identity",
-      "Women's Mental Health",
-      "Perinatal and Maternal Mental Health"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Grief or Loss",
+      "Self-Esteem or Identity",
+      "Women’s Mental Health",
+      "Family Conflict or Parenting Support"
     ],
     "treatmentApproach": [
       "CBT (Cognitive Behavioral Therapy)",
@@ -1990,21 +1972,21 @@
     ]
   },
   {
-    "athena_provider_id": "33",
-    "departmentId": "8",
-    "name": "Hana Hassan, LPCC",
+    "athena_provider_id": "47",
+    "departmentId": "5",
+    "name": "Nora Davis, LPCC, LADC",
     "provider_title": "Individual Therapist",
-    "credentials": "LPCC",
+    "credentials": "LPCC, LADC",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Hana-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/04/Nora-HS-web.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 18,
-    "maxAge": 55,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -2014,57 +1996,40 @@
       "HealthPartners",
       "Medica",
       "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
+      "UCare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Family Conflict and Parenting Support",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Substance Use and Addiction",
-      "Eating and Body Image",
-      "Self-Esteem and Identity",
-      "Women's Mental Health",
-      "Men's Mental Health",
-      "Bipolar Disorder"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)"
     ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "IFS (Internal Family Systems)",
-      "DBT (Dialectical Behavior Therapy)"
-    ],
+    "treatmentApproach": [],
     "gender": "Female",
     "languages": [
       "English"
     ],
     "services": [
-      "therapy-individual"
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
-    "athena_provider_id": "49",
+    "athena_provider_id": "48",
     "departmentId": "8",
-    "name": "Ali Kanan, LPCC",
-    "provider_title": "Individual and Family Therapist",
-    "credentials": "",
-    "specialty": "Therapy",
+    "name": "Drew Gernand, PA-C",
+    "provider_title": "Psychiatric Physician Assistant",
+    "credentials": "PA-C",
+    "specialty": "Psychiatry",
     "specialties": [
-      "Mental Health Therapy",
-      "Family Therapy"
+      "Psychiatry Medication Management"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Ali-web-hs.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Drew-Web-Headshot.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 15,
+    "minAge": 18,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -2078,192 +2043,25 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "ADHD",
-      "Relationship and Couples Issues",
-      "Family Conflict and Parenting Support",
-      "Grief and Loss",
-      "Life Transitions and Stress",
-      "Bipolar Disorder",
-      "Personality Disorders",
-      "Autism Spectrum and Neurodivergence",
-      "Eating and Body Image",
-      "Sleep and Insomnia",
-      "Self-Esteem and Identity",
-      "Anger Management",
-      "Perinatal and Maternal Mental Health",
-      "LGBTQ+",
-      "Men's Mental Health",
-      "Chronic Illness"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)",
-      "IFS (Internal Family Systems)",
-      "Parenting Therapy",
-      "Exposure Therapy",
-      "Executive Function Coaching"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual",
-      "therapy-family"
-    ]
-  },
-  {
-    "athena_provider_id": "45",
-    "departmentId": "8",
-    "name": "Tamara Pribnow, LICSW",
-    "provider_title": "Individual Therapist",
-    "credentials": "",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Tamara-Web-HS.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 65,
-    "telehealthLocs": "Telehealth - MN, Telehealth - WI",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress",
-      "Self-Esteem and Identity",
-      "LGBTQ+"
-    ],
-    "treatmentApproach": [
-      "CBT (Cognitive Behavioral Therapy)",
-      "DBT (Dialectical Behavior Therapy)"
-    ],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "36",
-    "departmentId": "8",
-    "name": "Laura Anderson",
-    "provider_title": "Individual Therapist",
-    "credentials": "",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
       "United Behavioral Health",
-      "Tricare"
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "48",
-    "departmentId": "8",
-    "name": "Drew Gernand, PA-C",
-    "provider_title": "Psychiatric Physician Assistant",
-    "credentials": "PA-C",
-    "specialty": "Psychiatry",
-    "specialties": [
-      "Psychiatric Medication Management"
-    ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Drew-Web-Headshot.webp",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": true,
-    "minAge": 18,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medica",
-      "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Life Transitions and Stress",
-      "Trauma and PTSD",
-      "Grief and Loss",
-      "ADHD",
-      "Substance Use and Addiction",
-      "OCD (Obsessive Compulsive Disorder)",
-      "Bipolar Disorder",
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Grief or Loss",
+      "ADHD (Evaluation or Treatment)",
+      "Substance Use  or Addiction",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Sleep Issues",
       "Personality Disorders",
-      "Self-Esteem and Identity",
-      "Sleep and Insomnia",
+      "Bipolar Disorder",
+      "Self-Esteem or Identity",
+      "LGBTQ+ Related Concerns",
+      "Men’s Mental Health",
       "Anger Management",
-      "LGBTQ+",
-      "Men's Mental Health",
       "Chronic Illness"
     ],
     "treatmentApproach": [],
@@ -2276,62 +2074,21 @@
     ]
   },
   {
-    "athena_provider_id": "50",
+    "athena_provider_id": "49",
     "departmentId": "8",
-    "name": "Bri Lundgren, LGSW",
+    "name": "Ali Kanan, LPCC",
     "provider_title": "Individual Therapist",
-    "credentials": "",
+    "credentials": "LPCC",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy"
     ],
-    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Bri-hs-web.webp",
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Ali-web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
     "minAge": 16,
-    "maxAge": 80,
-    "telehealthLocs": "Telehealth - MN",
-    "insurance": [
-      "Aetna",
-      "Americas PPO",
-      "Blue Cross Blue Shield",
-      "Cigna",
-      "HealthPartners",
-      "Medicaid",
-      "UCare"
-    ],
-    "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress"
-    ],
-    "treatmentApproach": [],
-    "gender": "Female",
-    "languages": [
-      "English"
-    ],
-    "services": [
-      "therapy-individual"
-    ]
-  },
-  {
-    "athena_provider_id": "42",
-    "departmentId": "8",
-    "name": "Michael Richardson",
-    "provider_title": "Individual Therapist",
-    "credentials": "",
-    "specialty": "Therapy",
-    "specialties": [
-      "Mental Health Therapy"
-    ],
-    "photo": "",
-    "sms_opt_in": false,
-    "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 5,
-    "maxAge": 80,
+    "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
       "Aetna",
@@ -2344,18 +2101,65 @@
       "Medicare",
       "Optum",
       "UCare",
-      "United Healthcare",
       "United Behavioral Health",
-      "Tricare"
+      "United Healthcare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)"
     ],
     "treatmentApproach": [],
     "gender": "Male",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-family"
+    ]
+  },
+  {
+    "athena_provider_id": "50",
+    "departmentId": "8",
+    "name": "Bri Lundgren, LGSW",
+    "provider_title": "Individual Therapist",
+    "credentials": "LGSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/05/Bri-hs-web.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 16,
+    "maxAge": 100,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medicaid",
+      "UCare"
+    ],
+    "whatWeTreat": [
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "ADHD (Evaluation or Treatment)",
+      "Obsessive Compulsive Disorder (OCD)"
+    ],
+    "treatmentApproach": [
+      "ACT (Acceptance and Commitment Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
     "languages": [
       "English"
     ],
@@ -2377,8 +2181,8 @@
     "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/06/Janae-Web-hs.webp",
     "sms_opt_in": false,
     "mobile_number": "",
-    "acceptingNew": false,
-    "minAge": 18,
+    "acceptingNew": true,
+    "minAge": 14,
     "maxAge": 80,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
@@ -2387,22 +2191,22 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "HealthPartners",
-      "Medica",
       "Medicaid",
-      "Medicare",
-      "Optum",
-      "UCare",
-      "United Healthcare",
-      "United Behavioral Health",
-      "Tricare"
+      "UCare"
     ],
     "whatWeTreat": [
-      "Anxiety and Worry",
-      "Depression and Low Mood",
-      "Trauma and PTSD",
-      "Life Transitions and Stress"
+      "Depression or Low Mood",
+      "Anxiety or Worry",
+      "Life Transitions or Stress",
+      "Trauma or PTSD",
+      "Grief or Loss",
+      "Perinatal or Maternal Mental Health",
+      "Women’s Mental Health"
     ],
-    "treatmentApproach": [],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)"
+    ],
     "gender": "Female",
     "languages": [
       "English"
