@@ -47,7 +47,7 @@ const ALL_SCHEDULING = [
 // ALL_WHAT_WE_TREAT and ALL_TREATMENT_APPROACH are derived dynamically inside
 // the component from the live provider data, so they always match WordPress.
 
-const ALL_GENDERS = ['Female', 'Male', 'Non-Binary'];
+const ALL_GENDERS = ['Male', 'Female', 'Non-Binary'];
 
 // ── URL ↔ filter sync ────────────────────────────────────────────────────────
 
@@ -235,9 +235,16 @@ export default function ProviderDirectory() {
   }, [providers]);
 
   const allLanguages = useMemo(() => {
-    const s = new Set(['English', 'Spanish', 'Other']); // seed with WP field options
+    const order = ['English', 'Spanish', 'Other'];
+    const s = new Set(order);
     providers.forEach(p => (p.languages || []).forEach(l => s.add(l)));
-    return [...s].sort();
+    return [...s].sort((a, b) => {
+      const ai = order.indexOf(a), bi = order.indexOf(b);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return a.localeCompare(b);
+    });
   }, [providers]);
 
   const allInsurance = useMemo(() => {
