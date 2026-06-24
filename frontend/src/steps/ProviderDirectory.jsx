@@ -78,7 +78,7 @@ const ALL_SCHEDULING = [
 
 const ALL_GENDERS = ['Female', 'Male', 'Non-Binary'];
 
-const ALL_LANGUAGES = ['English', 'Spanish', 'Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
+const ALL_LANGUAGES = ['English', 'Spanish', 'Other'];
 
 // ── URL ↔ filter sync ────────────────────────────────────────────────────────
 
