@@ -235,7 +235,7 @@ export default function ProviderDirectory() {
   }, [providers]);
 
   const allLanguages = useMemo(() => {
-    const s = new Set();
+    const s = new Set(['English', 'Spanish', 'Other']); // seed with WP field options
     providers.forEach(p => (p.languages || []).forEach(l => s.add(l)));
     return [...s].sort();
   }, [providers]);
