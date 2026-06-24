@@ -151,7 +151,8 @@
     "treatmentApproach": [],
     "gender": "Non-Binary",
     "languages": [
-      "English"
+      "English",
+      "Other"
     ],
     "services": [
       "therapy-individual",
@@ -1182,7 +1183,8 @@
     "treatmentApproach": [],
     "gender": "Female",
     "languages": [
-      "English"
+      "English",
+      "Other"
     ],
     "services": [
       "psychiatry"

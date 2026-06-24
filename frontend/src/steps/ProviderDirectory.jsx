@@ -78,8 +78,6 @@ const ALL_SCHEDULING = [
 
 const ALL_GENDERS = ['Female', 'Male', 'Non-Binary'];
 
-const ALL_LANGUAGES = ['English', 'Spanish', 'Other'];
-
 // ── URL ↔ filter sync ────────────────────────────────────────────────────────
 
 // Reverse of SPECIALTY_TO_SERVICE: slug → display name
@@ -262,6 +260,12 @@ export default function ProviderDirectory() {
   const allTreatmentApproach = useMemo(() => {
     const s = new Set();
     providers.forEach(p => (p.treatmentApproach || []).forEach(t => s.add(t)));
+    return [...s].sort();
+  }, [providers]);
+
+  const allLanguages = useMemo(() => {
+    const s = new Set();
+    providers.forEach(p => (p.languages || []).forEach(l => s.add(l)));
     return [...s].sort();
   }, [providers]);
 
@@ -620,7 +624,7 @@ export default function ProviderDirectory() {
               aria-label="Filter by language"
             >
               <option value="">Any Language</option>
-              {ALL_LANGUAGES.map((l) => (
+              {allLanguages.map((l) => (
                 <option key={l} value={l}>{l}</option>
               ))}
             </select>
