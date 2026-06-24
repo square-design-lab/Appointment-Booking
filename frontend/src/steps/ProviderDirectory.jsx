@@ -30,35 +30,6 @@ const SPECIALTY_TO_SERVICE = {
   'Psychopharmacologic Testing':       'psych-testing',
 };
 
-const ALL_SERVICES = [
-  'Psychiatric Medication Management',
-  'Mental Health Therapy',
-  'Family Therapy',
-  'Couples Therapy',
-  'Child Therapy',
-  'Teen Therapy',
-  'Transcranial Magnetic Stimulation',
-  'ADHD Evaluation',
-  'Psychopharmacologic Testing',
-];
-
-const ALL_INSURANCE = [
-  'Aetna',
-  'Americas PPO',
-  'Blue Cross Blue Shield',
-  'Cigna',
-  'HealthPartners',
-  'Medica',
-  'Medicaid',
-  'Medicare',
-  'Optum',
-  'UCare',
-  'United Healthcare',
-  'United Behavioral Health',
-  'Tricare',
-  'Other Commercial Insurance',
-  'Self-Pay',
-];
 
 // Time-of-day: sourced from monthly scheduling-meta endpoint (no extra API cost on page load)
 // Availability speed: sourced from real-time batch-availability (4-hour cache)
@@ -266,6 +237,18 @@ export default function ProviderDirectory() {
   const allLanguages = useMemo(() => {
     const s = new Set();
     providers.forEach(p => (p.languages || []).forEach(l => s.add(l)));
+    return [...s].sort();
+  }, [providers]);
+
+  const allInsurance = useMemo(() => {
+    const s = new Set();
+    providers.forEach(p => (p.insurance || []).forEach(i => s.add(i)));
+    return [...s].sort();
+  }, [providers]);
+
+  const allServices = useMemo(() => {
+    const s = new Set();
+    providers.forEach(p => (p.specialties || []).forEach(sv => s.add(sv)));
     return [...s].sort();
   }, [providers]);
 
@@ -515,7 +498,7 @@ export default function ProviderDirectory() {
               aria-label="Filter by service"
             >
               <option value="">All Services</option>
-              {ALL_SERVICES.map((s) => (
+              {allServices.map((s) => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
@@ -548,7 +531,7 @@ export default function ProviderDirectory() {
               aria-label="Filter by insurance"
             >
               <option value="">All Insurance</option>
-              {ALL_INSURANCE.map((ins) => (
+              {allInsurance.map((ins) => (
                 <option key={ins} value={ins}>{ins}</option>
               ))}
             </select>
