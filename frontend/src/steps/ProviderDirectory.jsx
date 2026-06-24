@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import providers from '../data/provider-contacts.json';
 import logoSrc from '../assets/logo.png';
-import { fetchBatchAvailability, fetchSchedulingMeta } from '../api/bookingApi';
+import { fetchBatchAvailability, fetchSchedulingMeta, fetchProviders } from '../api/bookingApi';
 import { ATHENA_PRACTICE_ID } from '../BookingContext';
 
 function pushDataLayer(obj) {
@@ -74,41 +73,8 @@ const ALL_SCHEDULING = [
 ];
 
 
-const ALL_WHAT_WE_TREAT = [
-  'Anxiety or Worry',
-  'Depression or Low Mood',
-  'Trauma or PTSD',
-  'ADHD (Evaluation or Treatment)',
-  'Relationship or Couples Issues',
-  'Family Conflict or Parenting Support',
-  'Grief or Loss',
-  'Life Transitions or Stress',
-  'Substance Use or Addiction',
-  'Obsessive Compulsive Disorder (OCD)',
-  'Bipolar Disorder',
-  'Autism Spectrum',
-  'Personality Disorders',
-  'Sleep Issues',
-  'Self-Esteem or Identity',
-  'Anger Management',
-  'Perinatal or Maternal Mental Health',
-  'LGBTQ+ Related Concerns',
-  "Men's Mental Health",
-  "Women's Mental Health",
-  'Chronic Illness',
-];
-
-const ALL_TREATMENT_APPROACH = [
-  'ACT (Acceptance and Commitment Therapy)',
-  'Brainspotting',
-  'CBT (Cognitive Behavioral Therapy)',
-  'DBT (Dialectical Behavior Therapy)',
-  'EMDR and ART',
-  'Exposure Therapy',
-  'IFS (Internal Family Systems)',
-  'Parenting Therapy',
-  'Play Therapy',
-];
+// ALL_WHAT_WE_TREAT and ALL_TREATMENT_APPROACH are derived dynamically inside
+// the component from the live provider data, so they always match WordPress.
 
 const ALL_GENDERS = ['Female', 'Male', 'Non-Binary'];
 
@@ -275,6 +241,30 @@ export default function ProviderDirectory() {
   const [acceptingNew,     setAcceptingNew]     = useState(initParams.accepting);
   const [search,           setSearch]           = useState(initParams.search);
 
+  // Provider list — fetched from backend (keeps in sync with WordPress via /api/sync-providers)
+  const [providers,        setProviders]        = useState([]);
+  const [providersLoading, setProvidersLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProviders()
+      .then(data => { setProviders(Array.isArray(data) ? data : []); })
+      .catch(() => { setProviders([]); })
+      .finally(() => setProvidersLoading(false));
+  }, []);
+
+  // Derived filter options — always match whatever WordPress has
+  const allWhatWeTreat = useMemo(() => {
+    const s = new Set();
+    providers.forEach(p => (p.whatWeTreat || []).forEach(w => s.add(w)));
+    return [...s].sort();
+  }, [providers]);
+
+  const allTreatmentApproach = useMemo(() => {
+    const s = new Set();
+    providers.forEach(p => (p.treatmentApproach || []).forEach(t => s.add(t)));
+    return [...s].sort();
+  }, [providers]);
+
   // null = loading, Map<providerId, bool> once resolved
   const [availability,   setAvailability]   = useState(null);
   // { [providerId]: string[] } — all scheduling prefs from scheduling-meta (monthly cache)
@@ -308,8 +298,9 @@ export default function ProviderDirectory() {
     history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
   }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search]);
 
-  // Batch availability — real-time, 4-hour server cache (show/hide Book button only).
+  // Batch availability — fires once providers have loaded.
   useEffect(() => {
+    if (providers.length === 0) return;
     const list = providers.map((p) => ({
       providerId:   String(p.athena_provider_id),
       departmentId: String(p.departmentId),
@@ -323,7 +314,7 @@ export default function ProviderDirectory() {
         setAvailability(availMap);
       })
       .catch(() => setAvailability(new Map())); // fail open — show all book buttons
-  }, []);
+  }, [providers]);
 
   // Scheduling meta — time-of-day preferences, monthly server cache.
   // Returns instantly on cache hit; triggers ~46 Athena calls only on cache miss (~once/month).
@@ -400,7 +391,7 @@ export default function ProviderDirectory() {
 
       return true;
     });
-  }, [serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search, schedulingMeta]);
+  }, [providers, serviceFilter, locationFilter, insuranceFilter, schedulingFilter, treatFilter, approachFilter, genderFilter, languageFilter, ageFilter, acceptingNew, search, schedulingMeta]);
 
   const hasFilters = serviceFilter || locationFilter || insuranceFilter || schedulingFilter || treatFilter || approachFilter || genderFilter || languageFilter || ageFilter || acceptingNew || search;
 
@@ -584,7 +575,7 @@ export default function ProviderDirectory() {
               aria-label="Filter by what we treat"
             >
               <option value="">What We Treat</option>
-              {ALL_WHAT_WE_TREAT.map((t) => (
+              {allWhatWeTreat.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
@@ -598,7 +589,7 @@ export default function ProviderDirectory() {
               aria-label="Filter by modalities"
             >
               <option value="">Modalities</option>
-              {ALL_TREATMENT_APPROACH.map((a) => (
+              {allTreatmentApproach.map((a) => (
                 <option key={a} value={a}>{a}</option>
               ))}
             </select>
@@ -655,12 +646,16 @@ export default function ProviderDirectory() {
         </div>
 
         {/* Result count */}
-        <div className="vpd-result-count">
-          {filtered.length} provider{filtered.length !== 1 ? 's' : ''} found
-        </div>
+        {!providersLoading && (
+          <div className="vpd-result-count">
+            {filtered.length} provider{filtered.length !== 1 ? 's' : ''} found
+          </div>
+        )}
 
         {/* Grid */}
-        {filtered.length === 0 ? (
+        {providersLoading ? (
+          <div className="vpd-empty">Loading providers…</div>
+        ) : filtered.length === 0 ? (
           <div className="vpd-empty">
             No providers match your filters.{' '}
             <button className="vpd-clear-link" onClick={clearFilters}>Clear filters</button>{' '}

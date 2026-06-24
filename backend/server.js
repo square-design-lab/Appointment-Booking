@@ -34,7 +34,101 @@ app.use(cors({
   credentials: true,
 }));
 
-const providerContacts = require('./provider-contacts.json');
+let providerStore = [...require('./provider-contacts.json')];
+
+// ── WP provider sync helpers ──────────────────────────────────────────────────
+const WP_PROVIDER_API = 'https://vantagementalhealth.org/wp-json/wp/v2';
+
+function wpDecodeHtml(str) {
+  return (str || '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#039;/g, "'")
+    .replace(/&#(\d+);/g, (_, c) => String.fromCharCode(+c))
+    .replace(/\s+/g, ' ').trim();
+}
+const WP_INSURANCE_NORM = { "America's PPO": 'Americas PPO', 'Ucare': 'UCare' };
+
+async function wpFetchTimeout(url, timeoutMs) {
+  const ctrl  = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal });
+    if (!res.ok) throw new Error(`WP ${res.status}: ${url}`);
+    return res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function wpBuildLookup(postType) {
+  const map = {};
+  let page = 1;
+  while (true) {
+    const posts = await wpFetchTimeout(
+      `${WP_PROVIDER_API}/${postType}?per_page=100&page=${page}&_fields=id,title`, 30000
+    );
+    if (!Array.isArray(posts) || posts.length === 0) break;
+    posts.forEach(p => { map[p.id] = wpDecodeHtml(p.title?.rendered || ''); });
+    if (posts.length < 100) break;
+    page++;
+  }
+  return map;
+}
+
+async function wpFetchAllProviders() {
+  const all = [];
+  let page = 1;
+  while (true) {
+    const posts = await wpFetchTimeout(
+      `${WP_PROVIDER_API}/providers?per_page=100&page=${page}&_embed&_fields=id,title,featured_media,meta,_links`,
+      60000
+    );
+    if (!Array.isArray(posts) || posts.length === 0) break;
+    all.push(...posts);
+    if (posts.length < 100) break;
+    page++;
+  }
+  return all;
+}
+
+function wpMapProvider(post, condMap, treatMap, svcMap, smsMap) {
+  const meta       = post.meta || {};
+  const providerId = String(meta.athena_provider_id   || '').trim();
+  const deptId     = String(meta.athena_department_id || '').trim();
+  if (!providerId || !deptId) return null;
+
+  const fullTitle  = wpDecodeHtml(post.title?.rendered || '');
+  const commaIdx   = fullTitle.indexOf(', ');
+  const credentials = commaIdx === -1 ? '' : fullTitle.slice(commaIdx + 2);
+  const services    = meta.services || [];
+  const sms         = smsMap[providerId] || { sms_opt_in: false, mobile_number: '' };
+
+  const fm    = post._embedded?.['wp:featuredmedia'];
+  const photo = Array.isArray(fm) && fm[0]?.source_url ? fm[0].source_url : '';
+
+  return {
+    athena_provider_id: providerId,
+    departmentId:       deptId,
+    name:               fullTitle,
+    provider_title:     wpDecodeHtml(meta.provider_title || ''),
+    credentials,
+    specialty:          services.includes('psychiatry') ? 'Psychiatry' : 'Therapy',
+    specialties:        (meta.services_provided  || []).map(id => svcMap[id]).filter(Boolean),
+    photo,
+    sms_opt_in:         sms.sms_opt_in,
+    mobile_number:      sms.mobile_number,
+    acceptingNew:       (meta.accepting_new_patients || [])[0] === 'Yes',
+    minAge:             parseInt(meta.min_age || '0', 10),
+    maxAge:             parseInt(meta.max_age || '0', 10),
+    telehealthLocs:     (meta.telehealth_location || []).join(', '),
+    insurance:          (meta.provider_insurances  || []).map(n => WP_INSURANCE_NORM[n] || n),
+    whatWeTreat:        (meta.treated_conditions   || []).map(id => condMap[id]).filter(Boolean),
+    treatmentApproach:  (meta.treatment            || []).map(id => treatMap[id]).filter(Boolean),
+    gender:             (meta.gender               || [])[0] || '',
+    languages:          meta.language || [],
+    services,
+  };
+}
 
 const twilioClient =
   process.env.TWILIO_API_KEY_SID && process.env.TWILIO_API_KEY_SECRET
@@ -381,7 +475,7 @@ app.post('/api/checkin/appointments', async (req, res) => {
       const pid = String(a.providerid || '');
       // Cross-reference provider-contacts.json for the display name.
       // Athena's appointment response often omits or abbreviates the provider name.
-      const contact = providerContacts.find((p) => String(p.athena_provider_id) === pid);
+      const contact = providerStore.find((p) => String(p.athena_provider_id) === pid);
       const providerName = contact?.provider_name
         || a.providername
         || a.providerusername
@@ -431,7 +525,7 @@ app.post('/api/checkin/confirm-arrival', async (req, res) => {
 
   // Send provider SMS if opted in — silently skip if not
   if (providerAthenaId && patientFirstName) {
-    const provider = providerContacts.find(
+    const provider = providerStore.find(
       (p) => String(p.athena_provider_id) === String(providerAthenaId)
     );
     if (provider && provider.sms_opt_in && provider.mobile_number) {
@@ -939,10 +1033,10 @@ async function refreshSchedulingMeta() {
   const endDate       = futureDateMMDDYYYY(31); // cover full "Within One Month" window
   const rd            = new Date(); rd.setHours(0, 0, 0, 0);
   const refreshDateMs = rd.getTime();
-  console.log(`[scheduling-meta] Refreshing for ${providerContacts.length} providers (31-day window)…`);
+  console.log(`[scheduling-meta] Refreshing for ${providerStore.length} providers (31-day window)…`);
 
   const providerResults = {};
-  for (const p of providerContacts) {
+  for (const p of providerStore) {
     const providerId   = String(p.athena_provider_id);
     const departmentId = String(p.departmentId);
     try {
@@ -1744,6 +1838,57 @@ app.post('/api/booking/alert', async (req, res) => {
   }
   await alertSupport(`[${type}] ${message}`);
   return res.json({ sent: true });
+});
+
+// ─── GET /api/providers ───────────────────────────────────────────────────────
+// Returns the current in-memory provider store. No auth — public data.
+
+app.get('/api/providers', (_req, res) => {
+  res.json(providerStore);
+});
+
+// ─── GET /api/sync-providers ──────────────────────────────────────────────────
+// Fetches provider metadata from WordPress and refreshes providerStore.
+// Protected by SYNC_KEY env var: ?key=<value>
+
+app.get('/api/sync-providers', async (req, res) => {
+  const SYNC_KEY = process.env.SYNC_KEY;
+  if (!SYNC_KEY || req.query.key !== SYNC_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  try {
+    console.log('[sync-providers] Starting WP sync…');
+
+    const [condMap, treatMap, svcMap] = await Promise.all([
+      wpBuildLookup('conditions'),
+      wpBuildLookup('treatments'),
+      wpBuildLookup('our-services'),
+    ]);
+    console.log(`[sync-providers] Lookups ready — ${Object.keys(condMap).length} conditions, ${Object.keys(treatMap).length} treatments, ${Object.keys(svcMap).length} services`);
+
+    const wpProviders = await wpFetchAllProviders();
+    console.log(`[sync-providers] Fetched ${wpProviders.length} WP provider posts`);
+
+    // Preserve sms_opt_in and mobile_number from the current store
+    const smsMap = {};
+    providerStore.forEach(p => {
+      smsMap[p.athena_provider_id] = { sms_opt_in: p.sms_opt_in, mobile_number: p.mobile_number };
+    });
+
+    const newStore = wpProviders
+      .map(post => wpMapProvider(post, condMap, treatMap, svcMap, smsMap))
+      .filter(Boolean)
+      .sort((a, b) => parseInt(a.athena_provider_id) - parseInt(b.athena_provider_id));
+
+    providerStore = newStore;
+    console.log(`[sync-providers] Done — ${newStore.length} providers in store`);
+
+    res.json({ ok: true, providers: newStore.length, synced: new Date().toISOString() });
+  } catch (err) {
+    console.error('[sync-providers] Failed:', err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

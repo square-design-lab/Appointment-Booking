@@ -96,3 +96,7 @@ export function createPatientCase(data) {
 export function fetchSchedulingMeta() {
   return apiFetch('/api/booking/scheduling-meta');
 }
+
+export function fetchProviders() {
+  return apiFetch('/api/providers');
+}
