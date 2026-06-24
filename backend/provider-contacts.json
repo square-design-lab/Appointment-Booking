@@ -303,7 +303,7 @@
       "Anxiety or Worry",
       "Trauma or PTSD",
       "ADHD (Evaluation or Treatment)",
-      "Substance Use  or Addiction",
+      "Substance Use or Addiction",
       "Obsessive Compulsive Disorder (OCD)",
       "Personality Disorders",
       "Bipolar Disorder"
@@ -411,7 +411,7 @@
       "Anxiety or Worry",
       "Trauma or PTSD",
       "ADHD (Evaluation or Treatment)",
-      "Substance Use  or Addiction",
+      "Substance Use or Addiction",
       "Obsessive Compulsive Disorder (OCD)",
       "Personality Disorders",
       "Bipolar Disorder",
@@ -571,7 +571,7 @@
       "Anxiety or Worry",
       "Trauma or PTSD",
       "ADHD (Evaluation or Treatment)",
-      "Substance Use  or Addiction",
+      "Substance Use or Addiction",
       "Obsessive Compulsive Disorder (OCD)",
       "Sleep Issues",
       "Personality Disorders",
@@ -643,9 +643,9 @@
   {
     "athena_provider_id": "18",
     "departmentId": "8",
-    "name": "Anna King Laubach, LICSW",
+    "name": "Anna King Laubach, LICSW",
     "provider_title": "Individual Therapist",
-    "credentials": "",
+    "credentials": "LICSW",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
@@ -1560,7 +1560,7 @@
       "Depression or Low Mood",
       "Anxiety or Worry",
       "Trauma or PTSD",
-      "Substance Use  or Addiction",
+      "Substance Use or Addiction",
       "Obsessive Compulsive Disorder (OCD)"
     ],
     "treatmentApproach": [
@@ -2053,7 +2053,7 @@
       "Trauma or PTSD",
       "Grief or Loss",
       "ADHD (Evaluation or Treatment)",
-      "Substance Use  or Addiction",
+      "Substance Use or Addiction",
       "Obsessive Compulsive Disorder (OCD)",
       "Sleep Issues",
       "Personality Disorders",

@@ -75,44 +75,42 @@ const ALL_SCHEDULING = [
 
 
 const ALL_WHAT_WE_TREAT = [
-  'Anxiety and Worry',
-  'Depression and Low Mood',
-  'Trauma and PTSD',
-  'ADHD',
-  'Relationship and Couples Issues',
-  'Family Conflict and Parenting Support',
-  'Grief and Loss',
-  'Life Transitions and Stress',
-  'Substance Use and Addiction',
-  'OCD (Obsessive Compulsive Disorder)',
+  'Anxiety or Worry',
+  'Depression or Low Mood',
+  'Trauma or PTSD',
+  'ADHD (Evaluation or Treatment)',
+  'Relationship or Couples Issues',
+  'Family Conflict or Parenting Support',
+  'Grief or Loss',
+  'Life Transitions or Stress',
+  'Substance Use or Addiction',
+  'Obsessive Compulsive Disorder (OCD)',
   'Bipolar Disorder',
-  'Autism Spectrum and Neurodivergence',
+  'Autism Spectrum',
   'Personality Disorders',
-  'Eating and Body Image',
-  'Sleep and Insomnia',
-  'Self-Esteem and Identity',
+  'Sleep Issues',
+  'Self-Esteem or Identity',
   'Anger Management',
-  'Perinatal and Maternal Mental Health',
-  'LGBTQ+',
+  'Perinatal or Maternal Mental Health',
+  'LGBTQ+ Related Concerns',
   "Men's Mental Health",
   "Women's Mental Health",
   'Chronic Illness',
 ];
 
 const ALL_TREATMENT_APPROACH = [
+  'ACT (Acceptance and Commitment Therapy)',
+  'Brainspotting',
   'CBT (Cognitive Behavioral Therapy)',
   'DBT (Dialectical Behavior Therapy)',
   'EMDR and ART',
-  'Play Therapy',
-  'Brainspotting',
-  'Parenting Therapy',
-  'Executive Function Coaching',
   'Exposure Therapy',
-  'Art Therapy',
   'IFS (Internal Family Systems)',
+  'Parenting Therapy',
+  'Play Therapy',
 ];
 
-const ALL_GENDERS = ['Female', 'Male', 'Non-binary'];
+const ALL_GENDERS = ['Female', 'Male', 'Non-Binary'];
 
 const ALL_LANGUAGES = ['English', 'Spanish', 'Polish', 'French', 'Arabic', 'Yoruba', 'Other'];
 
