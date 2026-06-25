@@ -102,11 +102,7 @@ export default function Step3Registration() {
   // GTM — fire once when step 3 mounts
   useEffect(() => {
     const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
-    pushDataLayer({
-      event:         `booking_step3_viewed_${suffix}`,
-      provider_name: providerInfo?.name || '',
-      service:       effectiveService   || '',
-    });
+    pushDataLayer({ event: `booking_step3_viewed_${suffix}` });
   }, []);
 
   // ── Section A: Patient information ────────────────────────────────────────
@@ -337,15 +333,7 @@ export default function Step3Registration() {
 
     // 6 — GTM: booking completed conversion event
     const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
-    pushDataLayer({
-      event:            `booking_completed_${suffix}`,
-      provider_name:    providerInfo?.name || '',
-      service:          effectiveService   || '',
-      location:         locationInfo?.name || '',
-      appointment_date: selectedDate
-        ? `${String(selectedDate.getMonth() + 1).padStart(2, '0')}/${String(selectedDate.getDate()).padStart(2, '0')}/${selectedDate.getFullYear()}`
-        : '',
-    });
+    pushDataLayer({ event: `booking_completed_${suffix}` });
 
     // 7 — Store confirmation and advance
     const snapshot = {

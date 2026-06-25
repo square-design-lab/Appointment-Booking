@@ -74,11 +74,7 @@ export default function Step2DateTime() {
   // GTM — fire once when step 2 mounts
   useEffect(() => {
     const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
-    pushDataLayer({
-      event:         `booking_step2_viewed_${suffix}`,
-      provider_name: providerInfo?.name || '',
-      service:       urlParams.service || selectedService || '',
-    });
+    pushDataLayer({ event: `booking_step2_viewed_${suffix}` });
   }, []);
 
   // slotMap: Map<'YYYY-MM-DD', Array<{appointmentId, time, duration}>>
