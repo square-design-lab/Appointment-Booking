@@ -5,6 +5,16 @@ function pushDataLayer(obj) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(obj);
 }
+
+function getBookingSuffix(patientType, specialty) {
+  const isNew   = patientType === 'new';
+  const isPsych = (specialty || '').toLowerCase() === 'psychiatry';
+  if (isNew  && !isPsych) return 'a';
+  if (isNew  &&  isPsych) return 'b';
+  if (!isNew && !isPsych) return 'c';
+  return 'd';
+}
+
 import {
   registerAndBook,
   writeServiceNote,
@@ -91,8 +101,9 @@ export default function Step3Registration() {
 
   // GTM — fire once when step 3 mounts
   useEffect(() => {
+    const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
     pushDataLayer({
-      event:         'booking_step3_viewed',
+      event:         `booking_step3_viewed_${suffix}`,
       provider_name: providerInfo?.name || '',
       service:       effectiveService   || '',
     });
@@ -325,8 +336,9 @@ export default function Step3Registration() {
     }
 
     // 6 — GTM: booking completed conversion event
+    const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
     pushDataLayer({
-      event:            'booking_completed',
+      event:            `booking_completed_${suffix}`,
       provider_name:    providerInfo?.name || '',
       service:          effectiveService   || '',
       location:         locationInfo?.name || '',

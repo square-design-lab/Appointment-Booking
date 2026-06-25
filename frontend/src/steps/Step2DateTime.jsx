@@ -11,6 +11,15 @@ function pushDataLayer(obj) {
   window.dataLayer.push(obj);
 }
 
+function getBookingSuffix(patientType, specialty) {
+  const isNew   = patientType === 'new';
+  const isPsych = (specialty || '').toLowerCase() === 'psychiatry';
+  if (isNew  && !isPsych) return 'a';
+  if (isNew  &&  isPsych) return 'b';
+  if (!isNew && !isPsych) return 'c';
+  return 'd';
+}
+
 // ─── Date helpers ─────────────────────────────────────────────────────────────
 
 // Athena returns dates as MM/DD/YYYY — convert to YYYY-MM-DD key
@@ -64,8 +73,9 @@ export default function Step2DateTime() {
 
   // GTM — fire once when step 2 mounts
   useEffect(() => {
+    const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
     pushDataLayer({
-      event:         'booking_step2_viewed',
+      event:         `booking_step2_viewed_${suffix}`,
       provider_name: providerInfo?.name || '',
       service:       urlParams.service || selectedService || '',
     });
