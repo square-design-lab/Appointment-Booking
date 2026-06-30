@@ -104,7 +104,6 @@
     "services": [
       "therapy-individual",
       "therapy-couples",
-      "therapy-family",
       "therapy-teen"
     ]
   },
@@ -209,7 +208,6 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-child",
       "therapy-teen"
     ]
   },
@@ -263,7 +261,8 @@
     ],
     "services": [
       "psychiatry",
-      "adhd"
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -316,7 +315,6 @@
     ],
     "services": [
       "psychiatry",
-      "adhd",
       "psych-testing"
     ]
   },
@@ -425,7 +423,8 @@
     ],
     "services": [
       "psychiatry",
-      "adhd"
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -477,7 +476,8 @@
     ],
     "services": [
       "psychiatry",
-      "adhd"
+      "adhd",
+      "psych-testing"
     ]
   },
   {
@@ -531,8 +531,7 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-child",
-      "therapy-teen"
+      "therapy-child"
     ]
   },
   {
@@ -590,7 +589,8 @@
       "Other"
     ],
     "services": [
-      "psychiatry"
+      "psychiatry",
+      "psych-testing"
     ]
   },
   {
@@ -787,8 +787,7 @@
       "English"
     ],
     "services": [
-      "therapy-individual",
-      "therapy-couples"
+      "therapy-individual"
     ]
   },
   {
@@ -940,7 +939,8 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-couples"
+      "therapy-couples",
+      "therapy-teen"
     ]
   },
   {
@@ -1030,9 +1030,7 @@
     "services": [
       "therapy-individual",
       "therapy-family",
-      "therapy-couples",
-      "therapy-child",
-      "therapy-teen"
+      "therapy-couples"
     ]
   },
   {
@@ -1187,7 +1185,8 @@
       "Other"
     ],
     "services": [
-      "psychiatry"
+      "psychiatry",
+      "adhd"
     ]
   },
   {
@@ -1298,11 +1297,15 @@
     "sms_opt_in": false,
     "mobile_number": "",
     "acceptingNew": true,
-    "minAge": 18,
+    "minAge": 10,
     "maxAge": 100,
     "telehealthLocs": "Telehealth - MN",
     "insurance": [
+      "Aetna",
+      "Americas PPO",
       "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
       "Medica",
       "Medicaid",
       "Medicare",
@@ -1314,13 +1317,29 @@
     "whatWeTreat": [
       "Depression or Low Mood",
       "Anxiety or Worry",
+      "Life Transitions or Stress",
       "Trauma or PTSD",
+      "Grief or Loss",
       "ADHD (Evaluation or Treatment)",
-      "Personality Disorders",
+      "Sleep Issues",
+      "Self-Esteem or Identity",
+      "Perinatal or Maternal Mental Health",
+      "LGBTQ+ Related Concerns",
+      "Women’s Mental Health",
+      "Anger Management",
+      "Family Conflict or Parenting Support",
+      "Relationship or Couples Issues",
       "Autism Spectrum"
     ],
     "treatmentApproach": [
-      "EMDR and ART"
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "EMDR and ART",
+      "Play Therapy",
+      "Parenting Therapy",
+      "Executive Function Coaching",
+      "Exposure Therapy",
+      "IFS (Internal Family Systems)"
     ],
     "gender": "Female",
     "languages": [
@@ -1330,7 +1349,6 @@
       "therapy-individual",
       "therapy-family",
       "therapy-couples",
-      "therapy-child",
       "therapy-teen"
     ]
   },
@@ -1525,9 +1543,7 @@
       "English"
     ],
     "services": [
-      "therapy-individual",
-      "therapy-family",
-      "therapy-teen"
+      "therapy-individual"
     ]
   },
   {
@@ -1624,8 +1640,7 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-couples",
-      "therapy-family"
+      "therapy-couples"
     ]
   },
   {
@@ -1720,7 +1735,6 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-couples",
       "therapy-teen"
     ]
   },
@@ -1773,8 +1787,7 @@
     ],
     "services": [
       "therapy-individual",
-      "therapy-couples",
-      "therapy-teen"
+      "therapy-couples"
     ]
   },
   {
@@ -1824,7 +1837,8 @@
       "English"
     ],
     "services": [
-      "therapy-individual"
+      "therapy-individual",
+      "therapy-teen"
     ]
   },
   {
@@ -2013,8 +2027,7 @@
       "English"
     ],
     "services": [
-      "therapy-individual",
-      "therapy-teen"
+      "therapy-individual"
     ]
   },
   {
@@ -2119,8 +2132,7 @@
       "English"
     ],
     "services": [
-      "therapy-individual",
-      "therapy-family"
+      "therapy-individual"
     ]
   },
   {
@@ -2172,9 +2184,9 @@
   {
     "athena_provider_id": "51",
     "departmentId": "1",
-    "name": "Janae Rothe",
+    "name": "Janae Rothe, LGSW",
     "provider_title": "Individual Therapist",
-    "credentials": "",
+    "credentials": "LGSW",
     "specialty": "Therapy",
     "specialties": [
       "Mental Health Therapy",
@@ -2216,6 +2228,57 @@
     "services": [
       "therapy-individual",
       "therapy-teen"
+    ]
+  },
+  {
+    "athena_provider_id": "52",
+    "departmentId": "8",
+    "name": "Mei-Li Ooi, LGSW",
+    "provider_title": "Individual and Couples Therapist",
+    "credentials": "LGSW",
+    "specialty": "Therapy",
+    "specialties": [
+      "Mental Health Therapy",
+      "Couples Therapy"
+    ],
+    "photo": "https://www.vantagementalhealth.org/wp-content/uploads/2026/06/Mei-Web-HS.webp",
+    "sms_opt_in": false,
+    "mobile_number": "",
+    "acceptingNew": true,
+    "minAge": 18,
+    "maxAge": 75,
+    "telehealthLocs": "Telehealth - MN",
+    "insurance": [
+      "Aetna",
+      "Americas PPO",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "HealthPartners",
+      "Medica",
+      "Medicaid",
+      "UCare"
+    ],
+    "whatWeTreat": [
+      "Anxiety or Worry",
+      "Trauma or PTSD",
+      "Obsessive Compulsive Disorder (OCD)",
+      "Self-Esteem or Identity",
+      "Relationship or Couples Issues"
+    ],
+    "treatmentApproach": [
+      "CBT (Cognitive Behavioral Therapy)",
+      "DBT (Dialectical Behavior Therapy)",
+      "EMDR and ART",
+      "Exposure Therapy",
+      "IFS (Internal Family Systems)"
+    ],
+    "gender": "Female",
+    "languages": [
+      "English"
+    ],
+    "services": [
+      "therapy-individual",
+      "therapy-couples"
     ]
   }
 ]
