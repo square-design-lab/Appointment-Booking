@@ -36,6 +36,19 @@ app.use(cors({
 
 let providerStore = [...require('./provider-contacts.json')];
 
+// Sync from WP on startup — keeps cold-start data fresh without a redeploy.
+// Seeds from bundled JSON above first so the server is immediately ready,
+// then replaces with live WP data after all module-level consts are initialized.
+setImmediate(async () => {
+  try {
+    const newStore = await syncProvidersFromWP();
+    providerStore = newStore;
+    console.log(`[startup] WP sync complete — ${newStore.length} providers`);
+  } catch (e) {
+    console.warn('[startup] WP sync failed, using bundled JSON:', e.message);
+  }
+});
+
 // ── WP provider sync helpers ──────────────────────────────────────────────────
 const WP_PROVIDER_API = 'https://vantagementalhealth.org/wp-json/wp/v2';
 
@@ -1869,6 +1882,33 @@ app.get('/api/remove-provider', (req, res) => {
   res.json({ ok: true, removed, providers: providerStore.length });
 });
 
+// ─── syncProvidersFromWP ──────────────────────────────────────────────────────
+// Shared sync logic used by both the startup auto-sync and the URL endpoint.
+
+async function syncProvidersFromWP() {
+  console.log('[sync-providers] Starting WP sync…');
+
+  const [condMap, treatMap, svcMap] = await Promise.all([
+    wpBuildLookup('conditions'),
+    wpBuildLookup('treatments'),
+    wpBuildLookup('our-services'),
+  ]);
+  console.log(`[sync-providers] Lookups ready — ${Object.keys(condMap).length} conditions, ${Object.keys(treatMap).length} treatments, ${Object.keys(svcMap).length} services`);
+
+  const wpProviders = await wpFetchAllProviders();
+  console.log(`[sync-providers] Fetched ${wpProviders.length} WP provider posts`);
+
+  const smsMap = {};
+  providerStore.forEach(p => {
+    smsMap[p.athena_provider_id] = { sms_opt_in: p.sms_opt_in, mobile_number: p.mobile_number };
+  });
+
+  return wpProviders
+    .map(post => wpMapProvider(post, condMap, treatMap, svcMap, smsMap))
+    .filter(Boolean)
+    .sort((a, b) => parseInt(a.athena_provider_id) - parseInt(b.athena_provider_id));
+}
+
 // ─── GET /api/sync-providers ──────────────────────────────────────────────────
 // Fetches provider metadata from WordPress and refreshes providerStore.
 // Protected by SYNC_KEY env var: ?key=<value>
@@ -1880,32 +1920,9 @@ app.get('/api/sync-providers', async (req, res) => {
   }
 
   try {
-    console.log('[sync-providers] Starting WP sync…');
-
-    const [condMap, treatMap, svcMap] = await Promise.all([
-      wpBuildLookup('conditions'),
-      wpBuildLookup('treatments'),
-      wpBuildLookup('our-services'),
-    ]);
-    console.log(`[sync-providers] Lookups ready — ${Object.keys(condMap).length} conditions, ${Object.keys(treatMap).length} treatments, ${Object.keys(svcMap).length} services`);
-
-    const wpProviders = await wpFetchAllProviders();
-    console.log(`[sync-providers] Fetched ${wpProviders.length} WP provider posts`);
-
-    // Preserve sms_opt_in and mobile_number from the current store
-    const smsMap = {};
-    providerStore.forEach(p => {
-      smsMap[p.athena_provider_id] = { sms_opt_in: p.sms_opt_in, mobile_number: p.mobile_number };
-    });
-
-    const newStore = wpProviders
-      .map(post => wpMapProvider(post, condMap, treatMap, svcMap, smsMap))
-      .filter(Boolean)
-      .sort((a, b) => parseInt(a.athena_provider_id) - parseInt(b.athena_provider_id));
-
+    const newStore = await syncProvidersFromWP();
     providerStore = newStore;
     console.log(`[sync-providers] Done — ${newStore.length} providers in store`);
-
     res.json({ ok: true, providers: newStore.length, synced: new Date().toISOString() });
   } catch (err) {
     console.error('[sync-providers] Failed:', err.message);
