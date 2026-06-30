@@ -3,7 +3,6 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { useBooking, ATHENA_PRACTICE_ID } from '../BookingContext';
 import { fetchSlots, fetchBatchAvailability } from '../api/bookingApi';
-import providerContacts from '../data/provider-contacts.json';
 import TimeSlotGrid from '../components/TimeSlotGrid';
 
 function pushDataLayer(obj) {
@@ -68,6 +67,7 @@ export default function Step2DateTime() {
     selectedTime,    setSelectedTime,
     selectedAppointmentId, setSelectedAppointmentId,
     providerInfo,
+    providerContacts,
     selectedService,
   } = useBooking();
 

@@ -138,6 +138,7 @@ export function BookingProvider({ children }) {
     currentStep,
     setCurrentStep,
     providerInfo,
+    providerContacts,
     providerLoading,
     providerMinAge,
     providerMaxAge,
