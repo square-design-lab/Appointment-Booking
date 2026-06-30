@@ -95,13 +95,14 @@ export default function Step3Registration() {
     setBookingConfirmation,
     visitType,
     providerInfo,
+    patientType,
   } = useBooking();
 
   const effectiveService = urlParams.service || selectedService;
 
   // GTM — fire once when step 3 mounts
   useEffect(() => {
-    const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
+    const suffix = getBookingSuffix(patientType, providerInfo?.specialty);
     pushDataLayer({ event: `booking_step3_viewed_${suffix}` });
   }, []);
 
@@ -332,7 +333,7 @@ export default function Step3Registration() {
     }
 
     // 6 — GTM: booking completed conversion event
-    const suffix = getBookingSuffix(urlParams.patientType, providerInfo?.specialty);
+    const suffix = getBookingSuffix(patientType, providerInfo?.specialty);
     pushDataLayer({ event: `booking_completed_${suffix}` });
 
     // 7 — Store confirmation and advance
