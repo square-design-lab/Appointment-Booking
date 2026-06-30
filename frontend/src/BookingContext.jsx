@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import providerContacts from './data/provider-contacts.json';
+import { fetchProviders } from './api/bookingApi';
 
 const BookingContext = createContext(null);
 
@@ -76,7 +76,12 @@ export function BookingProvider({ children }) {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [providerInfo, setProviderInfo] = useState(null);
+  const [providerContacts, setProviderContacts] = useState([]);
   const providerLoading = false;
+
+  useEffect(() => {
+    fetchProviders().then(setProviderContacts).catch(() => {});
+  }, []);
 
   // Provider-specific params derived from provider-contacts.json
   // (not from URL — minAge/maxAge/telehealthLocs are no longer in the URL)
@@ -106,7 +111,7 @@ export function BookingProvider({ children }) {
   const [bookingConfirmation, setBookingConfirmation] = useState(null);
 
   useEffect(() => {
-    if (!urlParams.providerId) return;
+    if (!urlParams.providerId || providerContacts.length === 0) return;
     const found = providerContacts.find(
       (p) => String(p.athena_provider_id) === String(urlParams.providerId)
     );
@@ -119,12 +124,11 @@ export function BookingProvider({ children }) {
         specialty:   found.specialty || '',
         services:    found.services || [],
       });
-      // Derive provider-specific params from JSON — these are no longer in the URL
       setProviderMinAge(found.minAge ?? 0);
       setProviderMaxAge(found.maxAge ?? 100);
       setProviderTelehealthLocs(found.telehealthLocs || '');
     }
-  }, [urlParams.providerId]);
+  }, [urlParams.providerId, providerContacts]);
 
   const locationInfo   = LOCATION_INFO[urlParams.departmentId] || null;
   const serviceLabel   = SERVICE_LABELS[urlParams.service] || '';

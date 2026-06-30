@@ -1847,6 +1847,28 @@ app.get('/api/providers', (_req, res) => {
   res.json(providerStore);
 });
 
+// ─── GET /api/remove-provider ─────────────────────────────────────────────────
+// Removes a single provider from the in-memory store by Athena provider ID.
+// Use after deleting the provider from WordPress.
+// Protected by SYNC_KEY env var: ?providerId=<id>&key=<value>
+
+app.get('/api/remove-provider', (req, res) => {
+  const SYNC_KEY = process.env.SYNC_KEY;
+  if (!SYNC_KEY || req.query.key !== SYNC_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const { providerId } = req.query;
+  if (!providerId) {
+    return res.status(400).json({ error: 'providerId required' });
+  }
+  const before = providerStore.length;
+  providerStore = providerStore.filter(
+    p => String(p.athena_provider_id) !== String(providerId)
+  );
+  const removed = before - providerStore.length;
+  res.json({ ok: true, removed, providers: providerStore.length });
+});
+
 // ─── GET /api/sync-providers ──────────────────────────────────────────────────
 // Fetches provider metadata from WordPress and refreshes providerStore.
 // Protected by SYNC_KEY env var: ?key=<value>
