@@ -175,16 +175,17 @@ export default function Step2DateTime() {
     setSelectedAppointmentId(slot.appointmentId);
   }
 
-  // Similar providers: same specialty, different provider
+  // Similar providers: same service type, different provider
   const similarProviders = useMemo(() => {
-    if (!urlParams.providerId || !serviceLabel) return [];
+    const serviceSlug = urlParams.service || selectedService;
+    if (!urlParams.providerId || !serviceSlug) return [];
     return providerContacts
       .filter((p) => {
         if (String(p.athena_provider_id) === String(urlParams.providerId)) return false;
-        return (p.specialties || []).some(s => s.toLowerCase() === serviceLabel.toLowerCase());
+        return (p.services || []).includes(serviceSlug);
       })
       .slice(0, 3);
-  }, [urlParams.providerId, serviceLabel, providerContacts]);
+  }, [urlParams.providerId, urlParams.service, selectedService, providerContacts]);
 
   // Availability check for similar providers — filter out those with no slots
   const [similarAvailability, setSimilarAvailability] = useState(null);

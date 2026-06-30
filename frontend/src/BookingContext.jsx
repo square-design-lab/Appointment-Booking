@@ -131,7 +131,7 @@ export function BookingProvider({ children }) {
   }, [urlParams.providerId, providerContacts]);
 
   const locationInfo   = LOCATION_INFO[urlParams.departmentId] || null;
-  const serviceLabel   = SERVICE_LABELS[urlParams.service] || '';
+  const serviceLabel   = SERVICE_LABELS[urlParams.service] || SERVICE_LABELS[selectedService] || '';
 
   const value = {
     urlParams,
