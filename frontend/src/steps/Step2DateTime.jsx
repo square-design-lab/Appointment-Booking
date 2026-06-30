@@ -184,7 +184,7 @@ export default function Step2DateTime() {
         return (p.specialties || []).some(s => s.toLowerCase() === serviceLabel.toLowerCase());
       })
       .slice(0, 3);
-  }, [urlParams.providerId, serviceLabel]);
+  }, [urlParams.providerId, serviceLabel, providerContacts]);
 
   // Availability check for similar providers — filter out those with no slots
   const [similarAvailability, setSimilarAvailability] = useState(null);
