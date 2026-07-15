@@ -479,7 +479,18 @@ export default function Step1Details() {
           />
         )}
 
-        {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && patientType && (
+        {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && patientType === 'new' && providerInfo?.acceptingNew === false && (
+          <div className="vbf-callout vbf-callout--error" role="alert">
+            <span className="vbf-callout-icon" aria-hidden="true" />
+            <span>
+              This provider is not currently accepting new clients. Please{' '}
+              <a href="https://book.vantagementalhealth.org/" style={{ fontWeight: 700 }}>return to search</a>{' '}
+              and filter for providers accepting new clients.
+            </span>
+          </div>
+        )}
+
+        {!reasonsLoading && !reasonsError && filteredReasons.length === 0 && patientType && !(patientType === 'new' && providerInfo?.acceptingNew === false) && (
           <div className="vbf-callout vbf-callout--info">
             <span className="vbf-callout-icon" aria-hidden="true" />
             <span>

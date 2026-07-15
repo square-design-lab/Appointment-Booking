@@ -117,12 +117,13 @@ export function BookingProvider({ children }) {
     );
     if (found) {
       setProviderInfo({
-        name:        found.name,
-        credentials: found.provider_title,
-        photo:       found.photo || null,
-        specialties: found.specialties || [],
-        specialty:   found.specialty || '',
-        services:    found.services || [],
+        name:         found.name,
+        credentials:  found.provider_title,
+        photo:        found.photo || null,
+        specialties:  found.specialties || [],
+        specialty:    found.specialty || '',
+        services:     found.services || [],
+        acceptingNew: found.acceptingNew ?? true,
       });
       setProviderMinAge(found.minAge ?? 0);
       setProviderMaxAge(found.maxAge ?? 100);

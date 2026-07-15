@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useBooking } from '../BookingContext';
 
 function pushDataLayer(obj) {
@@ -175,6 +175,7 @@ export default function Step3Registration() {
   const [submitting,   setSubmitting]   = useState(false);
   const [submitError,  setSubmitError]  = useState(null);
   const [triedSubmit,  setTriedSubmit]  = useState(false);
+  const formRef = useRef(null);
 
   // ── Per-field error computation ───────────────────────────────────────────
 
@@ -214,7 +215,18 @@ export default function Step3Registration() {
 
   const handleSubmit = useCallback(async () => {
     setTriedSubmit(true);
-    if (hasAnyError) return;
+    if (hasAnyError) {
+      setTimeout(() => {
+        const el = formRef.current?.querySelector(
+          '.vbf-input--error, .vbf-select--error, .vbf-field-error'
+        );
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.focus?.({ preventScroll: true });
+        }
+      }, 50);
+      return;
+    }
 
     setSubmitting(true);
     setSubmitError(null);
@@ -393,7 +405,7 @@ export default function Step3Registration() {
   }
 
   return (
-    <div className="vbf-card">
+    <div className="vbf-card" ref={formRef}>
       <h1 className="vbf-step-title">Your Information</h1>
 
       {/* ── Submit error banners ─────────────────────────────────── */}
